@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block sidebar %}{% endblock %}
+{% block title %}New EmployeeZerrendaType{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Egoera aldatzen</h1>
+        </div>
+    </div>
+
+    <div class="row">&nbsp;</div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            {{ include('employee_zerrenda_type/_form.html.twig') }}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+
+
+{% endblock %}

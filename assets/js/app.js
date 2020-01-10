@@ -1,14 +1,131 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
+const $ = require('jquery');
+// create global $ and jQuery variables
+global.$ = global.jQuery = $;
+import moment from "moment";
 
-// any CSS you import will output into a single css file (app.css in this case)
-import '../css/app.css';
+window.moment = moment;
 
-// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
+import Swal from "sweetalert2";
 
-console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
+require('bootstrap');
+require('datatables.net-bs4')($);
+import "datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+
+import "typeahead.js";
+import * as Bloodhound from 'typeahead.js/dist/bloodhound';
+// require('typeahead.js/dist/typeahead.bundle.min');
+// require("typeahead.js/dist/typeahead.jquery.min.js");
+// Bloodhound = require("typeahead.js/dist/bloodhound.min.js");
+
+// require('jquery-typeahead');
+
+// import 'ckeditor/adapters/jquery'
+const routes = require('../../public/js/fos_js_routes.json');
+import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+
+Routing.setRoutingData(routes);
+
+require('select2')($);
+
+$(document).ready(function () {
+
+
+
+
+
+    $('[data-toggle="popover"]').popover();
+
+    $('.myselect2').select2();
+
+    $('.myalert').each(function (index) {
+        const myicon = $(this).data('alert');
+        const msg = $(this).data('message');
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
+        Toast.fire({
+            icon: myicon,
+            title: msg,
+        })
+    });
+
+    const appLocale = $('#app_locale').val();
+    const datatablesLocaleURL = "/build/libs/datatables/locales/" + appLocale + ".json";
+
+    $('.mydatatable').DataTable({
+        language: {
+            url: datatablesLocaleURL
+        },
+        "paging": true,
+        "ordering": true,
+        "info": true,
+        "bLengthChange": true,
+        "order": []
+    });
+
+
+    $('body').on('click', '.btnRemoveRow', function () {
+        const that = $(this);
+        Swal.fire({
+            title: 'Ziur zaude?',
+            text: "Ezin izango duzu berreskuratu onartuz gero.",
+            type: 'warning',
+            animation: false,
+            customClass: {
+                popup: 'animated tada'
+            },
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Bai, ezabatu!'
+        }).then((result) => {
+            if (result.value) {
+                console.log(result.value);
+                $(that).closest('form').submit();
+            }
+        });
+    });
+
+    $('.btnFormAddEmployeeFromFileSubmit').on('click', function () {
+        $('#form_add_employee_from_file').submit();
+    });
+    $('.btnFormAddEmployeeFromZerrendaSubmit').on('click', function () {
+        $('#form_add_employee_from_zerrenda').submit();
+    });
+
+
+    $('.custom-file-input').on('change',function(){
+        var fileName = $(this).val();
+        $(this).next('.form-control-file').addClass("selected").html(fileName);
+    })
+
+    // Employee select
+    $('.mySelect').on('change', function () {
+        const miid = $(this).val();
+        if(this.checked) {
+            $('#employee_select_select_' + miid).prop('checked',true);
+        } else {
+            $('#employee_select_select_' + miid).prop('checked',false);
+        }
+    });
+
+    $('.mySelect:checkbox:checked').each(function () {
+        console.log($(this).val());
+        const miid = $(this).val();
+        $('#employee_select_select_' + miid).prop('checked',true);
+    });
+
+    $('.btnFormAddEmployeeSelectFormSubmit').on('click', function () {
+        $('#formAddEmployeeSelectForm').submit();
+    });
+});
+
+

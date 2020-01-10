@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EmployeeZerrendaType{% endblock %}
+
+{% block body %}
+    <h1>EmployeeZerrendaType</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ employee_zerrenda_type.id }}</td>
+            </tr>
+            <tr>
+                <th>Document</th>
+                <td>{{ employee_zerrenda_type.document }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ employee_zerrenda_type.created ? employee_zerrenda_type.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ employee_zerrenda_type.updated ? employee_zerrenda_type.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('employee_zerrenda_type_index') }}">back to list</a>
+
+    <a href="{{ path('employee_zerrenda_type_edit', {'id': employee_zerrenda_type.id}) }}">edit</a>
+
+    {{ include('employee_zerrenda_type/_delete_form.html.twig') }}
+{% endblock %}

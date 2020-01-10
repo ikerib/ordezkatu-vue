@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Municipio{% endblock %}
+
+{% block body %}
+    <h1>Municipio</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ municipio.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ municipio.name }}</td>
+            </tr>
+            <tr>
+                <th>Provincia</th>
+                <td>{{ municipio.provincia }}</td>
+            </tr>
+            <tr>
+                <th>Codpostal</th>
+                <td>{{ municipio.codpostal }}</td>
+            </tr>
+            <tr>
+                <th>Latitud</th>
+                <td>{{ municipio.latitud }}</td>
+            </tr>
+            <tr>
+                <th>Longitud</th>
+                <td>{{ municipio.longitud }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ municipio.created ? municipio.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ municipio.updated ? municipio.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('municipio_index') }}">back to list</a>
+
+    <a href="{{ path('municipio_edit', {'id': municipio.id}) }}">edit</a>
+
+    {{ include('municipio/_delete_form.html.twig') }}
+{% endblock %}

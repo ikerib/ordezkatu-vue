@@ -1,0 +1,23 @@
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>Noiz</th>
+                <th>Ekintza</th>
+                <th>Azalpena</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for log in logs %}
+                <tr>
+                    <td>{{ log.created |date('d-m-Y h:m:s') }}</td>
+                    <td>{{ log.name }}</td>
+                    <td>{{ log.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

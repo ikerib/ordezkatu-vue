@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Saila{% endblock %}
+
+{% block body %}
+    <h1>Create new Saila</h1>
+
+    {{ include('saila/_form.html.twig') }}
+
+    <a href="{{ path('saila_index') }}">back to list</a>
+{% endblock %}

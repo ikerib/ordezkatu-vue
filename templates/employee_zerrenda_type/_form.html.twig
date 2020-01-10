@@ -1,0 +1,22 @@
+
+<script>
+    $(function(){
+        $("#employee_zerrenda_type_notes").ckeditor();
+    });
+</script>
+
+
+{{ form_start(form, {'attr': {'id': 'form_employee_zerrenda_type_list'}}) }}
+
+    {{ form_row(form.zerrenda, { 'attr': { 'style': 'width: 100% !important'}}) }}
+    {{ form_row(form.type, { 'attr': { 'style': 'width: 100% !important'}}) }}
+    {{ form_row(form.documentFile) }}
+    {{ form_row(form.notes) }}
+
+
+    <div style="display: none;">
+        {{ form_row(form.employee) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Gorde</button>
+{{ form_end(form) }}

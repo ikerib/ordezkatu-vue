@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12">
+        <table class="mydatatable table table-responsive-sm table-sm table-striped table-hover">
+            <thead>
+            <tr>
+                <td>Id</td>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th>Inper</th> {#Inpertsonalizazio#}
+                {% endif %}
+                <th>{{ "Langilea" | trans }}</th>
+                <th>{{ "Saila" | trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                {% if user.displayname is defined %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <td class="nireTD" style="font-size: 1.2rem">
+                                <a href="{{ path('homepage', { _switch_user: user.username }) }}">
+                                    <i class="fas fa-user-secret"></i>
+                                </a>
+                            </td>
+                        {% endif %}
+                        <td>{% if user.displayname is defined %}{{ user.displayname }}{% endif %}</td>
+                        <td>{% if user.deparment is defined %}{{ user.deparment }}{% endif %}</td>
+                        <td></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+    {{ include('admin/_modal_new.html.twig') }}
+
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employee{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">{{ employee.name ~ ' ' ~  employee.abizena1 ~ ' ' ~ employee.abizena2}} </h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('employee_edit', {'id': employee.id}) }}">{{ "Langilea editatu" | trans }}</a>
+
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#modalChangeType">
+                Egoera aldatu
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Izena</th>
+                    <td>{{ employee.name }}</td>
+                </tr>
+                <tr>
+                    <th>Abizena1</th>
+                    <td>{{ employee.abizena1 }}</td>
+                </tr>
+                <tr>
+                    <th>Abizena2</th>
+                    <td>{{ employee.abizena2 }}</td>
+                </tr>
+                <tr>
+                    <th>Nan</th>
+                    <td>{{ employee.nan }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ employee.email }}</td>
+                </tr>
+                <tr>
+                    <th>Telefono</th>
+                    <td>{{ employee.telefono }}</td>
+                </tr>
+                <tr>
+                    <th>Helbidea</th>
+                    <td>{{ employee.helbidea }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <hr>
+    <ul class="nav nav-pills" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Azken eguneraketak</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Zerrendak</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Dokumentuak</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            {{ include('employee/_tab_log.html.twig') }}
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            {{ include('employee/_tab_zerrenda.html.twig') }}
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            {{ include('employee/_tab_documents.html.twig') }}
+        </div>
+    </div>
+
+    {{ include('employee/_modal_change_type.html.twig') }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('jsEmployee') }}
+
+{% endblock %}

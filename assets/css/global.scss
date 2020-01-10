@@ -1,0 +1,333 @@
+// customize some Bootstrap variables
+//$primary: darken(#428bca, 20%);
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+// Swal
+@import '~@sweetalert2/theme-bootstrap-4/bootstrap-4.scss';
+@import "~animate.css/animate.min.css";
+
+// Datatables
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+
+// Datepicker
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker.css";
+
+// Select2
+@import "~select2/dist/css/select2.min.css";
+
+/*! `Custom` Bootstrap 4 theme */
+/* https://themestr.app/theme?start=1&font=Nunito&palette=11&icons=fontawesome&border-width=1px&spacer=0.7rem&btn-border-radius=.25rem */
+@import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
+@import url(https://fonts.googleapis.com/css?family=Nunito:200,300,400,700);
+$headings-font-family:Nunito;
+
+$primary: #1e6b7c;
+$secondary:#868e96;
+$success:#28a745;
+$danger:#dc3545;
+$info:#17a2b8;
+$warning:#ffc107;
+$light:#f8f9fa;
+$dark:#343434;
+$spacer:0.7rem;
+$border-width:1px;
+$btn-border-radius:.25rem;
+$font-size-base:0.90rem;
+$font-weight-bold:700;
+
+$modal-backdrop-bg: #343434;
+
+@import "~bootstrap/scss/bootstrap";
+.modal-backdrop {
+  z-index: -1;
+}
+body {
+  font-size: .875rem;
+
+    background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center;              /* optional, center the image */
+
+}
+
+.form-signin {
+  background-color:#fff !important;
+}
+
+.mylabel {
+  background-color: #ffffff;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports ((position: -webkit-sticky) or (position: sticky)) {
+  .sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #999;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Content
+ */
+
+[role="main"] {
+  padding-top: 133px; /* Space for fixed navbar */
+}
+
+@media (min-width: 768px) {
+  [role="main"] {
+    padding-top: 28px; /* Space for fixed navbar */
+  }
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  //background-color: rgba(0, 0, 0, .25);
+  //box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+  /** Twitter Typeahead **/
+.twitter-typeahead, .typeahead, .empty-message  {
+  width: 100%;
+}
+.tt-menu {
+  background: #f8f9fa;
+  width: 100%;
+  border-color: #1d2124;
+
+  border-width: thin;
+}
+.tt-dataset a {
+  color:#000000;
+}
+.tt-suggestion {
+  overflow: hidden;
+  display: table;
+  width: 100%;
+  padding: 10px 10px;
+  border-bottom: 1px solid #e9ecf2;
+}
+/** Movie Card (Movie Suggestions) **/
+.movie-card {
+  position: relative;
+  padding: 8px;
+}
+.movie-card-poster {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 52px;
+  height: 52px;
+  border: 2px solid #ccd6dd;
+  border-radius: 5px;
+}
+.movie-card:hover .movie-card-poster {
+  border-color: #f5f8fa;
+}
+.movie-card-details {
+  min-height: 60px;
+  padding-left: 60px;
+}
+.movie-card-name,
+.movie-card-year {
+  display: inline-block;
+}
+.movie-card-name {
+  font-weight: 700;
+}
+.movie-card-year {
+  color: #8899a6;
+}
+.movie-card:hover .movie-card-year {
+  color: #fff;
+}
+.movie-card-plot {
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 18px;
+}
+.movie-card:hover,
+.movie-card.is-active {
+  color: #fff;
+  background: #0088CC;
+  cursor: pointer;
+}
+.empty-message {
+  position: relative;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+}
+
+
+
+
+/* ProfileCard */
+
+.ProfileCard {
+  position: relative;
+  padding: 8px;
+}
+
+.ProfileCard-avatar {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 52px;
+  height: 52px;
+  border: 2px solid #ccd6dd;
+  border-radius: 5px;
+}
+
+.ProfileCard:hover .ProfileCard-avatar {
+  border-color: #f5f8fa;
+}
+
+.ProfileCard-details {
+  min-height: 60px;
+  padding-left: 60px;
+}
+
+.ProfileCard-realName,
+.ProfileCard-screenName {
+  display: inline-block;
+}
+
+.ProfileCard-realName {
+  font-weight: 700;
+}
+
+.ProfileCard-screenName {
+  color: #8899a6;
+}
+
+.ProfileCard-description {
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.ProfileCard-stats {
+  float: right;
+  text-align: right;
+}
+
+.ProfileCard-stat {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.ProfileCard-stat-label {
+  color: #8899a6;
+  font-weight: 500;
+}
+
+.ProfileCard-stat + .ProfileCard-stat {
+  margin-left: 5px;
+}
+
+.ProfileCard:hover,
+.ProfileCard.is-active {
+  color: #fff;
+  background: #55acee;
+}
+
+.ProfileCard:hover .ProfileCard-screenName,
+.ProfileCard:hover .ProfileCard-stat-label,
+.ProfileCard.is-active .ProfileCard-screenName,
+.ProfileCard.is-active .ProfileCard-stat-label {
+  color: #fff;
+}
+
+/* EmptyMessage */
+
+.EmptyMessage {
+  position: relative;
+  padding: 10px;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+
+}

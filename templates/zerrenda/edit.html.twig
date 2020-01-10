@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit zerrenda{% endblock %}
+
+{% block body %}
+    <h1>{{zerrenda.name}} aldatzen</h1>
+    <hr>
+
+    <div class="jumbotron">
+        {{ include('zerrenda/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalSelectEmployee">
+                    Gehitu langilea
+                </button>
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Inportatu
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modalImportFile">
+                            Inportatu Calc-etik
+                        </button>
+                        <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modalSelectZerrenda">
+                            Inportatu beste zerrenda batetik
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ include('zerrenda/_list_employee.html.twig', { 'employeelist': zerrenda.employeeZerrenda} ) }}
+        </div>
+    </div>
+
+
+
+    <!-- Modal Import File -->
+    <div class="modal fade" id="modalImportFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Inportatu langileak zerrendara fitxategi batetik</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(uploadForm, {'attr': {'id': 'form_add_employee_from_file'}}) }}
+                    {{ form_widget(uploadForm) }}
+                    {{ form_end(uploadForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
+                    <button type="button" class="btn btn-primary btnFormAddEmployeeFromFileSubmit">Inportatu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Import from list-->
+    <div class="modal fade" id="modalSelectZerrenda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Inportatu langileak zerrendara fitxategi batetik</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(formZerrendaGuztiak, {'attr': {'id': 'form_add_employee_from_zerrenda'}}) }}
+                    {{ form_widget(formZerrendaGuztiak) }}
+                    {{ form_end(formZerrendaGuztiak) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
+                    <button type="button" class="btn btn-primary btnFormAddEmployeeFromZerrendaSubmit">Inportatu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Employee select-->
+    <div class="modal fade" id="modalSelectEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Inportatu langileak zerrendara fitxategi batetik</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ render(controller('App\\Controller\\EmployeeController::select', {'listid':zerrenda.id})) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Itxi</button>
+                    <button type="button" class="btn btn-primary btnFormAddEmployeeSelectFormSubmit">Inportatu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

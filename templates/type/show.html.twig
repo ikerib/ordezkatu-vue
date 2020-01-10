@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Type{% endblock %}
+
+{% block body %}
+    <h1>Type</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ type.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ type.name }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{{ type.created ? type.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ type.updated ? type.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Orden</th>
+                <td>{{ type.orden }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('type_index') }}">back to list</a>
+
+    <a href="{{ path('type_edit', {'id': type.id}) }}">edit</a>
+
+    {{ include('type/_delete_form.html.twig') }}
+{% endblock %}

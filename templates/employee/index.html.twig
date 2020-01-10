@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employee index{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ "Langileen zerrenda" | trans }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('employee_new') }}">{{ "Langile berria" | trans }}</a>
+
+            </div>
+{#            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">#}
+{#                <span data-feather="calendar"></span>#}
+{#                This week#}
+{#            </button>#}
+        </div>
+    </div>
+
+    <table class="mydatatable table table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>{{ "Izena" | trans }}</th>
+                <th>{{ "1º Abizena" | trans }}</th>
+                <th>{{ "2º Abizena" | trans }}</th>
+                <th>{{ "Herria" | trans }}</th>
+                <th>{{ "NAN" | trans }}</th>
+                <th>{{ "Email" | trans }}</th>
+                <th>{{ "Telefonoa" | trans }}</th>
+
+                <th>{{ "Zerrendak" | trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employee in employees %}
+            <tr>
+                <td><a href="{{ path('employee_show', { 'id': employee.id }) }}">{{ employee.id }}</a></td>
+                <td><a href="{{ path('employee_show', { 'id': employee.id }) }}">{{ employee.name }}</a></td>
+                <td><a href="{{ path('employee_show', { 'id': employee.id }) }}">{{ employee.abizena1 }}</a></td>
+                <td><a href="{{ path('employee_show', { 'id': employee.id}) }}">{{ employee.abizena2 }}</a></td>
+                <td>{% if employee.municipio %}
+                        {{ employee.municipio.name }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ employee.nan }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.telefono }}</td>
+                <td>
+                    {% for zer in employee.employeezerrenda if zer.zerrenda %}
+                        <span class="badge badge-secondary"><a class="text-white" href="{{ path('zerrenda_show', {'id': zer.zerrenda.id}) }}">{{zer.zerrenda.name}}</a></span>
+                    {% endfor %}
+                </td>
+                <td>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="{{ path('employee_show', {'id': employee.id}) }}"><i class="fas fa-eye"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="{{ path('employee_edit', {'id': employee.id}) }}"><i class="fas fa-edit"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            {{ include('employee/_delete_form.html.twig') }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

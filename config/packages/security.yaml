@@ -1,22 +1,58 @@
 security:
+
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_BIDERATZAILE: [ ROLE_USER, ROLE_ALLOWED_TO_SWITCH ]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_BIDERATZAILE]
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        db_user:
+            entity:
+                class: App\Entity\User
+                property: username
+        ldap_user:
+            ldap:
+                service: Symfony\Component\Ldap\Ldap
+                base_dn: "%env(resolve:LDAP_BASE_DN)%"
+                search_dn: "%env(resolve:LDAP_SEARCH_DN)%"
+                search_password: "%env(resolve:LDAP_PASSWD)%"
+                default_roles: ROLE_USER
+                uid_key: sAMAccountName
+        all_users:
+            chain:
+                providers: ['ldap_user','db_user']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\FormLoginAuthenticator
+            provider: db_user
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
+            logout:
+                path: app_logout
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 2592000
+
 
             # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: ROLE_USER }
+        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_BIDERATZAILEA, ROLE_SUPER_ADMIN] }

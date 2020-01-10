@@ -1,0 +1,53 @@
+{#{% extends 'base.html.twig' %}#}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-sm table-striped mydatatable">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ "Izena" | trans }}</th>
+                        <th>{{ "1º Abizena" | trans }}</th>
+                        <th>{{ "2º Abizena" | trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for emp in employess %}
+                    <tr>
+                        <td>
+                            {% set aurkitua=0 %}
+                            {% set break=false %}
+                            {% for e in employeeInList if not break %}
+                                {% if e.nan == emp.nan %}
+                                    {% set aurkitua=1 %}
+                                    {% set break=true %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if aurkitua %}
+{#                                <input class="checkbox mySelect" type="checkbox" checked name="employee_select['select']" value="{{ emp.id }}">#}
+                            {% else %}
+                                <input class="checkbox mySelect" type="checkbox"  name="employee_select['select']" value="{{ emp.id }}">
+                            {% endif %}
+
+                        </td>
+                        <td>{{ emp.name }}</td>
+                        <td>{{ emp.abizena1 }}</td>
+                        <td>{{ emp.abizena2 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div style="display: none;">
+        {{ form_start(form, {'attr': {'id': 'formAddEmployeeSelectForm'}}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}
+

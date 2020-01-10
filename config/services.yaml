@@ -23,5 +23,20 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    Symfony\Component\Ldap\Ldap:
+        arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+    Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
+        arguments:
+            - host: "%env(resolve:LDAP_IP)%"
+              port: 389
+                #encryption: tls
+              options:
+                  protocol_version: 3
+                  referrals: false
+
+    App\Service\PasaiaLdapService:
+        arguments:
+            - '%env(resolve:LDAP_IP)%'
+            - '%env(resolve:LDAP_SEARCH_DN)%'
+            - '%env(resolve:LDAP_BASE_DN)%'
+            - '%env(resolve:LDAP_PASSWD)%'

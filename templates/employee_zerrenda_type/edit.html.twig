@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EmployeeZerrendaType{% endblock %}
+
+{% block body %}
+    <h1>Edit EmployeeZerrendaType</h1>
+
+    {{ include('employee_zerrenda_type/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('employee_zerrenda_type_index') }}">back to list</a>
+
+    {{ include('employee_zerrenda_type/_delete_form.html.twig') }}
+{% endblock %}

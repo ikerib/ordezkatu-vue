@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lanpostuak{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ "Lanpostuen zerrenda" | trans }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('job_new') }}">{{ "Lanpostu berria" | trans }}</a>
+
+            </div>
+            {#            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">#}
+            {#                <span data-feather="calendar"></span>#}
+            {#                This week#}
+            {#            </button>#}
+        </div>
+    </div>
+
+    <table class="mydatatable table table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Saila</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.name }}</td>
+                <td>{{ job.saila }}</td>
+                <td>
+                    <a href="{{ path('job_show', {'id': job.id}) }}">show</a>
+                    <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('job_new') }}">Create new</a>
+{% endblock %}
