@@ -1,0 +1,51 @@
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with "job_" %}active {% endif %} " href="{{ path('job_index') }}">
+                    <i class="fas fa-city"></i>
+                    {{ "sidebar.lanpostuak" | trans }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with "zerrenda_" %}active {% endif %} " href="{{ path('zerrenda_index') }}">
+                    <i class="fas fa-list"></i>
+                    {{ "sidebar.zerrendak" | trans }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if app.request.get('_route') starts with "employee_" %}active {% endif %} " href="{{ path('employee_index') }}">
+                    <i class="fas fa-users"></i>
+                    {{ "sidebar.customer" | trans }} <span class="sr-only">(current)</span>
+                </a>
+            </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>{{ "Taula Laguntzaileak" | trans }}</span>
+            <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+            </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('municipio_index') }}">
+                    <span data-feather="file-text"></span>
+                    {{ "sidebar.herriak" | trans }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('type_index')}}">
+                    <span data-feather="file-text"></span>
+                    {{ "sidebar.egoera_motak" | trans }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('saila_index') }}">
+                    <span data-feather="file-text"></span>
+                    {{ "sidebar.saila" | trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
