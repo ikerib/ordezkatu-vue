@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Municipio index{% endblock %}
+{% block title %}Municipio{% endblock %}
 
 {% block body %}
-    <h1>Municipio index</h1>
 
-    <table class="table">
+    <table class="mydatatable table table-striped table-hover table-sm">
         <thead>
             <tr>
                 <th>Id</th>
@@ -43,5 +42,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('municipio_new') }}">Create new</a>
 {% endblock %}

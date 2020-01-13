@@ -1,37 +1,24 @@
 const $ = require('jquery');
-// create global $ and jQuery variables
 global.$ = global.jQuery = $;
-import moment from "moment";
 
+import moment from "moment";
 window.moment = moment;
 
 import Swal from "sweetalert2";
 
 require('bootstrap');
-require('datatables.net-bs4')($);
+require('datatables.net-bs4');
 import "datatables.net-bs4/css/dataTables.bootstrap4.min.css";
-
 import "typeahead.js";
-import * as Bloodhound from 'typeahead.js/dist/bloodhound';
-// require('typeahead.js/dist/typeahead.bundle.min');
-// require("typeahead.js/dist/typeahead.jquery.min.js");
-// Bloodhound = require("typeahead.js/dist/bloodhound.min.js");
 
-// require('jquery-typeahead');
-
-// import 'ckeditor/adapters/jquery'
 const routes = require('../../public/js/fos_js_routes.json');
 import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
 
 Routing.setRoutingData(routes);
 
-require('select2')($);
+require('select2');
 
 $(document).ready(function () {
-
-
-
-
 
     $('[data-toggle="popover"]').popover();
 
@@ -102,10 +89,10 @@ $(document).ready(function () {
     });
 
 
-    $('.custom-file-input').on('change',function(){
-        var fileName = $(this).val();
+    $('.custom-file-input').on('change', function () {
+        const fileName = $(this).val();
         $(this).next('.form-control-file').addClass("selected").html(fileName);
-    })
+    });
 
     // Employee select
     $('.mySelect').on('change', function () {

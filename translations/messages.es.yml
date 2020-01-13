@@ -1,0 +1,43 @@
+menu.taula.laguntzaileak: 'Tablas auxiliares'
+menu.municipio.list: Municipios
+menu.type.list: 'Tipos de estado'
+menu.customer: Trabajador
+sidebar.customer: Trabajadores
+sidebar.zerrendak: Listas
+sidebar.lanpostuak: 'Puestos de empleo'
+sidebar.eskaerak: Peticiones
+sidebar.egoera_motak: 'Tipos de estado'
+sidebar.herriak: Municipios
+Langilea: Trabajdor
+Saila: Departamento
+Hasiera: Inicio
+'Taula laguntzaileak': 'Tablas auxiliares'
+'Modu arruntera itzuli': 'Volver al modo normal'
+'Saioa itxi': 'Cerrar sesión'
+'Oroitu nazazu': Recuerdame
+Sartu: Entrar
+'Taula Laguntzaileak': Municipio
+Izena: nombre
+Langileak: Trabajador
+Type: Tipo
+'Zerrenda batean erabiltzaile bat egon daitekeen egoera motak': 'Tipos de estado para un aspirante en una lista'
+'Lanpostu berria': 'Nuevo puestro de trabajo'
+'Lanpostuen zerrenda': 'Listado de puestos de trabajo'
+'Langile berria': 'Nuevo trabajador'
+'Itzuli zerrendara': 'Volver a la lista'
+'1º Abizena': '1º Apellido'
+'2º Abizena': '2º Apellido'
+editatzen: editando
+'Langilea editatu': 'Editar trabajador'
+'Langileen zerrenda': 'Listado de trabajadores'
+Herria: Municipio
+NAN: DNI
+Email: Email
+Telefonoa: Telefono
+Zerrendak: Listado
+Gorde: Guardar
+Hurrenkera: Orden
+Helbidea: Dirección
+'Zerrenda berria': 'Nueva lista'
+'Zerrenda aldatu': 'Editar lista'
+sidebar.saila: Departamentos

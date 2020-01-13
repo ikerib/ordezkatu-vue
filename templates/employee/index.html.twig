@@ -51,8 +51,10 @@
                 <td>{{ employee.email }}</td>
                 <td>{{ employee.telefono }}</td>
                 <td>
-                    {% for zer in employee.employeezerrenda if zer.zerrenda %}
-                        <span class="badge badge-secondary"><a class="text-white" href="{{ path('zerrenda_show', {'id': zer.zerrenda.id}) }}">{{zer.zerrenda.name}}</a></span>
+                    {% for zer in employee.employeezerrenda %}
+                        {% if zer.zerrenda %}
+                            <span class="badge badge-secondary"><a class="text-white" href="{{ path('zerrenda_show', {'id': zer.zerrenda.id}) }}">{{zer.zerrenda.name}}</a></span>
+                        {% endif %}
                     {% endfor %}
                 </td>
                 <td>
