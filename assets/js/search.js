@@ -1,10 +1,8 @@
 require('typeahead.js');
 let Bloodhound = require('bloodhound-js');
 
-$(document).ready(function () {
+$(document).ready(function (formula) {
     const searchUrl = Routing.generate('api_employee_handle_search');
-    console.log(searchUrl);
-    // Bilaketa
     const engines = new Bloodhound(
         {
             datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -15,7 +13,6 @@ $(document).ready(function () {
                 wildcard: '%q%'
             },
             filter: function (engine) {
-                console.log(engine);
                 return $.map(engine, function(e){
                     return {
                         izena: e.name,
@@ -39,7 +36,7 @@ $(document).ready(function () {
         templates: {
             empty: '<div class="suggestion"><span class="suggestion_text no-underline">   Ez dago daturik   </span></div>',
             suggestion: function (el) {
-                const searchUrl = Routing.generate('employee_show', {'id':el.id});
+                const searchUrl = Routing.generate('employee_show', {'id': el.id});
                 return `<a href="` + searchUrl + `"><div class="ProfileCard-details">
                             <div class="ProfileCard-realName">` + el.name + ` ` + el.abizena1 + ` `+ el.abizena2 + `</div>
                             <div class="ProfileCard-screenName">(NAN.: ` + el.nan + `)</div>

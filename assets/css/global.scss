@@ -47,11 +47,9 @@ $modal-backdrop-bg: #343434;
 }
 body {
   font-size: .875rem;
-
-    background-size:     cover;                      /* <------ */
-    background-repeat:   no-repeat;
-    background-position: center center;              /* optional, center the image */
-
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
 }
 
 .form-signin {
@@ -95,6 +93,7 @@ body {
   .sidebar-sticky {
     position: -webkit-sticky;
     position: sticky;
+    background-color: #1a3e46;
   }
 }
 
@@ -120,6 +119,30 @@ body {
 .sidebar-heading {
   font-size: .75rem;
   text-transform: uppercase;
+}
+
+.navbar-brand {
+  background-color: #1a3e46;
+  font-size: 1.525rem;
+  padding-right: 14px;
+  border-radius: 0 25px 0 0;
+  text-align: center;
+  width: 204px;
+}
+
+.sidebar-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: #1a3e46;
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #ececec !important;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff !important;
 }
 
 /*
