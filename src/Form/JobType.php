@@ -15,12 +15,14 @@ class JobType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('zerrenda')
-            ->add('saila')
-//            ->add('saila', EntityType::class,[
-//                'label' => 'Saila',
-//                'data' => Saila::class
-//            ])
+            ->add('saila', EntityType::class, [
+                'class' => Saila::class,
+                'placeholder' => 'Aukeratu bat',
+                'required' => true,
+                'attr' => [
+                    'class' => 'myselect2'
+                ]
+            ])
         ;
     }
 

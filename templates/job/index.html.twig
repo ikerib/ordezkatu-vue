@@ -11,10 +11,6 @@
                 <a class="btn btn-sm btn-outline-secondary" href="{{ path('job_new') }}">{{ "Lanpostu berria" | trans }}</a>
 
             </div>
-            {#            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">#}
-            {#                <span data-feather="calendar"></span>#}
-            {#                This week#}
-            {#            </button>#}
         </div>
     </div>
 
@@ -34,8 +30,12 @@
                 <td>{{ job.name }}</td>
                 <td>{{ job.saila }}</td>
                 <td>
-                    <a href="{{ path('job_show', {'id': job.id}) }}">show</a>
-                    <a href="{{ path('job_edit', {'id': job.id}) }}">edit</a>
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="{{ path('job_show', {'id': job.id}) }}"><i class="fas fa-eye"></i> {{'Ikusi'|trans}}</a>
+                        <li class="list-inline-item"><a href="{{ path('job_edit', {'id': job.id}) }}"><i class="fas fa-edit"></i>{{'Editatu'|trans}}</a></li>
+                        <li class="list-inline-item"><a class="text-danger" href="{{ path('job_edit', {'id': job.id}) }}"><i class="fas fa-trash-alt"></i> {{ 'Ezabatu' | trans }}</a></li></li>
+                    </ul>
+
                 </td>
             </tr>
         {% else %}
