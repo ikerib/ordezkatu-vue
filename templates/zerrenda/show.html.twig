@@ -10,16 +10,12 @@
                 <a class="btn btn-sm btn-outline-secondary" href="{{ path('zerrenda_edit', {'id': zerrenda.id}) }}">{{ "Zerrenda aldatu" | trans }}</a>
 
             </div>
-            {#            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">#}
-            {#                <span data-feather="calendar"></span>#}
-            {#                This week#}
-            {#            </button>#}
         </div>
     </div>
 
     <p>Zerrendako partaideak</p>
 
-    <table class="table">
+    <table class="table mydatatable">
         <thead>
             <tr>
                 <th>Hurrenkera</th>
@@ -30,14 +26,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for ez in zerrenda.employeeZerrenda if ez %}
-                <tr>
-                    <td>{{ ez.position }}</td>
-                    <td>{{ ez.employee.name }}</td>
-                    <td>{{ ez.employee.abizena1 }}</td>
-                    <td>{{ ez.employee.abizena2 }}</td>
-                    <td>{{ ez.employee.telefono }}</td>
-                </tr>
+            {% for ez in zerrenda.employeeZerrenda %}
+                {% if ez %}
+                    <tr>
+                        <td>{{ ez.position }}</td>
+                        <td>{{ ez.employee.name }}</td>
+                        <td>{{ ez.employee.abizena1 }}</td>
+                        <td>{{ ez.employee.abizena2 }}</td>
+                        <td>{{ ez.employee.telefono }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
     </table>

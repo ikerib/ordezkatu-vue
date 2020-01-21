@@ -42,10 +42,10 @@ class Type
      */
     private $orden;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Employee", mappedBy="type")
-     */
-    private $employees;
+//    /**
+//     * @ORM\OneToMany(targetEntity="App\Entity\Employee", mappedBy="type")
+//     */
+//    private $employees;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrendaType", mappedBy="type")
@@ -59,7 +59,7 @@ class Type
 
     public function __construct()
     {
-        $this->employees = new ArrayCollection();
+//        $this->employees = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
         $this->employeeZerrendas = new ArrayCollection();
     }

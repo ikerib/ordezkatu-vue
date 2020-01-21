@@ -6,6 +6,7 @@ use App\Entity\Employee;
 use App\Entity\EmployeeZerrenda;
 use App\Entity\Log;
 use App\Entity\Municipio;
+use App\Entity\User;
 use App\Entity\Zerrenda;
 use App\Form\ZerrendaInportType;
 use App\Form\ZerrendaTemplateType;
@@ -14,6 +15,8 @@ use App\Repository\ZerrendaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -29,7 +32,7 @@ class ZerrendaController extends AbstractController
 {
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -39,9 +42,9 @@ class ZerrendaController extends AbstractController
 
     /**
      * @Route("/", name="zerrenda_index", methods={"GET"})
-     * @param \App\Repository\ZerrendaRepository $zerrendaRepository
+     * @param ZerrendaRepository $zerrendaRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(ZerrendaRepository $zerrendaRepository): Response
     {
@@ -52,9 +55,9 @@ class ZerrendaController extends AbstractController
 
     /**
      * @Route("/new", name="zerrenda_new", methods={"GET","POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -64,9 +67,9 @@ class ZerrendaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setZerrenda($zerrenda);
@@ -87,14 +90,15 @@ class ZerrendaController extends AbstractController
 
     /**
      * @Route("/{id}", name="zerrenda_show", methods={"GET"}) $formZerrendaGuztiak = $this->createForm(ZerrendaInportType::class, null, [
-            'action' => $this->generateUrl('admin_zerrenda_add_employees_from_zerrenda', [
-                'sourceid' => $zerrenda->getId()
-            ]),
-            'method' => 'POST'
-        ]);
-     * @param \App\Entity\Zerrenda $zerrenda
+            * 'action' => $this->generateUrl('admin_zerrenda_add_employees_from_zerrenda', [
+                * 'sourceid' => $zerrenda->getId()
+            * ]),
+            * 'method' => 'POST'
+        * ]);
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Zerrenda $zerrenda
+     *
+     * @return Response
      */
     public function show(Zerrenda $zerrenda): Response
     {
@@ -105,11 +109,11 @@ class ZerrendaController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="zerrenda_edit", methods={"GET","POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\Zerrenda                      $zerrenda
-     * @param \App\Repository\ZerrendaRepository        $zerrendaRepository
+     * @param Request            $request
+     * @param Zerrenda           $zerrenda
+     * @param ZerrendaRepository $zerrendaRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function edit(Request $request, Zerrenda $zerrenda, ZerrendaRepository $zerrendaRepository): Response
     {
@@ -117,9 +121,9 @@ class ZerrendaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setZerrenda($zerrenda);
@@ -155,14 +159,14 @@ class ZerrendaController extends AbstractController
     /**
      * @Route("/parsefile/{zerrendaid}", name="admin_zerrenda_add_employees_from_file", methods={"POST"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int                                       $zerrendaid
+     * @param Request            $request
+     * @param int                $zerrendaid
      *
-     * @param \App\Repository\ZerrendaRepository        $zerrendaRepository
+     * @param ZerrendaRepository $zerrendaRepository
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     * @return RedirectResponse|null
      * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @throws Exception
      */
     public function addEmployeesFromFile(Request $request, int $zerrendaid, ZerrendaRepository $zerrendaRepository): ?RedirectResponse
     {
@@ -173,9 +177,9 @@ class ZerrendaController extends AbstractController
         if ($uploadForm->isSubmitted() && $uploadForm->isValid()) {
             $myFile = $uploadForm->getData();
             /**  Identify the type of $inputFileName  **/
-            $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($myFile['fitxategiaFile']);
+            $inputFileType = IOFactory::identify($myFile['fitxategiaFile']);
             /**  Create a new Reader of the type that has been identified  **/
-            $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+            $reader = IOFactory::createReader($inputFileType);
             /**  Load $inputFileName to a Spreadsheet Object  **/
             $spreadsheet = $reader->load($myFile['fitxategiaFile']);
             $reader->setReadDataOnly(true);
@@ -190,9 +194,9 @@ class ZerrendaController extends AbstractController
 
                 $position++;
 
-                /** @var \App\Entity\Log $log */
+                /** @var Log $log */
                 $log = new Log();
-                /** @var \App\Entity\User $user */
+                /** @var User $user */
                 $user = $this->getUser();
                 $log->setUser($user);
 
@@ -260,11 +264,11 @@ class ZerrendaController extends AbstractController
 
     /**
      * @Route("/import/from/{sourceid}", name="admin_zerrenda_add_employees_from_zerrenda", options={ "expose": true})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int                                       $sourceid
-     * @param \App\Repository\ZerrendaRepository        $zerrendaRepository
+     * @param Request            $request
+     * @param int                $sourceid
+     * @param ZerrendaRepository $zerrendaRepository
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
+     * @return RedirectResponse|null
      */
     public function addEmployeesFromZerrenda(Request $request, int $sourceid, ZerrendaRepository $zerrendaRepository): ?RedirectResponse
     {
@@ -296,9 +300,9 @@ class ZerrendaController extends AbstractController
                             $newEz->setEmployee($ez->getEmployee());
                             $newEz->setZerrenda($oriZerrenda);
                             $newEz->setPosition((int)$position);
-                            /** @var \App\Entity\Log $log */
+                            /** @var Log $log */
                             $log = new Log();
-                            /** @var \App\Entity\User $user */
+                            /** @var User $user */
                             $user = $this->getUser();
                             $log->setUser($user);
                             $log->setEmployeezerrenda($newEz);
@@ -323,19 +327,19 @@ class ZerrendaController extends AbstractController
 
     /**
      * @Route("/{id}", name="zerrenda_delete", methods={"DELETE"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\Zerrenda                      $zerrenda
+     * @param Request  $request
+     * @param Zerrenda $zerrenda
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function delete(Request $request, Zerrenda $zerrenda): Response
     {
         if ($this->isCsrfTokenValid('delete'.$zerrenda->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($zerrenda);
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setZerrenda($zerrenda);
