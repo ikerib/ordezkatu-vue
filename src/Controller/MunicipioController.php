@@ -17,6 +17,9 @@ class MunicipioController extends AbstractController
 {
     /**
      * @Route("/", name="municipio_index", methods={"GET"})
+     * @param MunicipioRepository $municipioRepository
+     *
+     * @return Response
      */
     public function index(MunicipioRepository $municipioRepository): Response
     {
@@ -27,6 +30,9 @@ class MunicipioController extends AbstractController
 
     /**
      * @Route("/new", name="municipio_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +56,9 @@ class MunicipioController extends AbstractController
 
     /**
      * @Route("/{id}", name="municipio_show", methods={"GET"})
+     * @param Municipio $municipio
+     *
+     * @return Response
      */
     public function show(Municipio $municipio): Response
     {
@@ -60,6 +69,10 @@ class MunicipioController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="municipio_edit", methods={"GET","POST"})
+     * @param Request   $request
+     * @param Municipio $municipio
+     *
+     * @return Response
      */
     public function edit(Request $request, Municipio $municipio): Response
     {
@@ -80,6 +93,10 @@ class MunicipioController extends AbstractController
 
     /**
      * @Route("/{id}", name="municipio_delete", methods={"DELETE"})
+     * @param Request   $request
+     * @param Municipio $municipio
+     *
+     * @return Response
      */
     public function delete(Request $request, Municipio $municipio): Response
     {

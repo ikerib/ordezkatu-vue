@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Job;
 use App\Entity\Log;
+use App\Entity\User;
 use App\Form\JobType;
 use App\Repository\JobRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,9 @@ class JobController extends AbstractController
 {
     /**
      * @Route("/", name="job_index", methods={"GET"})
-     * @param \App\Repository\JobRepository $jobRepository
+     * @param JobRepository $jobRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(JobRepository $jobRepository): Response
     {
@@ -31,9 +32,9 @@ class JobController extends AbstractController
 
     /**
      * @Route("/new", name="job_new", methods={"GET","POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -44,9 +45,9 @@ class JobController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($job);
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setName('Lanpostu berria sortu da');
@@ -65,9 +66,9 @@ class JobController extends AbstractController
 
     /**
      * @Route("/{id}", name="job_show", methods={"GET"})
-     * @param \App\Entity\Job $job
+     * @param Job $job
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function show(Job $job): Response
     {
@@ -78,10 +79,10 @@ class JobController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="job_edit", methods={"GET","POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\Job                           $job
+     * @param Request $request
+     * @param Job     $job
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function edit(Request $request, Job $job): Response
     {
@@ -102,10 +103,10 @@ class JobController extends AbstractController
 
     /**
      * @Route("/{id}", name="job_delete", methods={"DELETE"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\Job                           $job
+     * @param Request $request
+     * @param Job     $job
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function delete(Request $request, Job $job): Response
     {

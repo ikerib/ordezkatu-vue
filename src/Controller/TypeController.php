@@ -17,6 +17,9 @@ class TypeController extends AbstractController
 {
     /**
      * @Route("/", name="type_index", methods={"GET"})
+     * @param TypeRepository $typeRepository
+     *
+     * @return Response
      */
     public function index(TypeRepository $typeRepository): Response
     {

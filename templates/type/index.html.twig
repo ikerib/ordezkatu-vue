@@ -10,8 +10,6 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Created</th>
-                <th>Updated</th>
                 <th>Orden</th>
                 <th>actions</th>
             </tr>
@@ -21,11 +19,8 @@
             <tr>
                 <td>{{ type.id }}</td>
                 <td>{{ type.name }}</td>
-                <td>{{ type.created ? type.created|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ type.updated ? type.updated|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ type.orden }}</td>
                 <td>
-                    <a href="{{ path('type_show', {'id': type.id}) }}">show</a>
                     <a href="{{ path('type_edit', {'id': type.id}) }}">edit</a>
                 </td>
             </tr>
@@ -36,6 +31,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('type_new') }}">Create new</a>
 {% endblock %}

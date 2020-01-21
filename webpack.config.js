@@ -1,5 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
-
+var fs = require("fs");
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -51,6 +51,14 @@ config.module.rules.unshift({
         amd: false,
     }
 });
+if(!Encore.isProduction()) {
+    fs.writeFile("fakewebpack.config.js", "module.exports = "+JSON.stringify(config), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        console.log("fakewebpack.config.js written");
+    });
+}
 
 
 module.exports = Encore.getWebpackConfig();

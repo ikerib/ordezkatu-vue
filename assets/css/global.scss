@@ -123,11 +123,14 @@ body {
 
 .navbar-brand {
   background-color: #1a3e46;
-  font-size: 1.525rem;
+  //font-size: 1.4rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.225em;
+  //line-height: 24px !important;
   padding-right: 14px;
   border-radius: 0 25px 0 0;
   text-align: center;
-  width: 204px;
+  //width: 204px;
 }
 
 .sidebar-sticky {
