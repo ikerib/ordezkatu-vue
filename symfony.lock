@@ -90,6 +90,18 @@
             "config/packages/dev/easy_log_handler.yaml"
         ]
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
+        },
+        "files": [
+            "config/packages/fos_ckeditor.yaml"
+        ]
+    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.3",
         "recipe": {
@@ -123,6 +135,12 @@
     "jms/metadata": {
         "version": "2.1.0"
     },
+    "markbaker/complex": {
+        "version": "1.4.7"
+    },
+    "markbaker/matrix": {
+        "version": "1.2.0"
+    },
     "monolog/monolog": {
         "version": "1.25.3"
     },
@@ -147,6 +165,9 @@
     "phpdocumentor/type-resolver": {
         "version": "1.0.1"
     },
+    "phpoffice/phpspreadsheet": {
+        "version": "1.10.1"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -155,6 +176,9 @@
     },
     "psr/log": {
         "version": "1.1.2"
+    },
+    "psr/simple-cache": {
+        "version": "1.0.1"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -252,6 +276,9 @@
     },
     "symfony/event-dispatcher-contracts": {
         "version": "v1.1.7"
+    },
+    "symfony/expression-language": {
+        "version": "v4.4.2"
     },
     "symfony/filesystem": {
         "version": "v4.4.2"

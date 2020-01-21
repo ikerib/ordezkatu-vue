@@ -12,17 +12,19 @@
             </tr>
             </thead>
             <tbody>
-            {% for et in employee.employeeZerrenda if et.zerrenda %}
-                <tr>
-                    <td>{{ et.zerrenda.name }}</td>
-                    <td>{{ et.type }}</td>
-                    <td>{{ et.position }}</td>
-                    <td>
-                        <a class="btnZerrendaType" data-employeeid="{{ et.employee.id }}" data-zerrendaid="{{ et.zerrenda.id }}" href="{{path('employee_zerrenda_type_new', {
-                            'employeeid': et.employee.id, 'zerrendaid': et.zerrenda.id
-                        })}}">Egoera aldatu</a>
-                    </td>
-                </tr>
+            {% for et in employee.employeeZerrenda %}
+                {% if et.zerrenda %}
+                    <tr>
+                        <td>{{ et.zerrenda.name }}</td>
+                        <td>{{ et.type }}</td>
+                        <td>{{ et.position }}</td>
+                        <td>
+                            <a class="btnZerrendaType" data-employeeid="{{ et.employee.id }}" data-zerrendaid="{{ et.zerrenda.id }}" href="{{path('employee_zerrenda_type_new', {
+                                'employeeid': et.employee.id, 'zerrendaid': et.zerrenda.id
+                            })}}">Egoera aldatu</a>
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>

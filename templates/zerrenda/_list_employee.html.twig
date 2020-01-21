@@ -14,35 +14,37 @@
     </tr>
     </thead>
     <tbody>
-    {% for item in employeelist if item.employee %}
-        <tr>
-            <td>{{ item.position }}</td>
-            <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.name }}</a></td>
-            <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.abizena1 }}</a></td>
-            <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.abizena2 }}</a></td>
-            <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.nan }}</a></td>
-            <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.email }}</a></td>
-            <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.telefono }}</a></td>
-            <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.helbidea }}</a></td>
-            <td>
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <a href="{{ path('employee_show', {'id': item.employee.id}) }}"><i class="fas fa-eye"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="{{ path('employee_edit', {'id': item.employee.id}) }}"><i class="fas fa-edit"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        {{ include('zerrenda/_delete_employee_form.html.twig') }}
-                    </li>
-                    {% if app.request.get('_route') is same as ('zerrenda_edit') %}
+    {% for item in employeelist %}
+        {% if item.employee %}
+            <tr>
+                <td>{{ item.position }}</td>
+                <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.name }}</a></td>
+                <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.abizena1 }}</a></td>
+                <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.abizena2 }}</a></td>
+                <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.nan }}</a></td>
+                <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.email }}</a></td>
+                <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.telefono }}</a></td>
+                <td><a href="{{ path('employee_edit', {'id': item.employee.id}) }}">{{ item.employee.helbidea }}</a></td>
+                <td>
+                    <ul class="list-inline">
                         <li class="list-inline-item">
-                            <a href="#">Egoera aldatu</a>
+                            <a href="{{ path('employee_show', {'id': item.employee.id}) }}"><i class="fas fa-eye"></i></a>
                         </li>
-                    {% endif %}
-                </ul>
-            </td>
-        </tr>
+                        <li class="list-inline-item">
+                            <a href="{{ path('employee_edit', {'id': item.employee.id}) }}"><i class="fas fa-edit"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            {{ include('zerrenda/_delete_employee_form.html.twig') }}
+                        </li>
+                        {% if app.request.get('_route') is same as ('zerrenda_edit') %}
+                            <li class="list-inline-item">
+                                <a href="#">Egoera aldatu</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </td>
+            </tr>
+        {% endif %}
     {% else %}
         <tr>
             <td></td>

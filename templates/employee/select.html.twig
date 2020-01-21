@@ -18,10 +18,12 @@
                         <td>
                             {% set aurkitua=0 %}
                             {% set break=false %}
-                            {% for e in employeeInList if not break %}
-                                {% if e.nan == emp.nan %}
-                                    {% set aurkitua=1 %}
-                                    {% set break=true %}
+                            {% for e in employeeInList %}
+                                {% if not break %}
+                                    {% if e.nan == emp.nan %}
+                                        {% set aurkitua=1 %}
+                                        {% set break=true %}
+                                    {% endif %}
                                 {% endif %}
                             {% endfor %}
                             {% if aurkitua %}
