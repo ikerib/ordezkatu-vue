@@ -3,11 +3,20 @@
 {% block title %}Edit Job{% endblock %}
 
 {% block body %}
-    <h1>Edit Job</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ job.name }}{{ " editatzen" }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('job_index') }}">{{ "Itzuli zerrendara" | trans }}</a>
 
-    {{ include('job/_form.html.twig', {'button_label': 'Update'}) }}
+            </div>
+            {#            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">#}
+            {#                <span data-feather="calendar"></span>#}
+            {#                This week#}
+            {#            </button>#}
+        </div>
+    </div>
 
-    <a href="{{ path('job_index') }}">back to list</a>
+    {{ include('job/_form.html.twig', {'button_label': 'Gorde'}) }}
 
-    {{ include('job/_delete_form.html.twig') }}
 {% endblock %}

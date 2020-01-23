@@ -6,6 +6,7 @@ use App\Entity\Employee;
 use App\Entity\EmployeeZerrenda;
 use App\Entity\EmployeeZerrendaType;
 use App\Entity\Log;
+use App\Entity\User;
 use App\Entity\Zerrenda;
 use App\Form\EmployeeSelectType;
 use App\Form\EmployeeType;
@@ -24,7 +25,7 @@ class EmployeeController extends AbstractController
 {
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -35,9 +36,9 @@ class EmployeeController extends AbstractController
 
     /**
      * @Route("/", name="employee_index", methods={"GET"})
-     * @param \App\Repository\EmployeeRepository $employeeRepository
+     * @param EmployeeRepository $employeeRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(EmployeeRepository $employeeRepository): Response
     {
@@ -48,14 +49,14 @@ class EmployeeController extends AbstractController
 
     /**
      * @Route("/select/tolist/{listid}", name="employee_select", methods={"GET", "POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int                                       $listid
+     * @param Request $request
+     * @param int     $listid
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function select(Request $request, int $listid): Response
     {
-        /** @var \App\Entity\Zerrenda $zerrenda */
+        /** @var Zerrenda $zerrenda */
         $zerrenda       = $this->em->getRepository(Zerrenda::class)->find($listid);
         $employess      = $this->em->getRepository(Employee::class)->findAll();
         $employeeInList = $this->em->getRepository(Employee::class)->findAllWithinList($listid);
@@ -81,9 +82,9 @@ class EmployeeController extends AbstractController
                     $this->em->persist($ez);
                     $this->em->persist($employee);
 
-                    /** @var \App\Entity\Log $log */
+                    /** @var Log $log */
                     $log = new Log();
-                    /** @var \App\Entity\User $user */
+                    /** @var User $user */
                     $user = $this->getUser();
                     $log->setUser($user);
                     $log->setEmployee($employee);
@@ -107,9 +108,9 @@ class EmployeeController extends AbstractController
 
     /**
      * @Route("/new", name="employee_new", methods={"GET","POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -121,9 +122,9 @@ class EmployeeController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($employee);
 
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setEmployee($employee);
@@ -143,15 +144,15 @@ class EmployeeController extends AbstractController
 
     /**
      * @Route("/{id}", name="employee_show", methods={"GET"}, options={"expose":true})
-     * @param \App\Entity\Employee $employee
+     * @param Employee $employee
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function show(Employee $employee): Response
     {
         $logs = $this->em->getRepository(Log::class)->getAllLogsForEmployee($employee->getId());
         $ezts = $this->em->getRepository(EmployeeZerrendaType::class)->getAllForEmployee($employee->getId());
-        /** @var \App\Entity\EmployeeZerrendaType $ezt */
+        /** @var EmployeeZerrendaType $ezt */
         $ezt = new EmployeeZerrendaType();
         $ezt->setEmployee($employee);
         $formEmployeeZerrendaType = $this->createForm(EmployeeZerrendaTypeType::class, $ezt,[
@@ -172,10 +173,10 @@ class EmployeeController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="employee_edit", methods={"GET","POST"}, options={"expose":true})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\Employee                      $employee
+     * @param Request  $request
+     * @param Employee $employee
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function edit(Request $request, Employee $employee): Response
     {
@@ -184,9 +185,9 @@ class EmployeeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setEmployee($employee);
@@ -205,18 +206,18 @@ class EmployeeController extends AbstractController
 
     /**
      * @Route("/{id}", name="employee_delete", methods={"DELETE"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\Employee                      $employee
+     * @param Request  $request
+     * @param Employee $employee
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function delete(Request $request, Employee $employee): Response
     {
         if ($this->isCsrfTokenValid('delete' . $employee->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setEmployee($employee);
@@ -233,11 +234,11 @@ class EmployeeController extends AbstractController
     /**
      * @Route("/{employeeid}/zerrenda/{zerrendaid}", name="employee_delete_zerrenda", methods={"DELETE"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request                                   $request
      * @param                                           $employeeid
      * @param int                                       $zerrendaid
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function deletefromlist(Request $request, $employeeid, int $zerrendaid): Response
     {
@@ -246,9 +247,9 @@ class EmployeeController extends AbstractController
             /** @var EmployeeZerrenda $ez */
             $ez = $this->em->getRepository(EmployeeZerrenda::class)->findOneByEmployeeZerrenda($employeeid, $zerrendaid);
             $entityManager->remove($ez);
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setEmployee($ez->getEmployee());
