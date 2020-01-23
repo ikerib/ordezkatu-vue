@@ -36,7 +36,7 @@
         "sweetalert2": "^8.18.4",
         "typeahead.js": "^0.11.1",
         "vue": "^2.6.10",
-        "vue-loader": "^15.7.2",
-        "vue-template-compiler": "^2.6.10"
+        "vue-loader": "^15.8.3",
+        "vue-template-compiler": "^2.6.11"
     }
 }
