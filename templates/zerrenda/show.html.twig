@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-        <h1 class="h2">{{ zerrenda.name }}</h1>
+        <h1 class="h2">Zerrenda: {{ zerrenda.name }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
                 <a class="btn btn-sm btn-outline-secondary" href="{{ path('zerrenda_edit', {'id': zerrenda.id}) }}">{{ "Zerrenda aldatu" | trans }}</a>
@@ -15,7 +15,7 @@
 
     <p>Zerrendako partaideak</p>
 
-    <table class="table mydatatable">
+    <table class="table table-bordered table-hover table-responsive-xl">
         <thead>
             <tr>
                 <th>Hurrenkera</th>
@@ -23,6 +23,8 @@
                 <th>Abizena1</th>
                 <th>Abizena2</th>
                 <th>Telf</th>
+                <th>Egoera</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +36,8 @@
                         <td>{{ ez.employee.abizena1 }}</td>
                         <td>{{ ez.employee.abizena2 }}</td>
                         <td>{{ ez.employee.telefono }}</td>
+                        <td>{{ ez.type }}</td>
+                        <td>aa</td>
                     </tr>
                 {% endif %}
             {% endfor %}

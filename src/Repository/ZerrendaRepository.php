@@ -68,4 +68,12 @@ class ZerrendaRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findZerrendaBat( $id )
+    {
+        $q = $this->createQueryBuilder( 'z' )
+                  ->leftJoin( 'z.employeeZerrenda', 'ez' )
+                  ->where( 'z.id = :id' )->setParameter( 'id', $id );
+
+        return $q->getQuery()->getOneOrNullResult();
+    }
 }

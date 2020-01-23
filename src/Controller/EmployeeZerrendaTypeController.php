@@ -6,6 +6,7 @@ use App\Entity\Employee;
 use App\Entity\EmployeeZerrenda;
 use App\Entity\EmployeeZerrendaType;
 use App\Entity\Log;
+use App\Entity\User;
 use App\Entity\Zerrenda;
 use App\Form\EmployeeZerrendaTypeType;
 use App\Repository\EmployeeZerrendaTypeRepository;
@@ -23,7 +24,7 @@ class EmployeeZerrendaTypeController extends AbstractController
 {
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -33,9 +34,9 @@ class EmployeeZerrendaTypeController extends AbstractController
 
     /**
      * @Route("/", name="employee_zerrenda_type_index", methods={"GET"})
-     * @param \App\Repository\EmployeeZerrendaTypeRepository $employeeZerrendaTypeRepository
+     * @param EmployeeZerrendaTypeRepository $employeeZerrendaTypeRepository
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(EmployeeZerrendaTypeRepository $employeeZerrendaTypeRepository): Response
     {
@@ -46,11 +47,11 @@ class EmployeeZerrendaTypeController extends AbstractController
 
     /**
      * @Route("/new/{employeeid}", name="employee_zerrenda_type_new", methods={"GET","POST"}, options={"expose":true})
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request                                   $request
      *
      * @param                                           $employeeid
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function new(Request $request, $employeeid): Response
     {
@@ -83,9 +84,9 @@ class EmployeeZerrendaTypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            /** @var \App\Entity\Log $log */
+            /** @var Log $log */
             $log = new Log();
-            /** @var \App\Entity\User $user */
+            /** @var User $user */
             $user = $this->getUser();
             $log->setUser($user);
             $log->setEmployee($employeeZerrendaType->getEmployee());
@@ -100,7 +101,7 @@ class EmployeeZerrendaTypeController extends AbstractController
                 $log->setDescription($employeeZerrendaType->getEmployee() . ' hautagaiaren egoera aldatua da' . $employeeZerrendaType->getZerrenda() . '-rako. Egoera berria: ' . $employeeZerrendaType->getType());
             } else {
                 $zerrendak = $this->em->getRepository(EmployeeZerrenda::class)->findAllZerrendasForEmployee($employeeid);
-                /** @var \App\Entity\EmployeeZerrenda $z */
+                /** @var EmployeeZerrenda $z */
                 foreach ($zerrendak as $z)
                 {
                     $z->setType($employeeZerrendaType->getType());
@@ -123,9 +124,9 @@ class EmployeeZerrendaTypeController extends AbstractController
 
     /**
      * @Route("/{id}", name="employee_zerrenda_type_show", methods={"GET"})
-     * @param \App\Entity\EmployeeZerrendaType $employeeZerrendaType
+     * @param EmployeeZerrendaType $employeeZerrendaType
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function show(EmployeeZerrendaType $employeeZerrendaType): Response
     {
@@ -136,10 +137,10 @@ class EmployeeZerrendaTypeController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="employee_zerrenda_type_edit", methods={"GET","POST"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\EmployeeZerrendaType          $employeeZerrendaType
+     * @param Request              $request
+     * @param EmployeeZerrendaType $employeeZerrendaType
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function edit(Request $request, EmployeeZerrendaType $employeeZerrendaType): Response
     {
@@ -160,10 +161,10 @@ class EmployeeZerrendaTypeController extends AbstractController
 
     /**
      * @Route("/{id}", name="employee_zerrenda_type_delete", methods={"DELETE"})
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Entity\EmployeeZerrendaType          $employeeZerrendaType
+     * @param Request              $request
+     * @param EmployeeZerrendaType $employeeZerrendaType
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function delete(Request $request, EmployeeZerrendaType $employeeZerrendaType): Response
     {

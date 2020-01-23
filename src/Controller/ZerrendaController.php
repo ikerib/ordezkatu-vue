@@ -89,19 +89,16 @@ class ZerrendaController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="zerrenda_show", methods={"GET"}) $formZerrendaGuztiak = $this->createForm(ZerrendaInportType::class, null, [
-            * 'action' => $this->generateUrl('admin_zerrenda_add_employees_from_zerrenda', [
-                * 'sourceid' => $zerrenda->getId()
-            * ]),
-            * 'method' => 'POST'
-        * ]);
+     * @Route("/{id}", name="zerrenda_show", methods={"GET"})
      *
-     * @param Zerrenda $zerrenda
+     * @param                    $id
+     * @param ZerrendaRepository $zerrendaRepository
      *
      * @return Response
      */
-    public function show(Zerrenda $zerrenda): Response
+    public function show($id, ZerrendaRepository $zerrendaRepository): Response
     {
+        $zerrenda = $zerrendaRepository->findZerrendaBat( $id );
         return $this->render('zerrenda/show.html.twig', [
             'zerrenda' => $zerrenda,
         ]);
