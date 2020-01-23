@@ -103,6 +103,11 @@ class Employee
      */
     private $employeeZerrendaTypes;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $elkarkidetza;
+
     public function __construct()
     {
         $this->employeeZerrenda = new ArrayCollection();
@@ -345,6 +350,18 @@ class Employee
                 $employeeZerrendaType->setEmployee(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getElkarkidetza(): ?bool
+    {
+        return $this->elkarkidetza;
+    }
+
+    public function setElkarkidetza(bool $elkarkidetza): self
+    {
+        $this->elkarkidetza = $elkarkidetza;
 
         return $this;
     }

@@ -29,7 +29,7 @@
                 <th>{{ "NAN" | trans }}</th>
                 <th>{{ "Email" | trans }}</th>
                 <th>{{ "Telefonoa" | trans }}</th>
-
+                <th>Elkarkidetza</th>
                 <th>{{ "Zerrendak" | trans }}</th>
                 <th></th>
             </tr>
@@ -50,6 +50,12 @@
                 <td>{{ employee.nan }}</td>
                 <td>{{ employee.email }}</td>
                 <td>{{ employee.telefono }}</td>
+                <td>{% if employee.elkarkidetza %}
+                        <span class="badge badge-success">Bai</span>
+                        {% else %}
+                            <span class="badge badge-danger">Ez</span>
+                    {% endif %}
+                </td>
                 <td>
                     {% for zer in employee.employeezerrenda %}
                         {% if zer.zerrenda %}
