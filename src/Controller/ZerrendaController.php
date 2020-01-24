@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/admin/zerrendak")
@@ -91,16 +92,18 @@ class ZerrendaController extends AbstractController
     /**
      * @Route("/{id}", name="zerrenda_show", methods={"GET"})
      *
-     * @param                    $id
-     * @param ZerrendaRepository $zerrendaRepository
+     * @param                     $id
+     * @param ZerrendaRepository  $zerrendaRepository
+     *
+     * @param SerializerInterface $serializer
      *
      * @return Response
      */
-    public function show($id, ZerrendaRepository $zerrendaRepository): Response
+    public function show($id, ZerrendaRepository $zerrendaRepository, SerializerInterface $serializer): Response
     {
-        $zerrenda = $zerrendaRepository->findZerrendaBat( $id );
+        $zerrenda   = $zerrendaRepository->findZerrendaBat( $id );
         return $this->render('zerrenda/show.html.twig', [
-            'zerrenda' => $zerrenda,
+            'zerrenda' =>$serializer->serialize($zerrenda, 'json',  ['groups' => 'main']),
         ]);
     }
 

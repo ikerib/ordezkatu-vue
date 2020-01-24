@@ -1,49 +1,8 @@
 {% extends 'vue.html.twig' %}
 
-{% block title %}Employee{% endblock %}
+{% block title %}Zerrendaren jarraipena{% endblock %}
 
-{% block body %}
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-        <h1 class="h2">Zerrenda: {{ zerrenda.name }}</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group mr-2">
-                <a class="btn btn-sm btn-outline-secondary" href="{{ path('zerrenda_edit', {'id': zerrenda.id}) }}">{{ "Zerrenda aldatu" | trans }}</a>
-
-            </div>
-        </div>
-    </div>
-
-    <p>Zerrendako partaideak</p>
-
-    <table class="table table-bordered table-hover table-responsive-xl">
-        <thead>
-            <tr>
-                <th>Hurrenkera</th>
-                <th>Izena</th>
-                <th>Abizena1</th>
-                <th>Abizena2</th>
-                <th>Telf</th>
-                <th>Egoera</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ez in zerrenda.employeeZerrenda %}
-                {% if ez %}
-                    <tr>
-                        <td>{{ ez.position }}</td>
-                        <td>{{ ez.employee.name }}</td>
-                        <td>{{ ez.employee.abizena1 }}</td>
-                        <td>{{ ez.employee.abizena2 }}</td>
-                        <td>{{ ez.employee.telefono }}</td>
-                        <td>{{ ez.type }}</td>
-                        <td>aa</td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+{% block sf_data %}
+    <div ref="zerrenda" data-zerrenda="{{ zerrenda|e }}"></div>
 
 {% endblock %}
-
-

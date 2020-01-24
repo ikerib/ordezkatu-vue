@@ -196,6 +196,19 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
+.form-control.mr-sm-2.tt-hint {
+  border-radius: 20px;
+}
+
+.ezker-borobil {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  background-color: #1a3e46;
+  color: #ececec !important;
+  font-weight: 500 !important;
+  padding: 6px 0;
+}
+
   /** Twitter Typeahead **/
 .twitter-typeahead, .typeahead, .empty-message  {
   width: 100%;

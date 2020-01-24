@@ -32,6 +32,7 @@ class Zerrenda
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"main"})
      */
     private $fitxategia;
 
@@ -43,12 +44,14 @@ class Zerrenda
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"main"})
      */
     private $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"main"})
      */
     private $updated;
 
