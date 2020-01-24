@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeeZerrendaRepository")
@@ -15,13 +16,16 @@ class EmployeeZerrenda
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"main", "details"})
      */
     private $id;
 
     /**
      * @ORM\Column(name="position", type="integer")
+     * @Groups({"main", "details"})
      */
     private $position;
+
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -30,7 +34,7 @@ class EmployeeZerrenda
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="employeeZerrenda")
      * @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
-     *
+     * @Groups({"details"})
      */
     private $employee;
 

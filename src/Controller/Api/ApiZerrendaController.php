@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiZerrendaController extends AbstractFOSRestController
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $entityManager;
 
@@ -41,24 +41,27 @@ class ApiZerrendaController extends AbstractFOSRestController
 
     /**
      * @Rest\Get("/zerrenda/{id}", name="get_zerrenda", options={ "expose": true})
-     * @param \App\Entity\Zerrenda $zerrenda
+     * @param Zerrenda $zerrenda
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View|Response
      */
-    public function getZerrenda(Zerrenda $zerrenda): View
+    public function getZerrenda(Zerrenda $zerrenda)
     {
         $ctx = new Context();
         $ctx->addGroup('main');
 
-        return View::create($zerrenda, Response::HTTP_OK)->setContext($ctx);
+        $view = $this->view( $zerrenda, Response::HTTP_OK )->setContext( $ctx );
+
+        return $this->handleView( $view );
+//        return View::create($zerrenda, Response::HTTP_OK)->setContext($ctx);
     }
 
     /**
      * @Rest\Post("/zerrenda", name="post_zerrenda", options={ "expose":true })
      * @Rest\RequestParam(name="name", description="The name of the list", nullable=false)
-     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
+     * @param ParamFetcher $paramFetcher
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function postZerrenda(ParamFetcher $paramFetcher): View
     {
@@ -80,10 +83,10 @@ class ApiZerrendaController extends AbstractFOSRestController
     /**
      * @Rest\Put("/zerrenda/{id}", name="put_zerrenda", options={ "expose": true })
      * @Rest\RequestParam(name="name", description="Zerrendaren izena", nullable=false)
-     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
-     * @param \App\Entity\Zerrenda                 $zerrenda
+     * @param ParamFetcher $paramFetcher
+     * @param Zerrenda     $zerrenda
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function putZerrenda(ParamFetcher $paramFetcher, Zerrenda $zerrenda): View
     {
@@ -101,9 +104,9 @@ class ApiZerrendaController extends AbstractFOSRestController
 
     /**
      * @Rest\Delete("/zerrenda/{id}", name="delete_zerrenda", options={ "expose": true})
-     * @param \App\Entity\Zerrenda $zerrenda
+     * @param Zerrenda $zerrenda
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function deleteZerrenda(Zerrenda $zerrenda): View
     {

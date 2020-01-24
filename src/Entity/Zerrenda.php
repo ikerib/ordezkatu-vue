@@ -20,19 +20,19 @@ class Zerrenda
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $fitxategia;
 
@@ -44,14 +44,14 @@ class Zerrenda
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $updated;
 
@@ -67,6 +67,7 @@ class Zerrenda
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrenda", mappedBy="zerrenda")
      * @ORM\OrderBy({"position"="ASC"})
+     * @Groups({"details"})
      */
     private $employeeZerrenda;
 
