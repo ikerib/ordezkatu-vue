@@ -34,7 +34,7 @@ class EmployeeZerrenda
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="employeeZerrenda")
      * @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
-     * @Groups({"details"})
+     * @Groups({"main","details"})
      */
     private $employee;
 

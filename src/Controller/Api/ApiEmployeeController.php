@@ -20,7 +20,7 @@ class ApiEmployeeController extends AbstractFOSRestController
 {
 
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -30,13 +30,13 @@ class ApiEmployeeController extends AbstractFOSRestController
 
     /**
      * @Rest\Get("/search/{q}", name="api_employee_handle_search", options={ "expose": true})
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param Request                                   $request
      *
      * @param                                           $q
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
-    public function search(Request $request, $q): \FOS\RestBundle\View\View
+    public function search(Request $request, $q): View
     {
         $employees = $this->em->getRepository(Employee::class)->hangleSearch($q);
         $ctx = new Context();
