@@ -8,7 +8,7 @@
                         <div class="col-md-10 col-sm-10">
                             <ul class="list-inline no-bottom-marging">
                                 <li class="list-inline-item">
-                                    <button class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id" aria-expanded="false" aria-controls="collapseExample">
+                                    <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id" aria-expanded="false" aria-controls="collapseExample">
                                     <span class="when-closed">
                                         <i class="fas fa-chevron-right"></i>
                                     </span>
@@ -25,8 +25,11 @@
                         <div class="col-md-2 col-sm-2">
                             <ul class="list-inline no-bottom-marging text-right ">
                                 <li class="list-inline-item">
-                                    <button @click="newCall" class="btn btn-outline-secondary" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id">
+                                    <button v-if="!isCalling[el.id]" @click="newCall(el.id)" class="btn btn-outline-secondary">
                                         <i class="fas fa-phone"> Dei berria</i>
+                                    </button>
+                                    <button v-if="isCalling[el.id]" @click="endCall(el.id)" class="btn btn-outline-warning">
+                                        <i class="fas fa-phone"> Deia Amaitu</i>
                                     </button>
                                 </li>
                             </ul>
@@ -52,20 +55,7 @@
                             </div>
                             <div class="col-md-1">&nbsp;</div>
                             <div class="col-md-8">
-                                <table class="table  table-striped table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>Noiz</th>
-                                            <th>Eranztuna</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>01/01/2115</td>
-                                            <td>Ez du hartzen</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <CallTable></CallTable>
                             </div>
                         </div>
 
@@ -82,17 +72,29 @@
 </template>
 
 <script>
+    import CallTable from "./CallTable";
     export default {
         name: "ZerrendaList",
+        components: {
+            CallTable
+        },
         props: ['employeeList'],
         data() {
             return {
-
+                isCalling : []
             }
         },
         methods: {
-            newCall: function() {
-                console.log("ring ring!");
+            newCall: function(id) {
+                this.$set(this.isCalling, id, true);
+                const btnName = "btnCollapse" + id;
+                const el = document.getElementById(btnName);
+                el.click()
+            },
+            endCall: function ( id ) {
+
+                this.$set(this.isCalling, id, false);
+                console.log("hang up!");
             }
         }
 
