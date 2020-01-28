@@ -28,7 +28,7 @@
                                     <button v-if="!isCalling[el.id]" @click="newCall(el.id)" class="btn btn-outline-secondary">
                                         <i class="fas fa-phone"> Dei berria</i>
                                     </button>
-                                    <button v-if="isCalling[el.id]" @click="endCall(el.id)" class="btn btn-outline-warning">
+                                    <button v-if="isCalling[el.id]" @click="endCall(el.id)" class="btn btn-warning">
                                         <i class="fas fa-phone"> Deia Amaitu</i>
                                     </button>
                                 </li>
@@ -87,9 +87,14 @@
         methods: {
             newCall: function(id) {
                 this.$set(this.isCalling, id, true);
-                const btnName = "btnCollapse" + id;
-                const el = document.getElementById(btnName);
-                el.click()
+
+                // check if card-cody is expanded or collapsed
+                const cardBody = document.getElementById("collapse" + id);
+                if ( !cardBody.classList.contains('show') ) {
+                    const btnName = "btnCollapse" + id;
+                    const el = document.getElementById(btnName);
+                    el.click()
+                }
             },
             endCall: function ( id ) {
 

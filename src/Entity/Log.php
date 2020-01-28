@@ -64,6 +64,11 @@ class Log
      */
     private $user;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="logs")
+     */
+    private $result;
+
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -167,6 +172,18 @@ class Log
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getResult(): ?Type
+    {
+        return $this->result;
+    }
+
+    public function setResult(?Type $result): self
+    {
+        $this->result = $result;
 
         return $this;
     }
