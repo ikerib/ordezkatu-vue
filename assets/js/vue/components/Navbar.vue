@@ -1,6 +1,8 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-        <h5>Zerrenda: {{ zerrendaName }}</h5>
+        <div class="col-md-10">
+            <h5>Zerrenda: {{ zerrendaName }}</h5>
+        </div>
     </nav>
 </template>
 

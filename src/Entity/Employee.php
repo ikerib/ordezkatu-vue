@@ -81,6 +81,7 @@ class Employee
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Municipio", inversedBy="employees")
+     * @Groups({"main"})
      */
     private $municipio;
     /**
