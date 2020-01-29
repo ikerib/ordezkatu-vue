@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeRepository")
@@ -16,11 +17,13 @@ class Type
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"main"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"main"})
      */
     private $name;
 
@@ -39,6 +42,7 @@ class Type
     /**
      * @Gedmo\SortablePosition
      * @ORM\Column(name="orden", type="integer", nullable=true)
+     * @Groups({"main"})
      */
     private $orden;
 

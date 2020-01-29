@@ -1,7 +1,6 @@
 <template>
     <div>
         <div v-for="el in employeeList">
-
             <div class="card border-light">
                 <div class="card-header">
                     <div class="row">
@@ -25,10 +24,10 @@
                         <div class="col-md-2 col-sm-2">
                             <ul class="list-inline no-bottom-marging text-right ">
                                 <li class="list-inline-item">
-                                    <button v-if="!isCalling[el.id]" @click="newCall(el.id)" class="btn btn-outline-secondary">
+                                    <button v-if="!isCalling[el.id]" @click="newCall(el)" class="btn btn-outline-secondary">
                                         <i class="fas fa-phone"> Dei berria</i>
                                     </button>
-                                    <button v-if="isCalling[el.id]" @click="endCall(el.id)" class="btn btn-warning">
+                                    <button v-if="isCalling[el.id]" @click="endCall(el)" class="btn btn-warning">
                                         <i class="fas fa-phone"> Deia Amaitu</i>
                                     </button>
                                 </li>
@@ -64,10 +63,32 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
+        <div class="modal" tabindex="-1" role="dialog" id="endCallModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><span v-if="emp.employee">{{ emp.employee.name }} {{ emp.employee.abizena1 }} {{ emp.employee.abizena2 }}</span></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="cmdCallStatus"></label>
+                            <select v-model="valueCallStatus" id="cmdCallStatus" class="custom-select">
+                                <option disabled value="">Aukeratu bat</option>
+                                <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
+                            </select>
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -81,25 +102,35 @@
         props: ['employeeList'],
         data() {
             return {
-                isCalling : []
+                isCalling : [],
+                types: [],
+                valueCallStatus: '',
+                emp: '',
+                showModal: false
             }
         },
+        mounted() {
+            let el = document.querySelector("div[data-types]");
+            this.types = JSON.parse(el.dataset.types);
+        },
         methods: {
-            newCall: function(id) {
-                this.$set(this.isCalling, id, true);
+            newCall: function(el) {
+                this.$set(this.isCalling, el.id, true);
 
                 // check if card-cody is expanded or collapsed
-                const cardBody = document.getElementById("collapse" + id);
+                const cardBody = document.getElementById("collapse" + el.id);
                 if ( !cardBody.classList.contains('show') ) {
-                    const btnName = "btnCollapse" + id;
-                    const el = document.getElementById(btnName);
-                    el.click()
+                    const btnName = "btnCollapse" + el.id;
+                    const btn = document.getElementById(btnName);
+                    btn.click()
                 }
-            },
-            endCall: function ( id ) {
 
-                this.$set(this.isCalling, id, false);
-                console.log("hang up!");
+                this.emp = el;
+
+            },
+            endCall: function ( el ) {
+                this.$set(this.isCalling, el.id, false);
+                $('#endCallModal').modal('show')
             }
         }
 

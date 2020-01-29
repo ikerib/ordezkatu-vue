@@ -11,6 +11,7 @@ use App\Entity\Zerrenda;
 use App\Form\ZerrendaInportType;
 use App\Form\ZerrendaTemplateType;
 use App\Form\ZerrendaType;
+use App\Repository\TypeRepository;
 use App\Repository\ZerrendaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -93,17 +94,21 @@ class ZerrendaController extends AbstractController
      * @Route("/{id}", name="zerrenda_show", methods={"GET"})
      *
      * @param                     $id
+     * @param TypeRepository      $typeRepository
      * @param ZerrendaRepository  $zerrendaRepository
      *
      * @param SerializerInterface $serializer
      *
      * @return Response
      */
-    public function show($id, ZerrendaRepository $zerrendaRepository, SerializerInterface $serializer): Response
+    public function show($id, TypeRepository $typeRepository, ZerrendaRepository $zerrendaRepository, SerializerInterface $serializer): Response
     {
         $zerrenda   = $zerrendaRepository->findZerrendaBat( $id );
+        $types = $typeRepository->findAll();
+
         return $this->render('zerrenda/show.html.twig', [
-            'zerrenda' =>$serializer->serialize($zerrenda, 'json',  ['groups' => 'main']),
+            'zerrenda'  =>$serializer->serialize($zerrenda, 'json',  ['groups' => 'main']),
+            'types'     =>$serializer->serialize($types, 'json',  ['groups' => 'main']),
         ]);
     }
 
