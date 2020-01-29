@@ -29,6 +29,16 @@ class LogRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getLogsByEmployeeZerrenda($employeezerrendaid)
+    {
+        return $this->createQueryBuilder('l')
+                    ->innerJoin('l.employeezerrenda', 'ez')
+                    ->andWhere('ez.zerrenda = :zerrendaid')->setParameter('zerrendaid', $employeezerrendaid)
+                    ->getQuery()
+                    ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Log[] Returns an array of Log objects
     //  */

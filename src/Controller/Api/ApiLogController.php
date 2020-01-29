@@ -30,6 +30,32 @@ class ApiLogController extends AbstractFOSRestController
     }
 
     /**
+     * @Rest\Get("/logs/employeezerrenda/{employeezerrendaid}", name="get_all_logs_by_employeezerrenda", options={ "expose": true})
+     *
+     * @param $employeezerrendaid
+     *
+     * @return View|Response
+     */
+    public function getLogsByEmployeeZerrenda($employeezerrendaid)
+    {
+        $employeezerrenda = $this->entityManager->getRepository( 'App:Log' )->getLogsByEmployeeZerrenda( $employeezerrendaid );
+
+        if (!$employeezerrenda) {
+            throw new HttpException( 400, 'Ez da zerrenda topatu.' );
+        }
+
+
+        $ctx = new Context();
+        $ctx->addGroup('main');
+
+        $view = $this->view( $employeezerrenda, Response::HTTP_OK )->setContext( $ctx );
+
+        return $this->handleView( $view );
+
+    }
+
+
+    /**
      * @Rest\Get("/log/{zerrendaid}/{employeeid}/{userid}", name="post_call", options={ "expose": true})
      * @param $zerrendaid
      * @param $employeeid
