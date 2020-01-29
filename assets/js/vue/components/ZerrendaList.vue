@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-1">&nbsp;</div>
                             <div class="col-md-8">
-                                <CallTable></CallTable>
+                                <CallTable row-data="rowData"></CallTable>
                             </div>
                         </div>
 
@@ -106,7 +106,8 @@
                 types: [],
                 valueCallStatus: '',
                 emp: '',
-                showModal: false
+                showModal: false,
+                rowData: []
             }
         },
         mounted() {
@@ -114,9 +115,16 @@
             this.types = JSON.parse(el.dataset.types);
         },
         methods: {
+            getData: function(el) {
+                const url = "/api/logs/employeezerrenda/" + el.id;
+                axios.get(url).then(response => {
+                    console.log(response.data);
+                    this.rowData(response.data);
+                })
+            },
             newCall: function(el) {
                 this.$set(this.isCalling, el.id, true);
-
+                this.getData(el);
                 // check if card-cody is expanded or collapsed
                 const cardBody = document.getElementById("collapse" + el.id);
                 if ( !cardBody.classList.contains('show') ) {
