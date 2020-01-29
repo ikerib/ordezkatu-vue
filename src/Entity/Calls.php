@@ -44,11 +44,13 @@ class Calls
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="calls")
+     * @Groups({"main"})
      */
     private $result;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="calls")
+     * @Groups({"main"})
      */
     private $user;
 

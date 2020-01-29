@@ -4,11 +4,11 @@
             <div class="card border-light">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-10 col-sm-10">
+                        <div class="col-md-8 col-sm-8">
                             <ul class="list-inline no-bottom-marging">
                                 <li class="list-inline-item">
                                     <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id"
-                                            aria-expanded="false" aria-controls="collapseExample">
+                                            aria-expanded="false" aria-controls="collapseExample" @click="getData(el)">
                                     <span class="when-closed">
                                         <i class="fas fa-chevron-right"></i>
                                     </span>
@@ -22,7 +22,7 @@
                                 <li class="list-inline-item"><h5>{{el.employee.name}} {{el.employee.abizena1}} {{el.employee.abizena2}}</h5></li>
                             </ul>
                         </div>
-                        <div class="col-md-2 col-sm-2">
+                        <div class="col-md-4 col-sm-4">
                             <ul class="list-inline no-bottom-marging text-right ">
                                 <li class="list-inline-item">
                                     <button v-if="!isCalling[el.id]" @click="newCall(el)" class="btn btn-outline-secondary">
@@ -30,6 +30,17 @@
                                     </button>
                                     <button v-if="isCalling[el.id]" @click="endCall(el)" class="btn btn-warning">
                                         <i class="fas fa-phone"> Deia Amaitu</i>
+                                    </button>
+                                </li>
+                                <li class="list-inline-item">
+                                    <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id"
+                                            aria-expanded="false" aria-controls="collapseExample" @click="getData(el)">
+                                    <span class="when-closed">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                        <span class="when-opened">
+                                        <i class="fas fa-chevron-down"></i>
+                                    </span>
                                     </button>
                                 </li>
                             </ul>
@@ -55,7 +66,7 @@
                             </div>
                             <div class="col-md-1">&nbsp;</div>
                             <div class="col-md-8">
-                                <CallTable row-data="rowData"></CallTable>
+                                <CallTable :rowData="rowData"></CallTable>
                             </div>
                         </div>
 
@@ -117,13 +128,18 @@
         },
         methods: {
             getData: function ( el ) {
-                const url = "/api/calls/employeezerrenda/" + el.id;
+                console.log("========");
+                console.log(el);
+                const url = "/api/calls/employeezerrenda/" + el.zerrenda.id + "/" + el.employee.id ;
                 axios.get(url).then(response => {
                     console.log(response.data);
-                    this.rowData(response.data);
+                    this.rowData = response.data;
                 });
             },
             newCall: function ( el ) {
+                console.log("**********************");
+                console.log(el);
+                console.log("**********************");
                 this.$set(this.isCalling, el.id, true);
                 this.getData(el);
                 // check if card-cody is expanded or collapsed

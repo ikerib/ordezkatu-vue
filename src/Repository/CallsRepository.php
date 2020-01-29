@@ -28,32 +28,16 @@ class CallsRepository extends ServiceEntityRepository
                     ->getResult()
             ;
     }
-    // /**
-    //  * @return Calls[] Returns an array of Calls objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Calls
+    public function getCallsByEmployeeZerrendaAndEmployeeid($employeezerrendaid, $employeeid)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+                    ->innerJoin('c.employeezerrenda', 'ez')
+                    ->innerJoin('c.employee', 'e')
+                    ->andWhere('ez.zerrenda = :zerrendaid')->setParameter('zerrendaid', $employeezerrendaid)
+                    ->andWhere('e.id = :employeeid')->setParameter('employeeid', $employeeid)
+                    ->getQuery()
+                    ->getResult()
+            ;
     }
-    */
 }

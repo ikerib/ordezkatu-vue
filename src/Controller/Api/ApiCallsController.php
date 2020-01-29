@@ -32,7 +32,7 @@ class ApiCallsController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Get("/calls/employeezerrenda/{employeezerrendaid}", name="get_all_calls_by_employeezerrenda", options={ "expose": true})
+     * @Rest\Get("/calls/{employeezerrendaid}", name="get_all_calls_by_employeezerrenda", options={ "expose": true})
      *
      * @param $employeezerrendaid
      *
@@ -42,6 +42,28 @@ class ApiCallsController extends AbstractFOSRestController
     {
         $calls = $this->entityManager->getRepository( 'App:Calls' )->getCallsByEmployeeZerrenda( $employeezerrendaid );
 
+
+        $ctx = new Context();
+        $ctx->addGroup('main');
+
+        $view = $this->view( $calls, Response::HTTP_OK )->setContext( $ctx );
+
+        return $this->handleView( $view );
+
+    }
+
+    /**
+     * @Rest\Get("/calls/employeezerrenda/{employeezerrendaid}/{employeeid}", name="get_all_calls_by_employeezerrenda", options={ "expose": true})
+     *
+     * @param $employeezerrendaid
+     *
+     * @param $employeeid
+     *
+     * @return View|Response
+     */
+    public function getCallsByEmployeeZerrendaAndEmproyeeid($employeezerrendaid, $employeeid)
+    {
+        $calls = $this->entityManager->getRepository( 'App:Calls' )->getCallsByEmployeeZerrendaAndEmployeeid( $employeezerrendaid, $employeeid );
 
         $ctx = new Context();
         $ctx->addGroup('main');

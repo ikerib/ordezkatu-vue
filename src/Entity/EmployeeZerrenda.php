@@ -41,6 +41,7 @@ class EmployeeZerrenda
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Zerrenda", inversedBy="employeeZerrenda")
      * @ORM\JoinColumn(name="zerrenda_id", referencedColumnName="id")
+     * @Groups({"main", "details"})
      */
     private $zerrenda;
 
