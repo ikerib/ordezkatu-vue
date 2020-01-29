@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LogRepository")
@@ -14,22 +15,26 @@ class Log
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"main"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"main"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"main"})
      */
     private $description;
 
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"main"})
      */
     private $created;
 
@@ -61,11 +66,13 @@ class Log
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="logs", cascade={"persist"})
+     * @Groups({"main"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="logs")
+     * @Groups({"main"})
      */
     private $result;
 

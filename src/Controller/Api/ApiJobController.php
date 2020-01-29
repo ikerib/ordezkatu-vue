@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiJobController extends AbstractFOSRestController
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $entityManager;
 
@@ -41,9 +41,9 @@ class ApiJobController extends AbstractFOSRestController
 
     /**
      * @Rest\Get("/job/{id}", name="get_job", options={ "expose": true})
-     * @param \App\Entity\Job $job
+     * @param Job $job
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function getJob(Job $job): View
     {
@@ -56,9 +56,9 @@ class ApiJobController extends AbstractFOSRestController
     /**
      * @Rest\Post("/job", name="post_job", options={ "expose":true })
      * @Rest\RequestParam(name="name", description="The name of the job", nullable=false)
-     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
+     * @param ParamFetcher $paramFetcher
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function postJob(ParamFetcher $paramFetcher): View
     {
@@ -84,10 +84,10 @@ class ApiJobController extends AbstractFOSRestController
     /**
      * @Rest\Put("/job/{id}", name="put_job", options={ "expose": true })
      * @Rest\RequestParam(name="name", description="Jobren izena", nullable=false)
-     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
-     * @param \App\Entity\Job                 $job
+     * @param ParamFetcher $paramFetcher
+     * @param Job          $job
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function putJob(ParamFetcher $paramFetcher, Job $job): View
     {
@@ -105,9 +105,9 @@ class ApiJobController extends AbstractFOSRestController
 
     /**
      * @Rest\Delete("/job/{id}", name="delete_job", options={ "expose": true})
-     * @param \App\Entity\Job $job
+     * @param Job $job
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function deleteJob(Job $job): View
     {

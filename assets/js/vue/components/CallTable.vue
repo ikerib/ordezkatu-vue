@@ -16,5 +16,8 @@
 </template>
 
 <script>
-
+    export default {
+        name: "CallTable",
+        props: ['rowData']
+    }
 </script>

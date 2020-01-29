@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Log;
+use App\Repository\EmployeeZerrendaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -68,5 +69,41 @@ class ApiLogController extends AbstractFOSRestController
 
         return $this->handleView( $view );
 
+    }
+
+
+    /**
+     * @Rest\Post("/logs", name="post_log", options={ "expose":true })
+     * @Rest\RequestParam(name="employeezerrendaid", description="Id of the EmployeeZerrenda", nullable=false)
+     * @param ParamFetcher               $paramFetcher
+     *
+     * @param EmployeeZerrendaRepository $employeeZerrendaRepository
+     *
+     * @return View
+     */
+    public function postLog(ParamFetcher $paramFetcher, EmployeeZerrendaRepository $employeeZerrendaRepository): View
+    {
+        $employeeZerrendaid = $paramFetcher->get('employeezerrendaid');
+        $employeeZerrenda = $employeeZerrendaRepository->find( $employeeZerrendaid );
+        $user = $this->getUser();
+
+        if ($employeeZerrenda) {
+            /** @var Log $log */
+            $log = new Log();
+            $log->setName( 'Dei berria' );
+            $log->setUser( $user );
+            $log->setEmployeezerrenda( $employeeZerrenda );
+            $log->setEmployee( $employeeZerrenda->getEmployee() );
+            $log->setZerrenda( $employeeZerrenda->getZerrenda() );
+
+            $this->entityManager->persist($log);
+            $this->entityManager->flush();
+            $ctx = new Context();
+            $ctx->addGroup('main');
+
+            return View::create($log, Response::HTTP_CREATED)->setContext($ctx);
+        }
+
+        return View::create(['name' => 'This cannot be null.'], Response::HTTP_BAD_REQUEST);
     }
 }

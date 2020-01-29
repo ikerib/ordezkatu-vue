@@ -65,43 +65,43 @@
             </div>
         </div>
 
-        <div class="modal" tabindex="-1" role="dialog" id="endCallModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><span v-if="emp.employee">{{ emp.employee.name }} {{ emp.employee.abizena1 }} {{ emp.employee.abizena2 }}</span></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <label for="cmdCallStatus"></label>
-                            <select v-model="valueCallStatus" id="cmdCallStatus" class="custom-select">
-                                <option disabled value="">Aukeratu bat</option>
-                                <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
-                            </select>
+        <stack-modal :show="show"
+                     title="Nola amaitu da deia?"
+                     @close="show=false"
+                     v-on:save="doModalSave"
+                     :modal-class="{ ['modal-morder-0']: true }"
+                     :saveButton="{ title: 'Gorde', visible: true, btnClass: {'btn btn-primary': true}}"
+                     :cancelButton="{ title: 'Ezeztatu', visible: true, btnClass: {'btn btn-outline-secondary': true}}"
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        >
+            <h5 class="modal-title"><span v-if="emp.employee">{{ emp.employee.name }} {{ emp.employee.abizena1 }} {{ emp.employee.abizena2 }}</span></h5>
+
+            <label for="cmdCallStatus"></label>
+            <select v-model="valueCallStatus" id="cmdCallStatus" class="custom-select">
+                <option disabled value="">Aukeratu bat</option>
+                <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
+            </select>
+
+        </stack-modal>
+
     </div>
 </template>
 
 <script>
     import CallTable from "./CallTable";
+    import StackModal from '@innologica/vue-stackable-modal'
+    import axios from 'axios'
     export default {
         name: "ZerrendaList",
         components: {
-            CallTable
+            CallTable,
+            StackModal
         },
         props: ['employeeList'],
         data() {
             return {
+                show: false,
+                modalClass: '',
                 isCalling : [],
                 types: [],
                 valueCallStatus: '',
@@ -127,10 +127,15 @@
 
                 this.emp = el;
 
+                axios.post()
+
             },
             endCall: function ( el ) {
                 this.$set(this.isCalling, el.id, false);
-                $('#endCallModal').modal('show')
+                this.show = true
+            },
+            doModalSave: function (e) {
+
             }
         }
 

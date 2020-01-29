@@ -11,6 +11,7 @@ use App\Entity\Zerrenda;
 use App\Form\ZerrendaInportType;
 use App\Form\ZerrendaTemplateType;
 use App\Form\ZerrendaType;
+use App\Repository\LogRepository;
 use App\Repository\TypeRepository;
 use App\Repository\ZerrendaRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -95,20 +96,24 @@ class ZerrendaController extends AbstractController
      *
      * @param                     $id
      * @param TypeRepository      $typeRepository
+     * @param LogRepository       $logRepository
      * @param ZerrendaRepository  $zerrendaRepository
      *
      * @param SerializerInterface $serializer
      *
      * @return Response
      */
-    public function show($id, TypeRepository $typeRepository, ZerrendaRepository $zerrendaRepository, SerializerInterface $serializer): Response
+    public function show($id, TypeRepository $typeRepository, LogRepository $logRepository, ZerrendaRepository $zerrendaRepository, SerializerInterface $serializer): Response
     {
         $zerrenda   = $zerrendaRepository->findZerrendaBat( $id );
         $types = $typeRepository->findAll();
+        $logs = $logRepository->findBy( [ 'employeezerrenda' => $id] );
 
         return $this->render('zerrenda/show.html.twig', [
             'zerrenda'  =>$serializer->serialize($zerrenda, 'json',  ['groups' => 'main']),
             'types'     =>$serializer->serialize($types, 'json',  ['groups' => 'main']),
+            'logs'     =>$serializer->serialize($logs, 'json',  ['groups' => 'main']),
+
         ]);
     }
 
