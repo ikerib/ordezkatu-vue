@@ -54,9 +54,15 @@ class EmployeeZerrenda
      */
     private $type;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employeezerrenda")
+     */
+    private $calls;
+
     public function __construct()
     {
         $this->logs = new ArrayCollection();
+        $this->calls = new ArrayCollection();
     }
 
     /************************************************************************************************************************************************************************************/
@@ -146,4 +152,13 @@ class EmployeeZerrenda
 
         return $this;
     }
+
+    /**
+     * @return Collection|Call[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
+
 }

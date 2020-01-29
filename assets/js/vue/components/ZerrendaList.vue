@@ -7,7 +7,8 @@
                         <div class="col-md-10 col-sm-10">
                             <ul class="list-inline no-bottom-marging">
                                 <li class="list-inline-item">
-                                    <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id" aria-expanded="false" aria-controls="collapseExample">
+                                    <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id"
+                                            aria-expanded="false" aria-controls="collapseExample">
                                     <span class="when-closed">
                                         <i class="fas fa-chevron-right"></i>
                                     </span>
@@ -35,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="collapse" v-bind:id="'collapse' +el.id" >
+                <div class="collapse" v-bind:id="'collapse' +el.id">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-1">&nbsp;</div>
@@ -43,13 +44,13 @@
                                 <h5 class="card-title">Telf: {{ el.employee.telefono}}</h5>
                                 <dl>
                                     <dt>email</dt>
-                                        <dd>{{el.employee.email}}</dd>
+                                    <dd>{{el.employee.email}}</dd>
                                     <dt>N.A.N.</dt>
-                                        <dd>{{el.employee.nan}}</dd>
+                                    <dd>{{el.employee.nan}}</dd>
                                     <dt>Herria</dt>
-                                        <dd><span v-if="el.employee.municipio">{{el.employee.municipio.name}}</span></dd>
+                                    <dd><span v-if="el.employee.municipio">{{el.employee.municipio.name}}</span></dd>
                                     <dt>Probintzia</dt>
-                                        <dd><span v-if="el.employee.municipio">{{el.employee.municipio.provincia}}</span></dd>
+                                    <dd><span v-if="el.employee.municipio">{{el.employee.municipio.provincia}}</span></dd>
                                 </dl>
                             </div>
                             <div class="col-md-1">&nbsp;</div>
@@ -57,7 +58,6 @@
                                 <CallTable row-data="rowData"></CallTable>
                             </div>
                         </div>
-
 
 
                     </div>
@@ -89,60 +89,73 @@
 
 <script>
     import CallTable from "./CallTable";
-    import StackModal from '@innologica/vue-stackable-modal'
-    import axios from 'axios'
+    import StackModal from "@innologica/vue-stackable-modal";
+    import axios from "axios";
+
     export default {
         name: "ZerrendaList",
         components: {
             CallTable,
             StackModal
         },
-        props: ['employeeList'],
+        props: ["employeeList"],
         data() {
             return {
                 show: false,
-                modalClass: '',
-                isCalling : [],
+                modalClass: "",
+                isCalling: [],
                 types: [],
-                valueCallStatus: '',
-                emp: '',
+                valueCallStatus: "",
+                emp: "",
                 showModal: false,
                 rowData: []
-            }
+            };
         },
         mounted() {
             let el = document.querySelector("div[data-types]");
             this.types = JSON.parse(el.dataset.types);
         },
         methods: {
-            getData: function(el) {
-                const url = "/api/logs/employeezerrenda/" + el.id;
+            getData: function ( el ) {
+                const url = "/api/calls/employeezerrenda/" + el.id;
                 axios.get(url).then(response => {
                     console.log(response.data);
                     this.rowData(response.data);
-                })
+                });
             },
-            newCall: function(el) {
+            newCall: function ( el ) {
                 this.$set(this.isCalling, el.id, true);
                 this.getData(el);
                 // check if card-cody is expanded or collapsed
                 const cardBody = document.getElementById("collapse" + el.id);
-                if ( !cardBody.classList.contains('show') ) {
+                if ( !cardBody.classList.contains("show") ) {
                     const btnName = "btnCollapse" + el.id;
                     const btn = document.getElementById(btnName);
-                    btn.click()
+                    btn.click();
                 }
 
                 this.emp = el;
 
-                axios.post()
+                const postCallUrl = "/api/calls";
+                axios.post(postCallUrl, {
+                    employeezerrendaid: el.id,
+                    employeeid: el.employee.id
+                })
+                     .then(response => {
+                         console.log(response);
+                         console.log("XIEEEEEEEEEEEEEE");
+                     })
+                     .catch(e => {
+                         console.log("HORROR!!!");
+                         this.errors.push(e);
+                     });
 
             },
             endCall: function ( el ) {
                 this.$set(this.isCalling, el.id, false);
-                this.show = true
+                this.show = true;
             },
-            doModalSave: function (e) {
+            doModalSave: function ( e ) {
 
             }
         }
@@ -150,7 +163,7 @@
     };
 </script>
 
-<style scoped >
+<style scoped>
     .collapsed > .when-opened,
     :not(.collapsed) > .when-closed {
         display: none;

@@ -109,11 +109,17 @@ class Employee
      */
     private $elkarkidetza;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employee")
+     */
+    private $calls;
+
     public function __construct()
     {
         $this->employeeZerrenda = new ArrayCollection();
         $this->logs = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
+        $this->calls = new ArrayCollection();
     }
 
     public function __toString()
@@ -363,6 +369,37 @@ class Employee
     public function setElkarkidetza(bool $elkarkidetza): self
     {
         $this->elkarkidetza = $elkarkidetza;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Calls[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
+
+    public function addCall(Calls $call): self
+    {
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCall(Calls $call): self
+    {
+        if ($this->calls->contains($call)) {
+            $this->calls->removeElement($call);
+            // set the owning side to null (unless already changed)
+            if ($call->getEmployee() === $this) {
+                $call->setEmployee(null);
+            }
+        }
 
         return $this;
     }

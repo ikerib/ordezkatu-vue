@@ -66,12 +66,18 @@ class Type
      */
     private $logs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="result")
+     */
+    private $calls;
+
     public function __construct()
     {
 //        $this->employees = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
         $this->employeeZerrendas = new ArrayCollection();
         $this->logs = new ArrayCollection();
+        $this->calls = new ArrayCollection();
     }
 
     public function __toString()
@@ -255,5 +261,14 @@ class Type
 
         return $this;
     }
+
+    /**
+     * @return Collection|Calls[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
+
 
 }

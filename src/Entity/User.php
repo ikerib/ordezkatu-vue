@@ -133,6 +133,11 @@ class User implements UserInterface
      */
     private $logs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="user")
+     */
+    private $calls;
+
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
     /*****************************************************************************************************************/
@@ -143,6 +148,7 @@ class User implements UserInterface
             $this->roles[] = 'ROLE_USER';
         }
         $this->logs = new ArrayCollection();
+        $this->calls = new ArrayCollection();
     }
 
     public function __toString()
@@ -449,6 +455,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($log->getUser() === $this) {
                 $log->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Call[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
+
+    public function addCall(Call $call): self
+    {
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCall(Call $call): self
+    {
+        if ($this->calls->contains($call)) {
+            $this->calls->removeElement($call);
+            // set the owning side to null (unless already changed)
+            if ($call->getUser() === $this) {
+                $call->setUser(null);
             }
         }
 
