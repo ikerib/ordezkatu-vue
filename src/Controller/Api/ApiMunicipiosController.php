@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiMunicipiosController extends AbstractFOSRestController
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -48,7 +48,7 @@ class ApiMunicipiosController extends AbstractFOSRestController
      *
      * @param $provincia
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function getProvincia($provincia): View
     {
@@ -69,7 +69,7 @@ class ApiMunicipiosController extends AbstractFOSRestController
      *
      * @param $codpostal
      *
-     * @return \FOS\RestBundle\View\View
+     * @return View
      */
     public function getMunicipio($codpostal): View
     {

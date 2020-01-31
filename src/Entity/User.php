@@ -462,33 +462,11 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Call[]
+     * @return Collection|Calls[]
      */
     public function getCalls(): Collection
     {
         return $this->calls;
     }
 
-    public function addCall(Call $call): self
-    {
-        if (!$this->calls->contains($call)) {
-            $this->calls[] = $call;
-            $call->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCall(Call $call): self
-    {
-        if ($this->calls->contains($call)) {
-            $this->calls->removeElement($call);
-            // set the owning side to null (unless already changed)
-            if ($call->getUser() === $this) {
-                $call->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }

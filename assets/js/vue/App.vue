@@ -2,7 +2,7 @@
     <div>
         <Navbar :zerrendaName="zerrendaName"></Navbar>
         <hr>
-        <ZerrendaList :employeeList="employeeList"></ZerrendaList>
+        <ZerrendaList></ZerrendaList>
     </div>
 
 </template>
@@ -10,7 +10,6 @@
 <script>
     import Navbar from './components/Navbar'
     import ZerrendaList from "./components/ZerrendaList";
-    import axios from 'axios'
 
     export default {
         name: 'app',
@@ -21,21 +20,16 @@
         data() {
             return {
                 zerrendaName: 'Kargatzen',
-                employeeList:null
+                employeezerrendaid: null
             }
         },
         mounted() {
             let el = document.querySelector("div[data-zerrenda]");
             let zerrenda = JSON.parse(el.dataset.zerrenda);
             this.zerrendaName = zerrenda.name;
-
-            const urlZerrendaEmployee = Routing.generate("get_employeezerrenda", {'zerrendaid': zerrenda.id });
-            axios
-                .get(urlZerrendaEmployee)
-                .then(response => {
-                    this.employeeList = response.data;
-                })
+            this.$store.dispatch("GET_EMPLOYEELIST", zerrenda.id);
         }
+
     }
 </script>
 

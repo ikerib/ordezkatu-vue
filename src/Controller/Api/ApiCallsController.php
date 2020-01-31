@@ -4,8 +4,10 @@ namespace App\Controller\Api;
 
 use App\Entity\Call;
 use App\Entity\Calls;
+use App\Repository\CallsRepository;
 use App\Repository\EmployeeRepository;
 use App\Repository\EmployeeZerrendaRepository;
+use App\Repository\TypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -26,7 +28,7 @@ class ApiCallsController extends AbstractFOSRestController
      */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct( EntityManagerInterface $entityManager )
     {
         $this->entityManager = $entityManager;
     }
@@ -38,13 +40,13 @@ class ApiCallsController extends AbstractFOSRestController
      *
      * @return View|Response
      */
-    public function getCallsByEmployeeZerrenda($employeezerrendaid)
+    public function getCallsByEmployeeZerrenda( $employeezerrendaid )
     {
         $calls = $this->entityManager->getRepository( 'App:Calls' )->getCallsByEmployeeZerrenda( $employeezerrendaid );
 
 
         $ctx = new Context();
-        $ctx->addGroup('main');
+        $ctx->addGroup( 'main' );
 
         $view = $this->view( $calls, Response::HTTP_OK )->setContext( $ctx );
 
@@ -61,12 +63,12 @@ class ApiCallsController extends AbstractFOSRestController
      *
      * @return View|Response
      */
-    public function getCallsByEmployeeZerrendaAndEmproyeeid($employeezerrendaid, $employeeid)
+    public function getCallsByEmployeeZerrendaAndEmproyeeid( $employeezerrendaid, $employeeid )
     {
         $calls = $this->entityManager->getRepository( 'App:Calls' )->getCallsByEmployeeZerrendaAndEmployeeid( $employeezerrendaid, $employeeid );
 
         $ctx = new Context();
-        $ctx->addGroup('main');
+        $ctx->addGroup( 'main' );
 
         $view = $this->view( $calls, Response::HTTP_OK )->setContext( $ctx );
 
@@ -87,30 +89,88 @@ class ApiCallsController extends AbstractFOSRestController
      *
      * @return View
      */
-    public function postCalls(ParamFetcher $paramFetcher, EmployeeZerrendaRepository $employeeZerrendaRepository, EmployeeRepository $employeeRepository): View
+    public function postCalls( ParamFetcher $paramFetcher, EmployeeZerrendaRepository $employeeZerrendaRepository, EmployeeRepository $employeeRepository ): View
     {
-        $employeeZerrendaid = $paramFetcher->get('employeezerrendaid');
-        $employeeZerrenda = $employeeZerrendaRepository->find( $employeeZerrendaid );
+        $employeeZerrendaid = $paramFetcher->get( 'employeezerrendaid' );
+        $employeeZerrenda   = $employeeZerrendaRepository->find( $employeeZerrendaid );
 
-        $employeeid = $paramFetcher->get('employeeid');
-        $employee = $employeeRepository->find( $employeeid );
+        $employeeid = $paramFetcher->get( 'employeeid' );
+        $employee   = $employeeRepository->find( $employeeid );
 
         $user = $this->getUser();
 
-        if (($employeeZerrenda) && ($employee) && ($user) ) {
+        if ( ( $employeeZerrenda ) && ( $employee ) && ( $user ) ) {
             /** @var Calls $log */
             $call = new Calls();
             $call->setUser( $user );
             $call->setEmployeezerrenda( $employeeZerrenda );
             $call->setEmployee( $employeeZerrenda->getEmployee() );
-            $this->entityManager->persist($call);
+            $this->entityManager->persist( $call );
             $this->entityManager->flush();
             $ctx = new Context();
-            $ctx->addGroup('main');
+            $ctx->addGroup( 'main' );
 
-            return View::create($call, Response::HTTP_CREATED)->setContext($ctx);
+            return View::create( $call, Response::HTTP_CREATED )->setContext( $ctx );
         }
 
-        return View::create(['name' => 'This cannot be null.'], Response::HTTP_BAD_REQUEST);
+        return View::create( [ 'name' => 'This cannot be null.' ], Response::HTTP_BAD_REQUEST );
+    }
+
+    /**
+     * @Rest\Put("/calls/{id}", name="put_calls", options={ "expose":true })
+     * @Rest\RequestParam(name="employeezerrendaid", description="Id of the EmployeeZerrenda", nullable=false)
+     * @Rest\RequestParam(name="employeeid", description="Id of the Employee", nullable=false)
+     * @Rest\RequestParam(name="typeid", description="Id of the Type", nullable=false)
+     * @param ParamFetcher    $paramFetcher
+     *
+     * @param TypeRepository  $typeRepository
+     *
+     * @param CallsRepository $callsRepository
+     *
+     * @param                 $id
+     *
+     * @return View
+     */
+    public function putCalls( ParamFetcher $paramFetcher,
+                              TypeRepository $typeRepository,
+                              CallsRepository $callsRepository,
+                              $id
+    ): View
+    {
+        $call = $callsRepository->find( $id );
+
+        $typeid = $paramFetcher->get( 'typeid' );
+        $type   = $typeRepository->find( $typeid );
+
+        if ( ( $call ) && ( $type ) ) {
+
+            $call->setResult( $type );
+            $call->getEmployeezerrenda()->setType( $type );
+            $this->entityManager->persist($call);
+
+            $this->entityManager->flush();
+            $ctx = new Context();
+            $ctx->addGroup( 'main' );
+
+            return View::create( $call, Response::HTTP_CREATED )->setContext( $ctx );
+        }
+
+        return View::create( [ 'name' => 'This cannot be null.' ], Response::HTTP_BAD_REQUEST );
+    }
+
+    /**
+     * @Rest\Delete("/calls/{id}", name="delete_calls", options={ "expose": true})
+     *
+     *
+     * @param Calls $calls
+     *
+     * @return View
+     */
+    public function deleteZerrenda(Calls $calls): View
+    {
+        $this->entityManager->remove($calls);
+        $this->entityManager->flush();
+
+        return View::create(null, Response::HTTP_NO_CONTENT);
     }
 }
