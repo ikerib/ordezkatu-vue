@@ -57,6 +57,7 @@ class EmployeeZerrenda
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employeezerrenda")
+     * @Groups({"main", "details"})
      */
     private $calls;
 

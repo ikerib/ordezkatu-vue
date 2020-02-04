@@ -21,6 +21,20 @@ const actions = {
         const urlZerrendaEmployee = Routing.generate("get_employeezerrenda", { "zerrendaid": payload });
         let { data } = await axios.get(urlZerrendaEmployee);
         context.commit("SET_EMPLOYEELIST", data);
+    },
+    REMOVE_CALL: async ( context, payload ) => {
+        console.log("REMOVINGGGG");
+        // const urlCallDelete = Routing.generate("delete_calls", payload);
+        const urlCallDelete = '/api/calls/' + payload.callid;
+        console.log(urlCallDelete);
+        axios.delete(urlCallDelete)
+             .then(resp => {
+                 // this.rowData.splice(index, -1)
+                 context.dispatch("GET_EMPLOYEELIST", payload.zerrendaid);
+             })
+             .catch(error => {
+                 console.log(error);
+             })
     }
 };
 

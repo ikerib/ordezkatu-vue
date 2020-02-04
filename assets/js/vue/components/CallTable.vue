@@ -1,6 +1,4 @@
 <template>
-    <div>
-        <pre>{{$data}}</pre>
     <table class="table  table-striped table-sm">
         <thead>
         <tr>
@@ -25,34 +23,25 @@
         </tr>
         </tbody>
     </table>
-    </div>
+
 </template>
 
 <script>
     import store from '../store/store'
     export default {
         name: "CallTable",
-        props: ['zerrendaid', 'employeeid'],
-        computed: {
-            rowData() {
-                const payload = {
-                    zerrendaid: this.zerrendaid,
-                    employeeid: this.employeeid
-                };
-                return this.$store.getters.CALLS;
-            }
-
-        },
-        methods: {
+        props: ['rowData','zerrendaid', 'employeeid'],
+           methods: {
             callRemove: function (id, index) {
                 if ( confirm("Seguru dei hau ezabatu nahi duzula?")) {
-                    axios.delete('/api/calls/'+id)
-                         .then(resp => {
-                             this.rowData.splice(index, -1)
-                         })
-                         .catch(error => {
-                             console.log(error);
-                         })
+
+                    const payload = {
+                        callid: id,
+                        zerrendaid: this.zerrendaid
+                    };
+
+                    this.$store.dispatch('REMOVE_CALL', payload)
+                    
                 }
             }
         }

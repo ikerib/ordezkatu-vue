@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-1">&nbsp;</div>
                             <div class="col-md-8">
-                                <CallTable :zerrendaid="el.zerrenda.id" :employeeid="el.employee.id"></CallTable>
+                                <CallTable :rowData="el.calls" :zerrendaid="el.zerrenda.id" :employeeid="el.employee.id"></CallTable>
                             </div>
                         </div>
 
@@ -133,14 +133,14 @@
         },
         methods: {
             getData: function ( el ) {
-                const payload = {
-                    zerrendaid: el.zerrenda.id,
-                    employeeid: el.employee.id
-                }
-                this.rowData = this.$store.dispatch("GET_CALLS", payload);
-                console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-                console.log(this.rowData);
-                console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+            //     const payload = {
+            //         zerrendaid: el.zerrenda.id,
+            //         employeeid: el.employee.id
+            //     }
+            //     this.rowData = this.$store.dispatch("GET_CALLS", payload);
+            //     console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+            //     console.log(this.rowData);
+            //     console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
             },
             newCall: function ( el ) {
                 this.$set(this.isCalling, el.id, true);
