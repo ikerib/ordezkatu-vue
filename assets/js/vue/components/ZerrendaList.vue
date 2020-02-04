@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-1">&nbsp;</div>
                             <div class="col-md-8">
-                                <CallTable :rowData="el.calls" :zerrendaid="el.zerrenda.id" :employeeid="el.employee.id"></CallTable>
+                                <CallTable :rowData="el.calls" :zerrendaid="zerrendaid" :employeeid="el.employee.id"></CallTable>
                             </div>
                         </div>
 
@@ -150,7 +150,7 @@
 
                 this.emp = el;
                 const payload = {
-                    employeezerrendaid: el.id,
+                    employeezerrendaid: this.zerrendaid,
                     employeeid: el.employee.id
                 };
 

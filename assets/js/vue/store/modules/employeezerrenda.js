@@ -33,10 +33,8 @@ const actions = {
         console.log("REMOVINGGGG");
         // const urlCallDelete = Routing.generate("delete_calls", payload);
         const urlCallDelete = '/api/calls/' + payload.callid;
-        console.log(urlCallDelete);
         axios.delete(urlCallDelete)
              .then(resp => {
-                 // this.rowData.splice(index, -1)
                  context.dispatch("GET_EMPLOYEELIST", payload.zerrendaid);
              })
              .catch(error => {
@@ -47,8 +45,8 @@ const actions = {
         const postCallUrl = "/api/calls";
         axios.post(postCallUrl, payload)
              .then(response => {
+                 console.log("ADD_CALL");
                  console.log(response);
-                 console.log("XIEEEEEEEEEEEEEE");
                  context.commit("SET_LAST_ID", response.data.id);
                  context.dispatch("GET_EMPLOYEELIST", payload.employeezerrendaid)
              })
