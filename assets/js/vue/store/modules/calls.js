@@ -35,6 +35,7 @@ const actions = {
         let { data } = await Axios.post("http://yourwebsite.com/api/todo");
         context.commit("ADD_TODO", payload);
     },
+
 };
 
 export default {

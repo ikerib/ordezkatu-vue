@@ -41,7 +41,7 @@
                     };
 
                     this.$store.dispatch('REMOVE_CALL', payload)
-                    
+
                 }
             }
         }

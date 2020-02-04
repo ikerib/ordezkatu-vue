@@ -8,7 +8,7 @@
                             <ul class="list-inline no-bottom-marging">
                                 <li class="list-inline-item">
                                     <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id"
-                                            aria-expanded="false" aria-controls="collapseExample" @click="getData(el)">
+                                            aria-expanded="false" aria-controls="collapseExample">
                                     <span class="when-closed">
                                         <i class="fas fa-chevron-right"></i>
                                     </span>
@@ -34,7 +34,7 @@
                                 </li>
                                 <li class="list-inline-item">
                                     <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id"
-                                            aria-expanded="false" aria-controls="collapseExample" @click="getData(el)">
+                                            aria-expanded="false" aria-controls="collapseExample">
                                     <span class="when-closed">
                                         <i class="fas fa-chevron-right"></i>
                                     </span>
@@ -132,16 +132,6 @@
             }
         },
         methods: {
-            getData: function ( el ) {
-            //     const payload = {
-            //         zerrendaid: el.zerrenda.id,
-            //         employeeid: el.employee.id
-            //     }
-            //     this.rowData = this.$store.dispatch("GET_CALLS", payload);
-            //     console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-            //     console.log(this.rowData);
-            //     console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-            },
             newCall: function ( el ) {
                 this.$set(this.isCalling, el.id, true);
                 // this.getData(el);
@@ -155,20 +145,26 @@
                 }
 
                 this.emp = el;
-
-                const postCallUrl = "/api/calls";
-                axios.post(postCallUrl, {
+                const payload = {
                     employeezerrendaid: el.id,
                     employeeid: el.employee.id
-                })
-                     .then(response => {
-                         console.log(response);
-                         console.log("XIEEEEEEEEEEEEEE");
-                     })
-                     .catch(e => {
-                         console.log("HORROR!!!");
-                         this.errors.push(e);
-                     });
+                };
+
+                this.$store.dispatch('ADD_CALL', payload)
+
+                // const postCallUrl = "/api/calls";
+                // axios.post(postCallUrl, {
+                //     employeezerrendaid: el.id,
+                //     employeeid: el.employee.id
+                // })
+                //      .then(response => {
+                //          console.log(response);
+                //          console.log("XIEEEEEEEEEEEEEE");
+                //      })
+                //      .catch(e => {
+                //          console.log("HORROR!!!");
+                //          this.errors.push(e);
+                //      });
 
             },
             endCall: function ( el ) {

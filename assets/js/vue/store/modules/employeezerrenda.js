@@ -35,7 +35,21 @@ const actions = {
              .catch(error => {
                  console.log(error);
              })
+    },
+    ADD_CALL: async (context, payload) => {
+        const postCallUrl = "/api/calls";
+        axios.post(postCallUrl, payload)
+             .then(response => {
+                 console.log(response);
+                 console.log("XIEEEEEEEEEEEEEE");
+                 context.dispatch("GET_EMPLOYEELIST", payload.employeezerrendaid);
+             })
+             .catch(e => {
+                 console.log("HORROR!!!");
+                 this.errors.push(e);
+             });
     }
+
 };
 
 export default {
