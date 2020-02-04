@@ -1,18 +1,25 @@
 import axios from "axios";
 
 const state = {
-    employeeList: []
+    employeeList: [],
+    lastId: null
 };
 
 const mutations = {
     SET_EMPLOYEELIST: ( state, payload ) => {
         state.employeeList = payload;
+    },
+    SET_LAST_ID: (state, payload) => {
+        state.lastId = payload;
     }
 };
 
 const getters = {
     EMPLOYEELIST: ( state ) => {
         return state.employeeList;
+    },
+    CURRENT_CALL: (state) => {
+        return state.lastId;
     }
 };
 
@@ -42,14 +49,28 @@ const actions = {
              .then(response => {
                  console.log(response);
                  console.log("XIEEEEEEEEEEEEEE");
-                 context.dispatch("GET_EMPLOYEELIST", payload.employeezerrendaid);
+                 context.commit("SET_LAST_ID", response.data.id);
+                 context.dispatch("GET_EMPLOYEELIST", payload.employeezerrendaid)
              })
              .catch(e => {
                  console.log("HORROR!!!");
                  this.errors.push(e);
              });
+    },
+    UPDATE_CALL: async (context, payload) => {
+        console.log("XIEEEEEEEEEEEErrrrrrrrrrrrr");
+        console.log(payload);
+        // const putUrl = "/api/calls/" + payload.id + '?XDEBUG_SESSION_START=PHPSTORM';
+        const putUrl = "/api/calls/" + payload.id ;
+        axios.put(putUrl, {
+            typeid: payload.valueCallStatus
+        }).then( response => {
+            console.log(response);
+            context.dispatch("GET_EMPLOYEELIST", payload.zerrendaid)
+        }).catch( e => {
+            console.log(e);
+        })
     }
-
 };
 
 export default {

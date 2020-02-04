@@ -2,7 +2,7 @@
     <div>
         <Navbar :zerrendaName="zerrendaName"></Navbar>
         <hr>
-        <ZerrendaList></ZerrendaList>
+        <ZerrendaList :zerrendaid="zerrendaid"></ZerrendaList>
     </div>
 
 </template>
@@ -19,6 +19,7 @@
         },
         data() {
             return {
+                zerrendaid: null,
                 zerrendaName: 'Kargatzen',
                 employeezerrendaid: null
             }
@@ -27,6 +28,7 @@
             let el = document.querySelector("div[data-zerrenda]");
             let zerrenda = JSON.parse(el.dataset.zerrenda);
             this.zerrendaName = zerrenda.name;
+            this.zerrendaid = zerrenda.id;
             this.$store.dispatch("GET_EMPLOYEELIST", zerrenda.id);
         }
 

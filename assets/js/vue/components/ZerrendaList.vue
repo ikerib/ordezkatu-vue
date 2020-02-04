@@ -28,7 +28,7 @@
                                     <button v-if="!isCalling[el.id]" @click="newCall(el)" class="btn btn-outline-secondary">
                                         <i class="fas fa-phone"> Dei berria</i>
                                     </button>
-                                    <button v-if="isCalling[el.id]" @click="endCall(el)" class="btn btn-warning">
+                                    <button v-if="isCalling[el.id]" @click="endCall" class="btn btn-warning">
                                         <i class="fas fa-phone"> Deia Amaitu</i>
                                     </button>
                                 </li>
@@ -77,7 +77,7 @@
             <stack-modal :show="show"
                          title="Nola amaitu da deia?"
                          @close="show=false"
-                         v-on:save="doModalSave(el)"
+                         v-on:save="doModalSave"
                          :modal-class="{ ['modal-morder-0']: true }"
                          :saveButton="{ title: 'Gorde', visible: true, btnClass: {'btn btn-primary': true}}"
                          :cancelButton="{ title: 'Ezeztatu', visible: true, btnClass: {'btn btn-outline-secondary': true}}"
@@ -110,6 +110,7 @@
             CallTable,
             StackModal
         },
+        props: ['zerrendaid'],
         data() {
             return {
                 show: false,
@@ -129,6 +130,9 @@
         computed: {
             employeeList() {
                 return this.$store.getters.EMPLOYEELIST;
+            },
+            lastId() {
+                return this.$store.getters.CURRENT_CALL;
             }
         },
         methods: {
@@ -152,36 +156,20 @@
 
                 this.$store.dispatch('ADD_CALL', payload)
 
-                // const postCallUrl = "/api/calls";
-                // axios.post(postCallUrl, {
-                //     employeezerrendaid: el.id,
-                //     employeeid: el.employee.id
-                // })
-                //      .then(response => {
-                //          console.log(response);
-                //          console.log("XIEEEEEEEEEEEEEE");
-                //      })
-                //      .catch(e => {
-                //          console.log("HORROR!!!");
-                //          this.errors.push(e);
-                //      });
-
             },
             endCall: function ( el ) {
                 this.$set(this.isCalling, el.id, false);
                 this.show = true;
             },
-            doModalSave: function ( el ) {
-                console.log("XIEEEEEEEEEEEE");
-                const putUrl = "/api/calls/" + el.id;
-                axios.put(putUrl, {
-                    typeid: this.valueCallStatus
-                }).then( response => {
-                    console.log(response);
-                    this.$el = response.data;
-                }).catch( e => {
-                    console.log(e);
-                })
+            doModalSave: function () {
+                const payload = {
+                    valueCallStatus: this.valueCallStatus,
+                    zerrendaid: this.zerrendaid,
+                    id: this.lastId
+                };
+                this.$store.dispatch("UPDATE_CALL", payload);
+                this.isCalling = false;
+                this.show = false;
             }
         }
 
