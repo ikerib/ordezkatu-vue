@@ -26,12 +26,12 @@
 </template>
 
 <script>
-    import {store} from '../store/store'
+    import store from '../store/store'
     export default {
         name: "CallTable",
         computed: {
-            rowData()  {
-                return store.state.calls;
+            rowData() {
+                return this.$store.getters.GET_CALLS;
             }
         },
         methods: {

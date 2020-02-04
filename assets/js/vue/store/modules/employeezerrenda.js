@@ -19,9 +19,6 @@ const getters = {
 const actions = {
     GET_EMPLOYEELIST: async ( context, payload ) => {
         const urlZerrendaEmployee = Routing.generate("get_employeezerrenda", { "zerrendaid": payload });
-        console.log("URIL");
-        console.log(urlZerrendaEmployee);
-
         let { data } = await axios.get(urlZerrendaEmployee);
         context.commit("SET_EMPLOYEELIST", data);
     }

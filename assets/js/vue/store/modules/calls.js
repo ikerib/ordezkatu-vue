@@ -11,8 +11,10 @@ const getters = {
 };
 
 const mutations = {
-    SET_CALL: ( state, payload ) => {
-        state.calls = payload;
+    SET_CALL: ( state, calls ) => {
+        console.log("kiki:");
+        console.log(calls);
+        state.calls = calls;
     },
     ADD_CALL: ( state, payload ) => {
         state.calls.push(payload);
@@ -23,11 +25,15 @@ const actions = {
     GET_CALLS: async ( context, payload ) => {
 
         const url = "/api/calls/employeezerrenda/" + payload.zerrendaid + "/" + payload.employeeid;
+        console.log("hemen sartu al naiz bada??");
+        console.log("--------------------------");
         console.log(url);
+        let kk = await axios.get(url);
+        console.log(kk);
         let { data } = await axios.get(url);
         console.log("GETCALL:");
         console.log(data);
-        context.commit("SET_CALL", data);
+        context.commit("SET_CALL", kk.data);
 
 
     },
