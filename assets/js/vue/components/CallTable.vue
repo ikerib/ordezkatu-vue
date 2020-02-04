@@ -1,4 +1,6 @@
 <template>
+    <div>
+        <pre>{{$data}}</pre>
     <table class="table  table-striped table-sm">
         <thead>
         <tr>
@@ -23,16 +25,23 @@
         </tr>
         </tbody>
     </table>
+    </div>
 </template>
 
 <script>
     import store from '../store/store'
     export default {
         name: "CallTable",
+        props: ['zerrendaid', 'employeeid'],
         computed: {
             rowData() {
-                return this.$store.getters.GET_CALLS;
+                const payload = {
+                    zerrendaid: this.zerrendaid,
+                    employeeid: this.employeeid
+                };
+                return this.$store.getters.CALLS;
             }
+
         },
         methods: {
             callRemove: function (id, index) {

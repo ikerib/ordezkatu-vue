@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-1">&nbsp;</div>
                             <div class="col-md-8">
-                                <CallTable :rowData="rowData"></CallTable>
+                                <CallTable :zerrendaid="el.zerrenda.id" :employeeid="el.employee.id"></CallTable>
                             </div>
                         </div>
 
@@ -133,11 +133,6 @@
         },
         methods: {
             getData: function ( el ) {
-                // const url = "/api/calls/employeezerrenda/" + el.zerrenda.id + "/" + el.employee.id ;
-                // axios.get(url).then(response => {
-                //     this.$store.rowData = response.data;
-                //     this.rowData = response.data;
-                // });
                 const payload = {
                     zerrendaid: el.zerrenda.id,
                     employeeid: el.employee.id

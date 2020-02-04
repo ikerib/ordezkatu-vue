@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const state = {
-    calls: null
+    calls: []
 };
 
 const getters = {
@@ -23,17 +23,11 @@ const mutations = {
 
 const actions = {
     GET_CALLS: async ( context, payload ) => {
-
         const url = "/api/calls/employeezerrenda/" + payload.zerrendaid + "/" + payload.employeeid;
-        console.log("hemen sartu al naiz bada??");
-        console.log("--------------------------");
-        console.log(url);
-        let kk = await axios.get(url);
-        console.log(kk);
         let { data } = await axios.get(url);
         console.log("GETCALL:");
         console.log(data);
-        context.commit("SET_CALL", kk.data);
+        context.commit("SET_CALL", data);
 
 
     },
