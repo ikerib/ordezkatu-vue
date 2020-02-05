@@ -19,6 +19,12 @@ class Calls
     private $id;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"main"})
+     */
+    private $notes;
+
+    /**
      * @ORM\Column(type="datetime")
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"main"})
@@ -144,6 +150,18 @@ class Calls
     public function setEmployee(?Employee $employee): self
     {
         $this->employee = $employee;
+
+        return $this;
+    }
+
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes): self
+    {
+        $this->notes = $notes;
 
         return $this;
     }

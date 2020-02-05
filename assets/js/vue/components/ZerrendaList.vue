@@ -85,12 +85,18 @@
             >
                 <h5 class="modal-title"><span v-if="emp.employee">{{ emp.employee.name }} {{ emp.employee.abizena1 }} {{ emp.employee.abizena2 }}</span></h5>
 
-                <label for="cmdCallStatus"></label>
-                <select v-model="valueCallStatus" id="cmdCallStatus" class="custom-select">
-                    <option disabled value="-1">Aukeratu bat</option>
-                    <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
-                </select>
-
+                <div class="form-group">
+                    <label for="cmdCallStatus"></label>
+                    <select :value="valueCallStatus" id="cmdCallStatus" class="custom-select">
+                        <option disabled value="-1">Aukeratu bat</option>
+                        <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="txtNotes"></label>
+                    <textarea :value="notes" @input="updateNotes" name="notes" id="txtNotes" class="form-control" cols="30" rows="10"></textarea>
+                </div>
             </stack-modal>
         </div>
 
@@ -114,7 +120,6 @@
             return {
                 modalClass: "",
                 types: [],
-                valueCallStatus: "",
                 emp: "",
                 rowData: [],
                 isCalling: []
@@ -133,9 +138,31 @@
             },
             show() {
                 return this.$store.getters.SHOW;
+            },
+            valueCallStatus: {
+                get: function() {
+                    return this.$store.getters.VALUE_CALL_STATUS;
+                },
+                set: function (value) {
+                    this.$store.commit("SET_CALL_STATUS", value);
+                }
+            },
+            // notes: {
+            //     get: function() {
+            //         return this.$store.getters.NOTES;
+            //     },
+            //     set: function (value) {
+            //         this.$store.commit("SET_NOTES", value);
+            //     }
+            // },
+            notes() {
+                return this.$store.getters.NOTES;
             }
         },
         methods: {
+            updateNotes: function(e) {
+                this.$store.commit("SET_NOTES", e.target.value);
+            },
             newCall: function ( el ) {
                 this.$set(this.isCalling, el.id, true);
                 // this.getData(el);
@@ -159,7 +186,11 @@
             },
             endCall: function ( el ) {
                 this.$set(this.isCalling, el.id, false);
-                this.$store.dispatch("TOOTGLE_SHOW");
+                const payload = {
+                    valueCallStatus: this.valueCallStatus ? this.valueCallStatus : null,
+                    notes: this.notes ? this.notes : null
+                };
+                this.$store.dispatch("TOOTGLE_SHOW", payload);
             },
             doModalSave: function () {
                 console.log('doModalSave');
@@ -168,6 +199,7 @@
                 if (( this.valueCallStatus ) && ( this.valueCallStatus !== "-1" )){
                     const payload = {
                         valueCallStatus: this.valueCallStatus,
+                        notes: this.notes,
                         zerrendaid: this.zerrendaid,
                         id: this.lastId
                     };
@@ -175,10 +207,18 @@
                     this.isCalling = false;
                     this.valueCallStatus = "-1"
                 }
-                this.$store.dispatch("TOOTGLE_SHOW");
+                const myData = {
+                    valueCallStatus: this.valueCallStatus ? this.valueCallStatus : null,
+                    notes: this.notes ? this.notes : null
+                };
+                this.$store.dispatch("TOOTGLE_SHOW", myData);
             },
             doModalClose: function() {
-                this.$store.dispatch("TOOTGLE_SHOW");
+                const payload = {
+                    valueCallStatus: null,
+                    notes: null
+                };
+                this.$store.dispatch("TOOTGLE_SHOW", payload);
             }
         }
 

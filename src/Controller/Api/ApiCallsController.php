@@ -121,6 +121,7 @@ class ApiCallsController extends AbstractFOSRestController
      * @Rest\RequestParam(name="employeezerrendaid", description="Id of the EmployeeZerrenda", nullable=false)
      * @Rest\RequestParam(name="employeeid", description="Id of the Employee", nullable=false)
      * @Rest\RequestParam(name="typeid", description="Id of the Type", nullable=false)
+     * @Rest\RequestParam(name="notes", description="Notes of the call", nullable=true)
      * @param ParamFetcher    $paramFetcher
      *
      * @param TypeRepository  $typeRepository
@@ -142,10 +143,13 @@ class ApiCallsController extends AbstractFOSRestController
         $typeid = $paramFetcher->get( 'typeid' );
         $type   = $typeRepository->find( $typeid );
 
+        $notes =$paramFetcher->get( 'notes' );
+
         if ( ( $call ) && ( $type ) ) {
 
             $call->setResult( $type );
             $call->getEmployeezerrenda()->setType( $type );
+            $call->setNotes( $notes );
             $this->entityManager->persist($call);
 
             $this->entityManager->flush();
