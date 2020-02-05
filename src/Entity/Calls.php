@@ -55,6 +55,12 @@ class Calls
     private $result;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="calls")
+     * @Groups({"main"})
+     */
+    private $employees;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="calls")
      * @Groups({"main"})
      */
@@ -145,6 +151,18 @@ class Calls
     public function setNotes(?string $notes): self
     {
         $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getEmployees(): ?self
+    {
+        return $this->employees;
+    }
+
+    public function setEmployees(?self $employees): self
+    {
+        $this->employees = $employees;
 
         return $this;
     }

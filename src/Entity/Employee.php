@@ -100,7 +100,7 @@ class Employee
     private $employeeZerrendaTypes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employee")
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employees")
      */
     private $calls;
 

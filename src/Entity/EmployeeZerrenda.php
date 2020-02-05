@@ -126,4 +126,27 @@ class EmployeeZerrenda
         return $this->calls;
     }
 
+    public function addCall(Calls $call): self
+    {
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setEmployeezerrenda($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCall(Calls $call): self
+    {
+        if ($this->calls->contains($call)) {
+            $this->calls->removeElement($call);
+            // set the owning side to null (unless already changed)
+            if ($call->getEmployeezerrenda() === $this) {
+                $call->setEmployeezerrenda(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
