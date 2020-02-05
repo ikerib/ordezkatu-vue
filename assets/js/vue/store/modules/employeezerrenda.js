@@ -2,7 +2,9 @@ import axios from "axios";
 
 const state = {
     employeeList: [],
-    lastId: null
+    lastId: null,
+    isCalling: false,
+    show: false
 };
 
 const mutations = {
@@ -11,6 +13,10 @@ const mutations = {
     },
     SET_LAST_ID: (state, payload) => {
         state.lastId = payload;
+    },
+    SET_SHOW: (state) => {
+        console.log('Mutation show');
+        state.show = !state.show;
     }
 };
 
@@ -20,6 +26,9 @@ const getters = {
     },
     CURRENT_CALL: (state) => {
         return state.lastId;
+    },
+    SHOW: (state) => {
+        return state.show;
     }
 };
 
@@ -68,6 +77,10 @@ const actions = {
         }).catch( e => {
             console.log(e);
         })
+    },
+    TOOTGLE_SHOW: (context) => {
+        console.log('Action Toogle show');
+        context.commit('SET_SHOW')
     }
 };
 

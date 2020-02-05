@@ -102,7 +102,6 @@
 <script>
     import CallTable from "./CallTable";
     import StackModal from "@innologica/vue-stackable-modal";
-    import axios from "axios";
 
     export default {
         name: "ZerrendaList",
@@ -113,14 +112,12 @@
         props: ['zerrendaid'],
         data() {
             return {
-                show: false,
                 modalClass: "",
-                isCalling: [],
                 types: [],
                 valueCallStatus: "",
                 emp: "",
-                showModal: false,
-                rowData: []
+                rowData: [],
+                isCalling: []
             };
         },
         mounted() {
@@ -133,6 +130,9 @@
             },
             lastId() {
                 return this.$store.getters.CURRENT_CALL;
+            },
+            show() {
+                return this.$store.getters.SHOW;
             }
         },
         methods: {
@@ -159,7 +159,7 @@
             },
             endCall: function ( el ) {
                 this.$set(this.isCalling, el.id, false);
-                this.show = true;
+                this.$store.dispatch("TOOTGLE_SHOW");
             },
             doModalSave: function () {
                 const payload = {
@@ -169,7 +169,7 @@
                 };
                 this.$store.dispatch("UPDATE_CALL", payload);
                 this.isCalling = false;
-                this.show = false;
+                this.$store.dispatch("TOOTGLE_SHOW");
             }
         }
 

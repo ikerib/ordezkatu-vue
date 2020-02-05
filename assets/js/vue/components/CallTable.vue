@@ -17,7 +17,8 @@
             <td><span v-if="r.result">{{r.result.name}}</span></td>
             <th>
                 <ul class="list-inline">
-                    <li><a href="#" @click="callRemove(r.id, index)"><i class="fas fa-trash-alt"></i></a></li>
+                    <li class="list-inline-item"><a href="#" @click="callRemove(r.id, index)"><i class="fas fa-trash-alt"></i></a></li>
+                    <li class="list-inline-item"><a href="#" @click="callEdit(r.id, index)"><i class="fas fa-edit"></i></a></li>
                 </ul>
             </th>
         </tr>
@@ -43,6 +44,10 @@
                     this.$store.dispatch('REMOVE_CALL', payload)
 
                 }
+            },
+            callEdit: function (id, index) {
+                this.$store.dispatch("TOOTGLE_ISCALLING");
+                this.$store.dispatch("TOOTGLE_SHOW");
             }
         }
     }
