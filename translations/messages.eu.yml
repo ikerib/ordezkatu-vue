@@ -4,7 +4,7 @@ menu.type.list: 'Egoera motak'
 menu.customer: Langileak
 sidebar.customer: Langileak
 sidebar.zerrendak: Zerrendak
-sidebar.lanpostuak: 'Eskeintzak'
+sidebar.lanpostuak: Eskeintzak
 sidebar.eskaerak: Eskaerak
 sidebar.egoera_motak: 'Egoera motak'
 sidebar.herriak: Herriak
@@ -41,3 +41,13 @@ Helbidea: Helbidea
 'Zerrenda berria': 'Zerrenda berria'
 'Zerrenda aldatu': 'Zerrenda aldatu'
 sidebar.saila: Sailak
+sidebar.arrazoia: 'Arrazoiak'
+'Eskeintza berria': 'Eskeintza berria'
+'Sailen zerrenda': 'Sailen zerrenda'
+'Sail berria': 'Sail berria'
+'Arrazoien zerrenda': 'Arrazoien zerrenda'
+'Arrazoi berria': 'Arrazoi berria'
+Ezarri: Ezarri
+Fitxategia: Fitxategia
+Egoera: Egoera
+'Hurrekera zerrendan': 'Hurrekera zerrendan'

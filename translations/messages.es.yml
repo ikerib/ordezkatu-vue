@@ -4,7 +4,7 @@ menu.type.list: 'Tipos de estado'
 menu.customer: Trabajador
 sidebar.customer: Trabajadores
 sidebar.zerrendak: Listas
-sidebar.lanpostuak: 'Ofertas'
+sidebar.lanpostuak: Ofertas
 sidebar.eskaerak: Peticiones
 sidebar.egoera_motak: 'Tipos de estado'
 sidebar.herriak: Municipios
@@ -41,3 +41,13 @@ Helbidea: Dirección
 'Zerrenda berria': 'Nueva lista'
 'Zerrenda aldatu': 'Editar lista'
 sidebar.saila: Departamentos
+sidebar.arrazoia: Razones
+'Eskeintza berria': 'Nueva oferta'
+'Sailen zerrenda': 'Listado de listado'
+'Sail berria': 'Nueva departamento'
+'Arrazoien zerrenda': 'Listado de Razones'
+'Arrazoi berria': 'Nueva razón'
+Ezarri: Ezarri
+Fitxategia: Fichero
+Egoera: Estado
+'Hurrekera zerrendan': 'Posición'
