@@ -103,7 +103,11 @@ class ZerrendaController extends AbstractController
      *
      * @return Response
      */
-    public function show($id, TypeRepository $typeRepository, LogRepository $logRepository, ZerrendaRepository $zerrendaRepository, SerializerInterface $serializer): Response
+    public function show($id,
+                         TypeRepository $typeRepository,
+                         LogRepository $logRepository,
+                         ZerrendaRepository $zerrendaRepository,
+                         SerializerInterface $serializer): Response
     {
         $zerrenda   = $zerrendaRepository->findZerrendaBat( $id );
         $types = $typeRepository->findAll();
@@ -113,7 +117,6 @@ class ZerrendaController extends AbstractController
             'zerrenda'  =>$serializer->serialize($zerrenda, 'json',  ['groups' => 'main']),
             'types'     =>$serializer->serialize($types, 'json',  ['groups' => 'main']),
             'logs'     =>$serializer->serialize($logs, 'json',  ['groups' => 'main']),
-
         ]);
     }
 

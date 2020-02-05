@@ -71,13 +71,15 @@ const actions = {
              })
     },
     ADD_CALL: async (context, payload) => {
-        const postCallUrl = "/api/calls";
+        console.log("ADD_CALL");
+        console.log(payload);
+        const postCallUrl = "/api/calls?XDEBUG_SESSION_START=PHPSTORM";
         axios.post(postCallUrl, payload)
              .then(response => {
-                 console.log("ADD_CALL");
+                 console.log("ADD_CALL response");
                  console.log(response);
                  context.commit("SET_LAST_ID", response.data.id);
-                 context.dispatch("GET_EMPLOYEELIST", payload.employeezerrendaid)
+                 context.dispatch("GET_EMPLOYEELIST", payload.zerrendaid)
              })
              .catch(e => {
                  console.log("HORROR!!!");

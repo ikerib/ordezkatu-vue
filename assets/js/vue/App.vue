@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :zerrendaName="zerrendaName"></Navbar>
+        <Navbar :jobName="jobName" :zerrendaName="zerrendaName"></Navbar>
         <hr>
         <ZerrendaList :zerrendaid="zerrendaid"></ZerrendaList>
     </div>
@@ -21,15 +21,18 @@
             return {
                 zerrendaid: null,
                 zerrendaName: 'Kargatzen',
-                employeezerrendaid: null
+                employeezerrendaid: null,
+                jobName: 'Kargatzen'
             }
         },
         mounted() {
             let el = document.querySelector("div[data-zerrenda]");
-            let zerrenda = JSON.parse(el.dataset.zerrenda);
-            this.zerrendaName = zerrenda.name;
-            this.zerrendaid = zerrenda.id;
-            this.$store.dispatch("GET_EMPLOYEELIST", zerrenda.id);
+            let job = JSON.parse(el.dataset.zerrenda);
+            console.log(job);
+            this.jobName = job.name;
+            this.zerrendaName = job.zerrenda[0].name;
+            this.zerrendaid = job.zerrenda[0].id;
+            this.$store.dispatch("GET_EMPLOYEELIST", job.zerrenda[0].id);
         }
 
     }

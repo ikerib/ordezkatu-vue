@@ -23,6 +23,7 @@ class JobType extends AbstractType
                     'class' => 'myselect2'
                 ]
             ])
+            ->add('zerrenda')
         ;
     }
 

@@ -87,7 +87,7 @@
 
                 <div class="form-group">
                     <label for="cmdCallStatus"></label>
-                    <select :value="valueCallStatus" id="cmdCallStatus" class="custom-select">
+                    <select :value="valueCallStatus" @input="updateCallStatus" id="cmdCallStatus" class="custom-select">
                         <option disabled value="-1">Aukeratu bat</option>
                         <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
                     </select>
@@ -147,14 +147,6 @@
                     this.$store.commit("SET_CALL_STATUS", value);
                 }
             },
-            // notes: {
-            //     get: function() {
-            //         return this.$store.getters.NOTES;
-            //     },
-            //     set: function (value) {
-            //         this.$store.commit("SET_NOTES", value);
-            //     }
-            // },
             notes() {
                 return this.$store.getters.NOTES;
             }
@@ -163,11 +155,11 @@
             updateNotes: function(e) {
                 this.$store.commit("SET_NOTES", e.target.value);
             },
+            updateCallStatus: function(e) {
+                this.$store.commit("SET_CALL_STATUS", e.target.value);
+            },
             newCall: function ( el ) {
                 this.$set(this.isCalling, el.id, true);
-                // this.getData(el);
-
-                // check if card-cody is expanded or collapsed
                 const cardBody = document.getElementById("collapse" + el.id);
                 if ( !cardBody.classList.contains("show") ) {
                     const btnName = "btnCollapse" + el.id;
@@ -177,7 +169,7 @@
 
                 this.emp = el;
                 const payload = {
-                    employeezerrendaid: this.zerrendaid,
+                    zerrendaid: this.zerrendaid,
                     employeeid: el.employee.id
                 };
 

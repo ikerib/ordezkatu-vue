@@ -6,11 +6,15 @@ use App\Entity\Job;
 use App\Entity\Log;
 use App\Entity\User;
 use App\Form\JobType;
+use App\Repository\EmployeeZerrendaRepository;
 use App\Repository\JobRepository;
+use App\Repository\TypeRepository;
+use App\Repository\ZerrendaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/admin/job")
@@ -66,14 +70,28 @@ class JobController extends AbstractController
 
     /**
      * @Route("/{id}", name="job_show", methods={"GET"})
-     * @param Job $job
+     * @param Job                        $job
+     *
+     * @param TypeRepository             $typeRepository
+     * @param EmployeeZerrendaRepository $employeeZerrendaRepository
+     * @param SerializerInterface        $serializer
      *
      * @return Response
      */
-    public function show(Job $job): Response
+    public function show(Job $job,
+                         TypeRepository $typeRepository,
+                         EmployeeZerrendaRepository $employeeZerrendaRepository,
+                         SerializerInterface $serializer): Response
+
     {
+        $types = $typeRepository->findAll();
+
+
         return $this->render('job/show.html.twig', [
-            'job' => $job,
+            'job'       => $serializer->serialize($job, 'json',  ['groups' => 'main']),
+            'zerrenda'  => $serializer->serialize($job, 'json',  ['groups' => 'main']),
+            'types'     => $serializer->serialize($types, 'json',  ['groups' => 'main']),
+
         ]);
     }
 

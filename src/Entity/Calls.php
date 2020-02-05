@@ -60,11 +60,6 @@ class Calls
      */
     private $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="calls")
-     */
-    private $employee;
-
     public function __construct()
     {
         $this->created = New \DateTime();
@@ -138,18 +133,6 @@ class Calls
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getEmployee(): ?Employee
-    {
-        return $this->employee;
-    }
-
-    public function setEmployee(?Employee $employee): self
-    {
-        $this->employee = $employee;
 
         return $this;
     }

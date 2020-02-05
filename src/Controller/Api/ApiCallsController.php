@@ -8,6 +8,7 @@ use App\Repository\CallsRepository;
 use App\Repository\EmployeeRepository;
 use App\Repository\EmployeeZerrendaRepository;
 use App\Repository\TypeRepository;
+use App\Repository\ZerrendaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -79,32 +80,30 @@ class ApiCallsController extends AbstractFOSRestController
 
     /**
      * @Rest\Post("/calls", name="post_calls", options={ "expose":true })
-     * @Rest\RequestParam(name="employeezerrendaid", description="Id of the EmployeeZerrenda", nullable=false)
+     * @Rest\RequestParam(name="zerrendaid", description="Id of the Zerrenda", nullable=false)
      * @Rest\RequestParam(name="employeeid", description="Id of the Employee", nullable=false)
      * @param ParamFetcher               $paramFetcher
      *
      * @param EmployeeZerrendaRepository $employeeZerrendaRepository
      *
-     * @param EmployeeRepository         $employeeRepository
-     *
      * @return View
      */
-    public function postCalls( ParamFetcher $paramFetcher, EmployeeZerrendaRepository $employeeZerrendaRepository, EmployeeRepository $employeeRepository ): View
+    public function postCalls(
+        ParamFetcher $paramFetcher,
+        EmployeeZerrendaRepository $employeeZerrendaRepository): View
     {
-        $employeeZerrendaid = $paramFetcher->get( 'employeezerrendaid' );
-        $employeeZerrenda   = $employeeZerrendaRepository->find( $employeeZerrendaid );
-
+        $zerrendaid = $paramFetcher->get( 'zerrendaid' );
         $employeeid = $paramFetcher->get( 'employeeid' );
-        $employee   = $employeeRepository->find( $employeeid );
+
+        $employeeZerrenda = $employeeZerrendaRepository->findOneByEmployeeZerrenda( $employeeid, $zerrendaid );
 
         $user = $this->getUser();
 
-        if ( ( $employeeZerrenda ) && ( $employee ) && ( $user ) ) {
+        if ( ( $employeeZerrenda ) && ( $user ) ) {
             /** @var Calls $log */
             $call = new Calls();
             $call->setUser( $user );
             $call->setEmployeezerrenda( $employeeZerrenda );
-            $call->setEmployee( $employeeZerrenda->getEmployee() );
             $this->entityManager->persist( $call );
             $this->entityManager->flush();
             $ctx = new Context();

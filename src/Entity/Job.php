@@ -46,6 +46,7 @@ class Job
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Zerrenda", inversedBy="jobs")
+     * @Groups({"main"})
      */
     private $zerrenda;
 

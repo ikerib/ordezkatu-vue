@@ -24,6 +24,10 @@ class EmployeeZerrendaRepository extends SortableRepository
         parent::__construct($em, $em->getClassMetadata(EmployeeZerrenda::class));
     }
 
+    public function findJobEmployeeZerrenda ($jobid) {
+
+    }
+
     public function findOneByEmployeeZerrenda($employeeid, $zerrendaid)
     {
         $qb = $this->createQueryBuilder('ez')
