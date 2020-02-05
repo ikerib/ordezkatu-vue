@@ -36,9 +36,15 @@
                 </a>
             </li>
             <li class="nav-item {% if app.request.get('_route') starts with "saila_" %}sidebar-active {% endif %}">
-            <a class="nav-link {% if app.request.get('_route') starts with "saila_" %}active {% endif %} " href="{{ path('saila_index') }}">
+                <a class="nav-link {% if app.request.get('_route') starts with "saila_" %}active {% endif %} " href="{{ path('saila_index') }}">
                     <span data-feather="file-text"></span>
                     {{ "sidebar.saila" | trans }}
+                </a>
+            </li>
+            <li class="nav-item {% if app.request.get('_route') starts with "arrazoia_" %}sidebar-active {% endif %}">
+                <a class="nav-link {% if app.request.get('_route') starts with "arrazoia_" %}active {% endif %} " href="{{ path('arrazoia_index') }}">
+                    <span data-feather="file-text"></span>
+                    {{ "sidebar.arrazoia" | trans }}
                 </a>
             </li>
         </ul>
