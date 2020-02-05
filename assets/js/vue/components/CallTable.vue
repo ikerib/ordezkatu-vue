@@ -46,8 +46,9 @@
                 }
             },
             callEdit: function (id, index) {
-                this.$store.dispatch("TOOTGLE_ISCALLING");
+                console.log('callEdit: ' +  id);
                 this.$store.dispatch("TOOTGLE_SHOW");
+                this.$store.dispatch("UPDATE_LAST_ID", id);
             }
         }
     }

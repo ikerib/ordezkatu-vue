@@ -81,6 +81,10 @@ const actions = {
     TOOTGLE_SHOW: (context) => {
         console.log('Action Toogle show');
         context.commit('SET_SHOW')
+    },
+    UPDATE_LAST_ID : (context, payload) => {
+        console.log("Action UPDATE_LAST_ID:" + payload);
+        context.commit('SET_LAST_ID', payload)
     }
 };
 

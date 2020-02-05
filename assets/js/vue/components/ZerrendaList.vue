@@ -76,7 +76,7 @@
             </div>
             <stack-modal :show="show"
                          title="Nola amaitu da deia?"
-                         @close="show=false"
+                         @close="doModalClose"
                          v-on:save="doModalSave"
                          :modal-class="{ ['modal-morder-0']: true }"
                          :saveButton="{ title: 'Gorde', visible: true, btnClass: {'btn btn-primary': true}}"
@@ -87,7 +87,7 @@
 
                 <label for="cmdCallStatus"></label>
                 <select v-model="valueCallStatus" id="cmdCallStatus" class="custom-select">
-                    <option disabled value="">Aukeratu bat</option>
+                    <option disabled value="-1">Aukeratu bat</option>
                     <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
                 </select>
 
@@ -162,13 +162,22 @@
                 this.$store.dispatch("TOOTGLE_SHOW");
             },
             doModalSave: function () {
-                const payload = {
-                    valueCallStatus: this.valueCallStatus,
-                    zerrendaid: this.zerrendaid,
-                    id: this.lastId
-                };
-                this.$store.dispatch("UPDATE_CALL", payload);
-                this.isCalling = false;
+                console.log('doModalSave');
+                console.log(this.valueCallStatus);
+
+                if (( this.valueCallStatus ) && ( this.valueCallStatus !== "-1" )){
+                    const payload = {
+                        valueCallStatus: this.valueCallStatus,
+                        zerrendaid: this.zerrendaid,
+                        id: this.lastId
+                    };
+                    this.$store.dispatch("UPDATE_CALL", payload);
+                    this.isCalling = false;
+                    this.valueCallStatus = "-1"
+                }
+                this.$store.dispatch("TOOTGLE_SHOW");
+            },
+            doModalClose: function() {
                 this.$store.dispatch("TOOTGLE_SHOW");
             }
         }
