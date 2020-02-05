@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Job;
-use App\Entity\Log;
 use App\Entity\User;
 use App\Form\JobType;
 use App\Repository\EmployeeZerrendaRepository;
@@ -49,14 +48,7 @@ class JobController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($job);
-            /** @var Log $log */
-            $log = new Log();
-            /** @var User $user */
-            $user = $this->getUser();
-            $log->setUser($user);
-            $log->setName('Lanpostu berria sortu da');
-            $log->setDescription($job->getName() . ' lanpostua sortua izan da.');
-            $entityManager->persist($log);
+
             $entityManager->flush();
 
             return $this->redirectToRoute('job_index');

@@ -72,11 +72,6 @@ class Zerrenda
     private $employeeZerrenda;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="zerrenda")
-     */
-    private $logs;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrendaType", mappedBy="zerrenda")
      */
     private $employeeZerrendaTypes;
@@ -85,7 +80,6 @@ class Zerrenda
     {
         $this->jobs = new ArrayCollection();
         $this->employeeZerrenda = new ArrayCollection();
-        $this->logs = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
     }
 
@@ -220,37 +214,6 @@ class Zerrenda
             // set the owning side to null (unless already changed)
             if ($employeeZerrenda->getZerrenda() === $this) {
                 $employeeZerrenda->setZerrenda(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Log[]
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Log $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setZerrenda($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Log $log): self
-    {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
-            // set the owning side to null (unless already changed)
-            if ($log->getZerrenda() === $this) {
-                $log->setZerrenda(null);
             }
         }
 

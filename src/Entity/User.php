@@ -129,11 +129,6 @@ class User implements UserInterface
     private $updated;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="user")
-     */
-    private $logs;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="user")
      */
     private $calls;
@@ -147,7 +142,6 @@ class User implements UserInterface
         if (empty($this->roles)) {
             $this->roles[] = 'ROLE_USER';
         }
-        $this->logs = new ArrayCollection();
         $this->calls = new ArrayCollection();
     }
 
@@ -426,37 +420,6 @@ class User implements UserInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Log[]
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Log $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Log $log): self
-    {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
-            // set the owning side to null (unless already changed)
-            if ($log->getUser() === $this) {
-                $log->setUser(null);
-            }
-        }
 
         return $this;
     }

@@ -64,6 +64,11 @@ class Employee
     private $helbidea;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $elkarkidetza;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -90,24 +95,9 @@ class Employee
     private $employeeZerrenda;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="employee")
-     */
-    private $logs;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="employees")
-//     */
-//    private $type;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrendaType", mappedBy="employee")
      */
     private $employeeZerrendaTypes;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $elkarkidetza;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employee")
@@ -117,7 +107,6 @@ class Employee
     public function __construct()
     {
         $this->employeeZerrenda = new ArrayCollection();
-        $this->logs = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
         $this->calls = new ArrayCollection();
     }
@@ -286,49 +275,6 @@ class Employee
 
         return $this;
     }
-
-    /**
-     * @return Collection|Log[]
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Log $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setEmployee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Log $log): self
-    {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
-            // set the owning side to null (unless already changed)
-            if ($log->getEmployee() === $this) {
-                $log->setEmployee(null);
-            }
-        }
-
-        return $this;
-    }
-
-//    public function getType(): ?Type
-//    {
-//        return $this->type;
-//    }
-//
-//    public function setType(?Type $type): self
-//    {
-//        $this->type = $type;
-//
-//        return $this;
-//    }
 
     /**
      * @return Collection|EmployeeZerrendaType[]

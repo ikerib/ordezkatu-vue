@@ -46,11 +46,6 @@ class EmployeeZerrenda
     private $zerrenda;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="employeezerrenda")
-     */
-    private $logs;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="employeeZerrendas")
      */
     private $type;
@@ -63,7 +58,6 @@ class EmployeeZerrenda
 
     public function __construct()
     {
-        $this->logs = new ArrayCollection();
         $this->calls = new ArrayCollection();
     }
 
@@ -108,37 +102,6 @@ class EmployeeZerrenda
     public function setPosition(int $position): self
     {
         $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Log[]
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Log $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setEmployeezerrenda($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Log $log): self
-    {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
-            // set the owning side to null (unless already changed)
-            if ($log->getEmployeezerrenda() === $this) {
-                $log->setEmployeezerrenda(null);
-            }
-        }
 
         return $this;
     }

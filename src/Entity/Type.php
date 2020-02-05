@@ -62,11 +62,6 @@ class Type
     private $employeeZerrendas;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="result")
-     */
-    private $logs;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="result")
      */
     private $calls;
@@ -76,7 +71,6 @@ class Type
 //        $this->employees = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
         $this->employeeZerrendas = new ArrayCollection();
-        $this->logs = new ArrayCollection();
         $this->calls = new ArrayCollection();
     }
 
@@ -225,37 +219,6 @@ class Type
             // set the owning side to null (unless already changed)
             if ($employeeZerrenda->getType() === $this) {
                 $employeeZerrenda->setType(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Log[]
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Log $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setResult($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Log $log): self
-    {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
-            // set the owning side to null (unless already changed)
-            if ($log->getResult() === $this) {
-                $log->setResult(null);
             }
         }
 

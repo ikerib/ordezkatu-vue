@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use App\Entity\Log;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\PasaiaLdapService;
@@ -99,15 +98,6 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        /** @var \App\Entity\Log $log */
-        $log = new Log();
-        /** @var \App\Entity\User $user */
-        $user = $token->getUser();
-        $log->setUser($user);
-        $log->setName('Login');
-        $log->setDescription("$user erabiltzaileak login egin du.");
-        $this->em->persist($log);
-        $this->em->flush();
 
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
