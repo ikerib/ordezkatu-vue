@@ -40,7 +40,7 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
      */
     private $pasaiaLdapSrv;
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
     private $em;
 

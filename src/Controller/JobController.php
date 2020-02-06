@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Job;
+use App\Entity\Notifycation;
 use App\Entity\User;
 use App\Form\JobType;
 use App\Repository\EmployeeZerrendaRepository;
@@ -53,8 +54,12 @@ class JobController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($job);
 
-            $entityManager->flush();
+            // send notifycation
+            $notify = new Notifycation();
+            $notify->setName( 'Eskaera berria' . $job->getId() . ' - ' . $job->getName() );
+            $entityManager->persist($notify);
 
+            $entityManager->flush();
             return $this->redirectToRoute('job_index');
         }
 

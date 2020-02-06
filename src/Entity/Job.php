@@ -120,6 +120,11 @@ class Job
      */
     private $bestebatzuk;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isUserEditable;
+
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -343,6 +348,18 @@ class Job
     public function setBestebatzuk(?string $bestebatzuk): self
     {
         $this->bestebatzuk = $bestebatzuk;
+
+        return $this;
+    }
+
+    public function getIsUserEditable(): ?bool
+    {
+        return $this->isUserEditable;
+    }
+
+    public function setIsUserEditable(bool $isUserEditable): self
+    {
+        $this->isUserEditable = $isUserEditable;
 
         return $this;
     }

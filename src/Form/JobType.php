@@ -59,15 +59,20 @@ class JobType extends AbstractType
                 'label' => 'Lanpostua / Puesto de trabajo',
                 'required' => true
             ])
-            ->add('startDate', TextType::class, [
+            ->add('startDate', DateTimeType::class, [
                 'label' => 'Hasiera / Comienzo',
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
                 'required' => true,
                 'attr' => [
-                    'class' => 'datepicker col-md-6'
+                    'class' => 'datepicker col-md-6',
+                    'html5' => false,
+                    'data-provide' => 'datetimepicker'
                 ]
             ])
-            ->add('endDate', TextType::class, [
+            ->add('endDate', DateTimeType::class, [
                 'label' => 'Bukaera / Fin',
+                'widget' => 'single_text',
                 'required' => true,
                 'attr' => [
                     'class' => 'datepicker col-md-6'
@@ -81,6 +86,7 @@ class JobType extends AbstractType
                 ]
             ])
             ->add('created', DateTimeType::class, [
+                'widget' => 'single_text',
                 'label' => 'Eskaera data / Fecha de solicitud',
                 'disabled' => false
             ])

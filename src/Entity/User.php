@@ -138,6 +138,11 @@ class User implements UserInterface
      */
     private $jobs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notifycation", mappedBy="user")
+     */
+    private $notifycations;
+
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
     /*****************************************************************************************************************/
@@ -149,6 +154,7 @@ class User implements UserInterface
         }
         $this->calls = new ArrayCollection();
         $this->jobs = new ArrayCollection();
+        $this->notifycations = new ArrayCollection();
     }
 
     public function __toString()
@@ -486,6 +492,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($job->getUser() === $this) {
                 $job->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notifycation[]
+     */
+    public function getNotifycations(): Collection
+    {
+        return $this->notifycations;
+    }
+
+    public function addNotifycation(Notifycation $notifycation): self
+    {
+        if (!$this->notifycations->contains($notifycation)) {
+            $this->notifycations[] = $notifycation;
+            $notifycation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotifycation(Notifycation $notifycation): self
+    {
+        if ($this->notifycations->contains($notifycation)) {
+            $this->notifycations->removeElement($notifycation);
+            // set the owning side to null (unless already changed)
+            if ($notifycation->getUser() === $this) {
+                $notifycation->setUser(null);
             }
         }
 
