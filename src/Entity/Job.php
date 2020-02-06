@@ -90,6 +90,36 @@ class Job
      */
     private $jobType;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $eginkizunak;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\SailkapenTaldea", inversedBy="jobs")
+     */
+    private $sailkapenTalea;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\JobType", inversedBy="jobs")
+     */
+    private $izendapenMota;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Hizkuntza", inversedBy="jobs")
+     */
+    private $hizkuntza;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Titulazioa", inversedBy="jobs")
+     */
+    private $titulazioa;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $bestebatzuk;
+
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -241,6 +271,78 @@ class Job
     public function setJobType(?JobType $jobType): self
     {
         $this->jobType = $jobType;
+
+        return $this;
+    }
+
+    public function getEginkizunak(): ?string
+    {
+        return $this->eginkizunak;
+    }
+
+    public function setEginkizunak(?string $eginkizunak): self
+    {
+        $this->eginkizunak = $eginkizunak;
+
+        return $this;
+    }
+
+    public function getSailkapenTalea(): ?SailkapenTaldea
+    {
+        return $this->sailkapenTalea;
+    }
+
+    public function setSailkapenTalea(?SailkapenTaldea $sailkapenTalea): self
+    {
+        $this->sailkapenTalea = $sailkapenTalea;
+
+        return $this;
+    }
+
+    public function getIzendapenMota(): ?JobType
+    {
+        return $this->izendapenMota;
+    }
+
+    public function setIzendapenMota(?JobType $izendapenMota): self
+    {
+        $this->izendapenMota = $izendapenMota;
+
+        return $this;
+    }
+
+    public function getHizkuntza(): ?Hizkuntza
+    {
+        return $this->hizkuntza;
+    }
+
+    public function setHizkuntza(?Hizkuntza $hizkuntza): self
+    {
+        $this->hizkuntza = $hizkuntza;
+
+        return $this;
+    }
+
+    public function getTitulazioa(): ?Titulazioa
+    {
+        return $this->titulazioa;
+    }
+
+    public function setTitulazioa(?Titulazioa $titulazioa): self
+    {
+        $this->titulazioa = $titulazioa;
+
+        return $this;
+    }
+
+    public function getBestebatzuk(): ?string
+    {
+        return $this->bestebatzuk;
+    }
+
+    public function setBestebatzuk(?string $bestebatzuk): self
+    {
+        $this->bestebatzuk = $bestebatzuk;
 
         return $this;
     }

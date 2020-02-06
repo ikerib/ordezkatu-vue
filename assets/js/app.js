@@ -113,6 +113,29 @@ $(document).ready(function () {
     $('.btnFormAddEmployeeSelectFormSubmit').on('click', function () {
         $('#formAddEmployeeSelectForm').submit();
     });
+
+
+    // JOB NEW
+    // $('#job_arrazoia').on('change', function () {
+     $('#job_arrazoia').on('select2:select', function (e) {
+         const data = e.params.data;
+         console.log('params');
+         console.log(e.params.data.id);
+        const url = Routing.generate("get_arrazoia", {'id': e.params.data.id});
+        console.log(url);
+        $.ajax({
+            url: url,
+            success: function (data) {
+                console.log('success');
+                console.log(data);
+                if ( data.aldibaterako ) {
+                    $('#divPrograma').show()
+                } else {
+                    $('#divPrograma').hide()
+                }
+            }
+        })
+    })
 });
 
 

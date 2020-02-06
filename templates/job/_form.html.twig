@@ -13,6 +13,16 @@
 
     {{ form_row(form.created) }}
 
+    <div style="display: none;" id="divPrograma">
+
+        {{ form_row(form.eginkizunak) }}
+        {{ form_row(form.sailkapenTalea) }}
+        {{ form_row(form.titulazioa) }}
+        {{ form_row(form.hizkuntza) }}
+        {{ form_row(form.bestebatzuk) }}
+
+    </div>
+
     {{ form_rest(form) }}
 
     <button class="btn btn-primary">{{ button_label|default('Gorde') }}</button>

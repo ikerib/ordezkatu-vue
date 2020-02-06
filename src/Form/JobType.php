@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Arrazoia;
+use App\Entity\Hizkuntza;
 use App\Entity\Job;
 use App\Entity\Saila;
+use App\Entity\SailkapenTaldea;
+use App\Entity\Titulazioa;
 use App\Entity\User;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -81,7 +84,47 @@ class JobType extends AbstractType
                 'label' => 'Eskaera data / Fecha de solicitud',
                 'disabled' => false
             ])
-
+            ->add('eginkizunak', CKEditorType::class, [
+                'label' => 'Eginkizunak / Tareas',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('sailkapenTalea', EntityType::class, [
+                'class' => SailkapenTaldea::class,
+                'required' => false,
+                'label' => 'Sailkapen taldea',
+                'placeholder' => 'Aukeratu bat',
+                'attr' => [
+                    'class' => 'myselect2'
+                ]
+            ])
+            ->add('hizkuntza', EntityType::class, [
+                'class' => Hizkuntza::class,
+                'required' => false,
+                'label' => 'Hizkuntz eskakizuna',
+                'placeholder' => 'Aukeratu bat',
+                'attr' => [
+                    'class' => 'myselect2'
+                ]
+            ])
+            ->add('titulazioa',EntityType::class, [
+                'class' => Titulazioa::class,
+                'required' => false,
+                'label' => 'Eskatutako titulazioa',
+                'placeholder' => 'Aukeratu bat',
+                'attr' => [
+                    'class' => 'myselect2'
+                ]
+            ])
+            ->add('bestebatzuk', CKEditorType::class, [
+                'label' => 'Beste batzuk / Otros',
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
         ;
     }
 

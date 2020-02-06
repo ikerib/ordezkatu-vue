@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CallsRepository")
@@ -25,16 +26,14 @@ class Calls
     private $notes;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"main"})
      */
     private $created;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"main"})
      */
     private $updated;
 
