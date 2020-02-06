@@ -3,9 +3,15 @@
 {% block title %}New Saila{% endblock %}
 
 {% block body %}
-    <h1>Create new Saila</h1>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{ "Sail berria" | trans }}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('saila_index') }}">{{ "Itzuli zerrendara" | trans }}</a>
+            </div>
+        </div>
+    </div>
 
     {{ include('saila/_form.html.twig') }}
 
-    <a href="{{ path('saila_index') }}">back to list</a>
 {% endblock %}

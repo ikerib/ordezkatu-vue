@@ -13,7 +13,9 @@ class ArrazoiaType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('aldibaterako')
+            ->add('aldibaterako', null, [
+                'label' => 'Programa bat da'
+            ])
         ;
     }
 

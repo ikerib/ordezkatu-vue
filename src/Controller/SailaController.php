@@ -17,6 +17,9 @@ class SailaController extends AbstractController
 {
     /**
      * @Route("/", name="saila_index", methods={"GET"})
+     * @param SailaRepository $sailaRepository
+     *
+     * @return Response
      */
     public function index(SailaRepository $sailaRepository): Response
     {
@@ -27,6 +30,9 @@ class SailaController extends AbstractController
 
     /**
      * @Route("/new", name="saila_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +56,9 @@ class SailaController extends AbstractController
 
     /**
      * @Route("/{id}", name="saila_show", methods={"GET"})
+     * @param Saila $saila
+     *
+     * @return Response
      */
     public function show(Saila $saila): Response
     {
@@ -60,6 +69,10 @@ class SailaController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="saila_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Saila   $saila
+     *
+     * @return Response
      */
     public function edit(Request $request, Saila $saila): Response
     {
@@ -80,6 +93,10 @@ class SailaController extends AbstractController
 
     /**
      * @Route("/{id}", name="saila_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Saila   $saila
+     *
+     * @return Response
      */
     public function delete(Request $request, Saila $saila): Response
     {
