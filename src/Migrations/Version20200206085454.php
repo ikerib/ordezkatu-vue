@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200205130245 extends AbstractMigration
+final class Version20200206085454 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,9 +22,8 @@ final class Version20200205130245 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE calls ADD employees_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE calls ADD CONSTRAINT FK_DAA35C8F8520A30B FOREIGN KEY (employees_id) REFERENCES calls (id)');
-        $this->addSql('CREATE INDEX IDX_DAA35C8F8520A30B ON calls (employees_id)');
+        $this->addSql('CREATE TABLE sailkapen_taldea (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE titulazioa (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
     }
 
     public function down(Schema $schema) : void
@@ -32,8 +31,7 @@ final class Version20200205130245 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE calls DROP FOREIGN KEY FK_DAA35C8F8520A30B');
-        $this->addSql('DROP INDEX IDX_DAA35C8F8520A30B ON calls');
-        $this->addSql('ALTER TABLE calls DROP employees_id');
+        $this->addSql('DROP TABLE sailkapen_taldea');
+        $this->addSql('DROP TABLE titulazioa');
     }
 }

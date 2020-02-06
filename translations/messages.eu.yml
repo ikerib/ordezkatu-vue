@@ -41,7 +41,7 @@ Helbidea: Helbidea
 'Zerrenda berria': 'Zerrenda berria'
 'Zerrenda aldatu': 'Zerrenda aldatu'
 sidebar.saila: Sailak
-sidebar.arrazoia: 'Arrazoiak'
+sidebar.arrazoia: Arrazoiak
 'Eskeintza berria': 'Eskeintza berria'
 'Sailen zerrenda': 'Sailen zerrenda'
 'Sail berria': 'Sail berria'
@@ -51,3 +51,18 @@ Ezarri: Ezarri
 Fitxategia: Fitxategia
 Egoera: Egoera
 'Hurrekera zerrendan': 'Hurrekera zerrendan'
+sidebar.jobtype: 'Izendapen mota'
+sidebar.sailkapentalea: 'Sailkapen taldeak'
+sidebar.hizkuntza: Hizkuntzak
+sidebar.titulazioa: Titulazioak
+'Eskaintza berria': 'Eskaintza berria'
+'Mota berria': 'Mota berria'
+'Moten zerrenda': 'Moten zerrenda'
+'Eskaintza mota berria': 'Eskaintza mota berria'
+'Eskaintza mota zerrenda': 'Eskaintza mota zerrenda'
+'Sailkapen talde berria': 'Sailkapen talde berria'
+'Sailkapen talde zerrenda': 'Sailkapen talde zerrenda'
+'Hizkuntza berria': 'Hizkuntza berria'
+'Hizkuntzen zerrenda': 'Hizkuntzen zerrenda'
+'Titulazio berria': 'Titulazio berria'
+'Titulazioen zerrenda': 'Titulazioen zerrenda'

@@ -9,6 +9,7 @@ use App\Repository\EmployeeZerrendaRepository;
 use App\Repository\JobRepository;
 use App\Repository\TypeRepository;
 use App\Repository\ZerrendaRepository;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,10 +39,13 @@ class JobController extends AbstractController
      * @param Request $request
      *
      * @return Response
+     * @throws Exception
      */
     public function new(Request $request): Response
     {
         $job = new Job();
+        $job->setUser( $this->getUser() );
+        $job->setCreated( new \DateTime() );
         $form = $this->createForm(JobType::class, $job);
         $form->handleRequest($request);
 

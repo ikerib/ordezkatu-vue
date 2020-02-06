@@ -28,6 +28,21 @@ class Job
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $startDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $endDate;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
      /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
@@ -60,6 +75,20 @@ class Job
      */
     private $saila;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="jobs")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Arrazoia", inversedBy="jobs")
+     */
+    private $arrazoia;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\JobType", inversedBy="job")
+     */
+    private $jobType;
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -140,6 +169,78 @@ class Job
     public function setSaila(?Saila $saila): self
     {
         $this->saila = $saila;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getArrazoia(): ?Arrazoia
+    {
+        return $this->arrazoia;
+    }
+
+    public function setArrazoia(?Arrazoia $arrazoia): self
+    {
+        $this->arrazoia = $arrazoia;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(\DateTimeInterface $startDate): self
+    {
+        $this->startDate = $startDate;
+
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTimeInterface
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(\DateTimeInterface $endDate): self
+    {
+        $this->endDate = $endDate;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getJobType(): ?JobType
+    {
+        return $this->jobType;
+    }
+
+    public function setJobType(?JobType $jobType): self
+    {
+        $this->jobType = $jobType;
 
         return $this;
     }

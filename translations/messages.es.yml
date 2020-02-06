@@ -50,4 +50,19 @@ sidebar.arrazoia: Razones
 Ezarri: Ezarri
 Fitxategia: Fichero
 Egoera: Estado
-'Hurrekera zerrendan': 'Posición'
+'Hurrekera zerrendan': Posición
+sidebar.jobtype: 'Tipos de nombramiento'
+sidebar.sailkapentalea: 'Grupo de Clasificación'
+sidebar.hizkuntza: Idiomas
+sidebar.titulazioa: Titulaciones
+'Eskaintza berria': 'Nueva petición'
+'Mota berria': 'Nuevo tipo'
+'Moten zerrenda': 'Nueva lista'
+'Eskaintza mota berria': 'Nuevo tipo de nombramiento'
+'Eskaintza mota zerrenda': 'Lista tipos de nombramiento'
+'Sailkapen talde berria': 'Nuevo grupo'
+'Sailkapen talde zerrenda': 'Lista grupos de clasificación'
+'Hizkuntza berria': 'Nuevo idioma'
+'Hizkuntzen zerrenda': 'Lista idiomas'
+'Titulazio berria': 'Nueva titulación'
+'Titulazioen zerrenda': 'Lista de titulaciones'

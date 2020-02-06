@@ -133,6 +133,11 @@ class User implements UserInterface
      */
     private $calls;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="user")
+     */
+    private $jobs;
+
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
     /*****************************************************************************************************************/
@@ -143,6 +148,7 @@ class User implements UserInterface
             $this->roles[] = 'ROLE_USER';
         }
         $this->calls = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     public function __toString()
@@ -449,6 +455,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($call->getUser() === $this) {
                 $call->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Job[]
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(Job $job): self
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs[] = $job;
+            $job->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(Job $job): self
+    {
+        if ($this->jobs->contains($job)) {
+            $this->jobs->removeElement($job);
+            // set the owning side to null (unless already changed)
+            if ($job->getUser() === $this) {
+                $job->setUser(null);
             }
         }
 

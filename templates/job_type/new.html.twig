@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lanpostu berria{% endblock %}
+{% block title %}New JobType{% endblock %}
 
 {% block body %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">{{ "Eskaintza berria" | trans }}</h1>
+        <h1 class="h2">{{ "Eskaintza mota berria" | trans }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <a class="btn btn-sm btn-outline-secondary" href="{{ path('job_index') }}">{{ "Itzuli zerrendara" | trans }}</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('job_type_index') }}">{{ "Itzuli zerrendara" | trans }}</a>
             </div>
         </div>
     </div>
 
-    {{ include('job/_form.html.twig') }}
+    {{ include('job_type/_form.html.twig') }}
 
 {% endblock %}

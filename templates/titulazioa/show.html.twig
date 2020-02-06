@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Titulazioa{% endblock %}
+
+{% block body %}
+    <h1>Titulazioa</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ titulazioa.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ titulazioa.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('titulazioa_index') }}">back to list</a>
+
+    <a href="{{ path('titulazioa_edit', {'id': titulazioa.id}) }}">edit</a>
+
+    {{ include('titulazioa/_delete_form.html.twig') }}
+{% endblock %}

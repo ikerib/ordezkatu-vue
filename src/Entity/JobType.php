@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ArrazoiaRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\JobTypeRepository")
  */
-class Arrazoia
+class JobType
 {
     /**
      * @ORM\Id()
@@ -23,28 +23,23 @@ class Arrazoia
      */
     private $name;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $aldibaterako;
-
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="arrazoia")
+     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="jobType")
      */
-    private $jobs;
+    private $job;
+
+    public function __construct()
+    {
+        $this->job = new ArrayCollection();
+    }
 
     public function __toString()
     {
         return $this->getName();
-    }
-
-    public function __construct()
-    {
-        $this->jobs = new ArrayCollection();
     }
 
     /************************************************************************************************************************************************************************************/
@@ -68,31 +63,19 @@ class Arrazoia
         return $this;
     }
 
-    public function getAldibaterako(): ?bool
-    {
-        return $this->aldibaterako;
-    }
-
-    public function setAldibaterako(?bool $aldibaterako): self
-    {
-        $this->aldibaterako = $aldibaterako;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Job[]
      */
-    public function getJobs(): Collection
+    public function getJob(): Collection
     {
-        return $this->jobs;
+        return $this->job;
     }
 
     public function addJob(Job $job): self
     {
-        if (!$this->jobs->contains($job)) {
-            $this->jobs[] = $job;
-            $job->setArrazoia($this);
+        if (!$this->job->contains($job)) {
+            $this->job[] = $job;
+            $job->setJobType($this);
         }
 
         return $this;
@@ -100,11 +83,11 @@ class Arrazoia
 
     public function removeJob(Job $job): self
     {
-        if ($this->jobs->contains($job)) {
-            $this->jobs->removeElement($job);
+        if ($this->job->contains($job)) {
+            $this->job->removeElement($job);
             // set the owning side to null (unless already changed)
-            if ($job->getArrazoia() === $this) {
-                $job->setArrazoia(null);
+            if ($job->getJobType() === $this) {
+                $job->setJobType(null);
             }
         }
 

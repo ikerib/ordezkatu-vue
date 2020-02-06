@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sailak{% endblock %}
+{% block title %}Titulazioa index{% endblock %}
 
 {% block body %}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">{{ "Sailen zerrenda" | trans }}</h1>
+        <h1 class="h2">{{ "Titulazioen zerrenda" | trans }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <a class="btn btn-sm btn-outline-secondary" href="{{ path('saila_new') }}">{{ "Sail berria" | trans }}</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{ path('titulazioa_new') }}">{{ "Titulazio berria" | trans }}</a>
             </div>
         </div>
     </div>
@@ -21,26 +21,26 @@
             </tr>
         </thead>
         <tbody>
-        {% for saila in sailas %}
+        {% for titulazioa in titulazioas %}
             <tr>
-                <td>{{ saila.id }}</td>
-                <td>{{ saila.name }}</td>
+                <td>{{ titulazioa.id }}</td>
+                <td>{{ titulazioa.name }}</td>
                 <td>
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            <a href="{{ path('saila_edit', {'id': saila.id}) }}">
+                            <a href="{{ path('titulazioa_edit', {'id': titulazioa.id}) }}">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            {{ include('saila/_delete_form.html.twig') }}
+                            {{ include('titulazioa/_delete_form.html.twig') }}
                         </li>
                     </ul>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
