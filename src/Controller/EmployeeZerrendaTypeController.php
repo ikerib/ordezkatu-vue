@@ -75,7 +75,10 @@ class EmployeeZerrendaTypeController extends AbstractController
             $employeeZerrendaType->setZerrenda($zerrenda);
         }
 
-        $form = $this->createForm(EmployeeZerrendaTypeType::class, $employeeZerrendaType);
+        $form = $this->createForm(EmployeeZerrendaTypeType::class, $employeeZerrendaType, [
+            'employeeid' => $employee->getId(),
+            'method' => 'POST'
+        ]);
         $form->handleRequest($request);
 
 
@@ -102,6 +105,8 @@ class EmployeeZerrendaTypeController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('employee_show', ['id' => $employeeZerrendaType->getEmployee()->getId()]);
+        } else {
+            dump( $form->getErrors(true) );
         }
 
         return $this->render('employee_zerrenda_type/new.html.twig', [

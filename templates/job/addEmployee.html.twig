@@ -1,0 +1,17 @@
+{% extends 'vueAddEmployee.html.twig' %}
+
+{% block title %}Gehitu hautagaiak{% endblock %}
+
+{%  block stylesheets %}
+
+    {{ parent() }}
+    {{ encore_entry_link_tags('jsVueApp') }}
+
+{% endblock %}
+
+{% block sf_data %}
+    <div ref="job" data-job="{{ job|e }}"><pre>{{ job|e }}</pre></div>
+    <div ref="types" data-types="{{ types|e }}"><pre>{{ types|e }}</pre></div>
+    <div ref="zerrendak" data-zerrendak="{{ zerrendak|e }}"><pre>{{ zerrendak|e }}</pre></div>
+{% endblock %}
+

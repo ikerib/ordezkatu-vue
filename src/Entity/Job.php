@@ -43,6 +43,21 @@ class Job
      */
     private $description;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $eginkizunak;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $bestebatzuk;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isUserEditable;
+
      /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
@@ -59,15 +74,9 @@ class Job
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Zerrenda", inversedBy="jobs")
-     * @Groups({"main"})
-     */
-    private $zerrenda;
-
     public function __construct()
     {
-        $this->zerrenda = new ArrayCollection();
+        $this->jobZerrendaEmployees = new ArrayCollection();
     }
 
     /**
@@ -91,11 +100,6 @@ class Job
     private $jobType;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $eginkizunak;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SailkapenTaldea", inversedBy="jobs")
      */
     private $sailkapenTalea;
@@ -114,16 +118,6 @@ class Job
      * @ORM\ManyToOne(targetEntity="App\Entity\Titulazioa", inversedBy="jobs")
      */
     private $titulazioa;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $bestebatzuk;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isUserEditable;
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/

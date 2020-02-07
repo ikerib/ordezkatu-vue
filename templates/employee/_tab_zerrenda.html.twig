@@ -19,9 +19,11 @@
                         <td>{{ et.type }}</td>
                         <td>{{ et.position }}</td>
                         <td>
-                            <a class="btnZerrendaType" data-employeeid="{{ et.employee.id }}" data-zerrendaid="{{ et.zerrenda.id }}" href="{{path('employee_zerrenda_type_new', {
-                                'employeeid': et.employee.id, 'zerrendaid': et.zerrenda.id
-                            })}}">Egoera aldatu</a>
+                            <a class="btnZerrendaType"
+                               data-employeeid="{{ et.employee.id }}"
+                               data-zerrendaid="{{ et.zerrenda.id }}"
+                               data-typeid="{{ et.type.id }}"
+                               href="#">Egoera aldatu</a>
                         </td>
                     </tr>
                 {% endif %}

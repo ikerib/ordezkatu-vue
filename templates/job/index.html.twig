@@ -52,7 +52,7 @@
                             </li>
                             {% if is_granted('ROLE_ADMIN') and job.isUserEditable%}
                                 <li class="list-inline-item">
-                                    <a href="">Abiatu</a>
+                                    <a href="{{ path('job_abiatu', { 'id': job.id}) }}">Abiatu</a>
                                 </li>
                             {% endif %}
                         {% else %}

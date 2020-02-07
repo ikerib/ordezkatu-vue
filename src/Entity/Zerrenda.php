@@ -250,8 +250,4 @@ class Zerrenda
 
         return $this;
     }
-
-
-
-
 }

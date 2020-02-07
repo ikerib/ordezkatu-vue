@@ -2,7 +2,6 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\Call;
 use App\Entity\Calls;
 use App\Repository\CallsRepository;
 use App\Repository\EmployeeRepository;

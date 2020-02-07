@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Zerrenda;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Zerrenda|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,7 +21,7 @@ class ZerrendaRepository extends ServiceEntityRepository
     }
 
 
-    public function getAllZerrendas(): \Doctrine\ORM\QueryBuilder
+    public function getAllZerrendas(): QueryBuilder
     {
         $q = $this->createQueryBuilder('z')
                   ->orderBy('z.name', 'ASC')
@@ -29,7 +30,7 @@ class ZerrendaRepository extends ServiceEntityRepository
         return $q;
     }
 
-    public function getAllZerrendasForUser($employeeid): \Doctrine\ORM\QueryBuilder
+    public function getAllZerrendasForUser($employeeid): QueryBuilder
     {
         $q = $this->createQueryBuilder('z')
                 ->innerJoin('z.employeeZerrenda', 'ze')

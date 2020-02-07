@@ -94,6 +94,18 @@ $(document).ready(function () {
         $(this).next('.form-control-file').addClass("selected").html(fileName);
     });
 
+    // Employee
+    $(".btnZerrendaType").on("click", function () {
+        const employeeid = $(this).data("employeeid");
+        const zerrendaid = $(this).data("zerrendaid");
+        const typeid = $(this).data("typeid");
+
+        $("#employee_zerrenda_type_zerrenda").val(zerrendaid).trigger('change');
+        $("#employee_zerrenda_type_type").val(typeid).trigger('change');
+
+        $("#modalChangeType").modal('show');
+    });
+
     // Employee select
     $('.mySelect').on('change', function () {
         const miid = $(this).val();

@@ -6,11 +6,13 @@ use App\Entity\Job;
 use App\Entity\Notifycation;
 use App\Entity\User;
 use App\Form\JobType;
+use App\Form\JobZerrendaType;
 use App\Repository\EmployeeZerrendaRepository;
 use App\Repository\JobRepository;
 use App\Repository\TypeRepository;
 use App\Repository\ZerrendaRepository;
 use Exception;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +35,50 @@ class JobController extends AbstractController
         return $this->render('job/index.html.twig', [
             'jobs' => $jobRepository->findBy([],['id'=>'DESC']),
         ]);
+    }
+
+    /**
+     * @Route("/abiatu/{id}", name="job_abiatu", methods={"GET"})
+     *
+     * @param Job $job
+     *
+     * @return Response
+     */
+    public function abiatu(Job $job): Response
+    {
+        $job->setIsUserEditable( false );
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($job);
+        $em->flush();
+
+        return $this->redirectToRoute( 'job_add_employee', [ 'id' => $job->getId()] );
+    }
+
+    /**
+     * @Route("/{id}/employee/add", name="job_add_employee", methods={"GET"})
+     *
+     * @param Job                 $job
+     *
+     * @param SerializerInterface $serializer
+     *
+     * @param TypeRepository      $typeRepository
+     *
+     * @param ZerrendaRepository  $zerrendaRepository
+     *
+     * @return Response
+     */
+    public function addEmployee(Job $job,
+                                SerializerInterface $serializer,
+                                TypeRepository $typeRepository,
+                                ZerrendaRepository $zerrendaRepository): Response
+    {
+        $types = $typeRepository->findAll();
+        $zerrendak = $zerrendaRepository->findAll();
+        return $this->render( 'job/addEmployee.html.twig', [
+            'job' => $serializer->serialize( $job, 'json', [ 'groups' => 'main' ] ),
+            'types' => $serializer->serialize( $types, 'json', [ 'groups' => 'main' ] ),
+            'zerrendak' => $serializer->serialize( $zerrendak, 'json', [ 'groups' => 'main' ] ),
+        ] );
     }
 
     /**

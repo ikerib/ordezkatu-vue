@@ -256,5 +256,4 @@ class Type
         return $this;
     }
 
-
 }

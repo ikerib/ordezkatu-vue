@@ -350,6 +350,4 @@ class Employee
         return $this;
     }
 
-
-
 }

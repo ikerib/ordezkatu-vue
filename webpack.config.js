@@ -14,6 +14,7 @@ Encore
     .addEntry('jsSearch', './assets/js/search.js')
     .addEntry('jsEmployee', './assets/js/employee.js')
     .addEntry('jsVueApp', './assets/js/vue/app.js')
+    .addEntry('jsVueAppAddEmployee', './assets/js/vue/appAddEmployee.js')
     .addStyleEntry('cssGlobal', './assets/css/global.scss')
 
     .splitEntryChunks()
