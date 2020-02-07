@@ -18,16 +18,37 @@ class EmployeeZerrendaType
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"main", "details"})
      */
     private $id;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"main", "details"})
+     */
+    private $notes;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"main", "details"})
+     */
+    private $lastPosition;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"main", "details"})
+     */
+    private $currentPosition;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"main", "details"})
      */
     private $document;
 
     /**
      * @Vich\UploadableField(mapping="uploadfile", fileNameProperty="document")
+     * @Groups({"main", "details"})
      */
     private $documentFile;
 
@@ -58,14 +79,14 @@ class EmployeeZerrendaType
     private $zerrenda;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="employeeZerrendaTypes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="lastemployeeZerrendaTypes")
      */
     private $type;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="employeeZerrendaTypes")
      */
-    private $notes;
+    private $last;
 
     public function __construct() { }
 
@@ -185,6 +206,43 @@ class EmployeeZerrendaType
 
         return $this;
     }
+
+    public function getLast(): ?Type
+    {
+        return $this->last;
+    }
+
+    public function setLast(?Type $last): self
+    {
+        $this->last = $last;
+
+        return $this;
+    }
+
+    public function getLastPosition(): ?int
+    {
+        return $this->lastPosition;
+    }
+
+    public function setLastPosition(?int $lastPosition): self
+    {
+        $this->lastPosition = $lastPosition;
+
+        return $this;
+    }
+
+    public function getCurrentPosition(): ?int
+    {
+        return $this->currentPosition;
+    }
+
+    public function setCurrentPosition(?int $currentPosition): self
+    {
+        $this->currentPosition = $currentPosition;
+
+        return $this;
+    }
+
 
 
 

@@ -9,6 +9,7 @@ use App\Repository\ZerrendaRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
@@ -55,7 +56,23 @@ class EmployeeZerrendaTypeType extends AbstractType
                     'placeholder' => 'Aukeratu bat',
                 ]
             ])
+            ->add('last', null, [
+                'placeholder' => 'Aukeratu bat',
+                'label' => 'Last: ',
+                'attr' => [
+                    'class' => 'myselect2',
+                    'placeholder' => 'Aukeratu bat',
+                ]
+            ])
             ->add('notes', CKEditorType::class)
+            ->add('lastPosition', NumberType::class, [
+                'label' => 'Uneko hurrenekera',
+                'required' => false
+            ])
+            ->add('currentPosition', NumberType::class, [
+                'label' => 'Hurrenkera berria',
+                'required' => false
+            ])
         ;
     }
 

@@ -29,6 +29,18 @@ class EmployeeZerrendaTypeRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getEmployeeZerrenda($employeeid,$zerrendaid)
+    {
+        $qb = $this->createQueryBuilder( 'ezt' )
+                   ->leftJoin( 'ezt.employee', 'e' )
+                   ->leftJoin( 'ezt.zerrenda', 'z' )
+                   ->andWhere( 'e.id=:employeeid' )->setParameter( 'employeeid', $employeeid )
+                   ->andWhere( 'z.id=:zerrendaid' )->setParameter( 'zerrendaid', $zerrendaid )
+        ;
+
+        $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return EmployeeZerrendaType[] Returns an array of EmployeeZerrendaType objects
     //  */

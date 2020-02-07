@@ -5,18 +5,29 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th>{{ "Fitxategia" | trans }}</th>
-
-                <th></th>
+                <th>Noiz</th>
+                <th>Zerrenda</th>
+                <th>Aurreko urrenkera</th>
+                <th>Uneko urrenkera</th>
+                <th>Aurreko egoera</th>
+                <th>Egoera berria</th>
+                <th>Dokumentua</th>
             </tr>
             </thead>
             <tbody>
             {% for ezt in ezts %}
                 <tr>
-                    <td>{{ ezt.document }}</td>
-                    <td>
-
-                    </td>
+                    <td>{{ ezt.created | date('Y-m-d h:m:s') }}</td>
+                    <td>{{ ezt.zerrenda }}</td>
+                    <td>{{ ezt.lastPosition }}</td>
+                    <td>{{ ezt.currentPosition }}</td>
+                    <td>{% if ezt.last %}
+                            {{ ezt.last.name }}
+                            {% else %}
+                            ---
+                        {% endif %}</td>
+                    <td>{% if ezt.type %}{{ ezt.type.name }}{% else %}---{% endif %}</td>
+                    <td>{{ vich_uploader_asset(ezt,'documentFile') }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -106,6 +106,36 @@ $(document).ready(function () {
         $("#modalChangeType").modal('show');
     });
 
+    $("#employee_zerrenda_type_zerrenda").on("select2:select", function (e) {
+
+        const employeeid = $("#employee_zerrenda_type_employee").val();
+
+        console.log("employeeid: " + employeeid + " zerrendaid: " + e.params.data.id);
+
+        const url = Routing.generate("get_employeezerrenda_position_employee", {
+            employeeid: employeeid,
+            zerrendaid: e.params.data.id
+        });
+        $.ajax({
+            url: url,
+            success: function ( response ) {
+                $("#employee_zerrenda_type_lastPosition").val(response.position);
+
+            }
+        });
+
+        const url2 = Routing.generate('get_employeezerrendatype', {'employeeid': employeeid, 'zerrendaid': e.params.data.id})
+        $.ajax({
+            url: url2,
+            success: function ( response ) {
+                console.log("SUCCESS 2")
+                console.log(response);
+
+            }
+        });
+
+    });
+
     // Employee select
     $('.mySelect').on('change', function () {
         const miid = $(this).val();

@@ -57,6 +57,11 @@ class Type
     private $employeeZerrendaTypes;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrendaType", mappedBy="last")
+     */
+    private $lastemployeeZerrendaTypes;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrenda", mappedBy="type")
      */
     private $employeeZerrendas;
@@ -72,6 +77,7 @@ class Type
         $this->employeeZerrendaTypes = new ArrayCollection();
         $this->employeeZerrendas = new ArrayCollection();
         $this->calls = new ArrayCollection();
+        $this->lastemployeeZerrendaTypes = new ArrayCollection();
     }
 
     public function __toString()
@@ -250,6 +256,37 @@ class Type
             // set the owning side to null (unless already changed)
             if ($call->getResult() === $this) {
                 $call->setResult(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmployeeZerrendaType[]
+     */
+    public function getLastemployeeZerrendaTypes(): Collection
+    {
+        return $this->lastemployeeZerrendaTypes;
+    }
+
+    public function addLastemployeeZerrendaType(EmployeeZerrendaType $lastemployeeZerrendaType): self
+    {
+        if (!$this->lastemployeeZerrendaTypes->contains($lastemployeeZerrendaType)) {
+            $this->lastemployeeZerrendaTypes[] = $lastemployeeZerrendaType;
+            $lastemployeeZerrendaType->setLast($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLastemployeeZerrendaType(EmployeeZerrendaType $lastemployeeZerrendaType): self
+    {
+        if ($this->lastemployeeZerrendaTypes->contains($lastemployeeZerrendaType)) {
+            $this->lastemployeeZerrendaTypes->removeElement($lastemployeeZerrendaType);
+            // set the owning side to null (unless already changed)
+            if ($lastemployeeZerrendaType->getLast() === $this) {
+                $lastemployeeZerrendaType->setLast(null);
             }
         }
 

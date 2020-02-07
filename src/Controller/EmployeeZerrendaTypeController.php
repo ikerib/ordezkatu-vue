@@ -91,6 +91,12 @@ class EmployeeZerrendaTypeController extends AbstractController
                 /** @var EmployeeZerrenda $employeeZerrenda */
                 $employeeZerrenda = $this->em->getRepository(EmployeeZerrenda::class)->findOneByEmployeeZerrenda($employeeZerrendaType->getEmployee(), $employeeZerrendaType->getZerrenda());
                 $employeeZerrenda->setType($employeeZerrendaType->getType());
+
+                //            TODO: currentPosition bidaltzen bada employeeZerrenda entitatea eguneratu.
+                if (( $employeeZerrendaType->getLastPosition() !== $employeeZerrendaType->getCurrentPosition()) && ($employeeZerrendaType->getCurrentPosition()) ){
+                    $employeeZerrenda->setPosition( $employeeZerrendaType->getCurrentPosition() );
+                }
+
                 $entityManager->persist($employeeZerrenda);
             } else {
                 $zerrendak = $this->em->getRepository(EmployeeZerrenda::class)->findAllZerrendasForEmployee($employeeid);
@@ -101,6 +107,11 @@ class EmployeeZerrendaTypeController extends AbstractController
                     $this->em->persist($z);
                 }
             }
+
+            if ( $employeeZerrendaType->getLast() !== $employeeZerrendaType->getType()) {
+                $employeeZerrendaType->setLast( $employeeZerrendaType->getType() );
+            }
+
             $entityManager->persist($employeeZerrendaType);
             $entityManager->flush();
 

@@ -22,7 +22,7 @@
                             <a class="btnZerrendaType"
                                data-employeeid="{{ et.employee.id }}"
                                data-zerrendaid="{{ et.zerrenda.id }}"
-                               data-typeid="{{ et.type.id }}"
+                               data-typeid="{% if et.type %}{{ et.type.id }}{% endif %}"
                                href="#">Egoera aldatu</a>
                         </td>
                     </tr>

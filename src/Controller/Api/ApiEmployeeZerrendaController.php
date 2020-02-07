@@ -45,4 +45,25 @@ class ApiEmployeeZerrendaController extends AbstractFOSRestController
         return $this->handleView( $view );
 //        return View::create($zerrenda, Response::HTTP_OK)->setContext($ctx);
     }
+
+    /**
+     * @Rest\Get("/employeezerrenda/{zerrendaid}/position/{employeeid}", name="get_employeezerrenda_position_employee", options={ "expose": true})
+     *
+     * @param $zerrendaid
+     *
+     * @param $employeeid
+     *
+     * @return View|Response
+     */
+    public function getPosition($zerrendaid, $employeeid)
+    {
+        $employeezerrenda = $this->entityManager->getRepository( 'App:EmployeeZerrenda' )->findPosition( $employeeid, $zerrendaid );
+
+        $ctx = new Context();
+        $ctx->addGroup('main');
+
+        $view = $this->view( $employeezerrenda, Response::HTTP_OK )->setContext( $ctx );
+
+        return $this->handleView( $view );
+    }
 }

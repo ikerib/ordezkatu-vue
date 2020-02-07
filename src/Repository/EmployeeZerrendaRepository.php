@@ -63,6 +63,21 @@ class EmployeeZerrendaRepository extends SortableRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findPosition($employeeid, $zerrendaid) {
+        $qb = $this->createQueryBuilder( 'ez' )
+                   ->innerJoin( 'ez.employee', 'e' )
+                   ->innerJoin( 'ez.zerrenda', 'z' )
+                   ->andWhere( 'e.id=:employeeid' )->setParameter( 'employeeid', $employeeid )
+                   ->andWhere('z.id=:zerrendaid')->setParameter('zerrendaid', $zerrendaid)
+        ;
+
+        try {
+            return $qb->getQuery()->getOneOrNullResult();
+        } catch ( NonUniqueResultException $e ) {
+            return null;
+        }
+    }
+
     public function getMaxPositionZerrenda($zerrendaid) {
         $qb = $this->createQueryBuilder('ez')
                     ->innerJoin('ez.zerrenda', 'z')
