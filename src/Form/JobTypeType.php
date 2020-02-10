@@ -15,7 +15,10 @@ class JobTypeType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Mota',
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
             ])
         ;
     }

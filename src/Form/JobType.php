@@ -62,6 +62,7 @@ class JobType extends AbstractType
             ->add('startDate', DateTimeType::class, [
                 'label' => 'Hasiera / Comienzo',
                 'widget' => 'single_text',
+                'html5' => false,
                 'format' => 'dd-MM-yyyy',
                 'required' => true,
                 'attr' => [
@@ -115,15 +116,22 @@ class JobType extends AbstractType
                     'class' => 'myselect2'
                 ]
             ])
-            ->add('titulazioa',EntityType::class, [
-                'class' => Titulazioa::class,
-                'required' => false,
+            ->add('eskatutakoTitulazioa', null, [
                 'label' => 'Eskatutako titulazioa',
-                'placeholder' => 'Aukeratu bat',
+                'required' => false,
                 'attr' => [
-                    'class' => 'myselect2'
+                    'autocomplete' => 'off'
                 ]
             ])
+//            ->add('titulazioa',EntityType::class, [
+//                'class' => Titulazioa::class,
+//                'required' => false,
+//                'label' => 'Eskatutako titulazioa',
+//                'placeholder' => 'Aukeratu bat',
+//                'attr' => [
+//                    'class' => 'myselect2'
+//                ]
+//            ])
             ->add('bestebatzuk', CKEditorType::class, [
                 'label' => 'Beste batzuk / Otros',
                 'required' => false,

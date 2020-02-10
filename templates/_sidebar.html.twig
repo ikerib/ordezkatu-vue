@@ -70,12 +70,12 @@
                         {{ "sidebar.hizkuntza" | trans }}
                     </a>
                 </li>
-                <li class="nav-item {% if app.request.get('_route') starts with "titulazioa_" %}sidebar-active {% endif %}">
-                    <a class="nav-link {% if app.request.get('_route') starts with "titulazioa_" %}active {% endif %} " href="{{ path('titulazioa_index') }}">
-                        <span data-feather="file-text"></span>
-                        {{ "sidebar.titulazioa" | trans }}
-                    </a>
-                </li>
+{#                <li class="nav-item {% if app.request.get('_route') starts with "titulazioa_" %}sidebar-active {% endif %}">#}
+{#                    <a class="nav-link {% if app.request.get('_route') starts with "titulazioa_" %}active {% endif %} " href="{{ path('titulazioa_index') }}">#}
+{#                        <span data-feather="file-text"></span>#}
+{#                        {{ "sidebar.titulazioa" | trans }}#}
+{#                    </a>#}
+{#                </li>#}
             </ul>
         {% endif %}
     </div>

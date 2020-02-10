@@ -15,7 +15,10 @@ class SailkapenTaldeaType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Sailkapen taldea',
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
             ])
         ;
     }

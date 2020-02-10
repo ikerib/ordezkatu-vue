@@ -193,6 +193,8 @@ class ZerrendaController extends AbstractController
                     $ez->setEmployee($emp);
                     $ez->setZerrenda($zerrenda);
                     $ez->setPosition($position);
+                    $type = $this->em->getRepository( 'App:Type' )->find( 1 ); // TODO: kendu hardcoding
+                    $ez->setType( $type );
                     $this->em->persist($ez);
                     $emp->addEmployeeZerrenda($ez);
                     $emp->setName($data[0]);
@@ -270,6 +272,9 @@ class ZerrendaController extends AbstractController
                             $newEz->setEmployee($ez->getEmployee());
                             $newEz->setZerrenda($oriZerrenda);
                             $newEz->setPosition((int)$position);
+
+                            $type = $this->em->getRepository( 'App:Type' )->find( 1 ); // TODO: Kendu Hardcoding
+                            $newEz->setType( $type );
 
                             /** @var User $user */
                             $user = $this->getUser();

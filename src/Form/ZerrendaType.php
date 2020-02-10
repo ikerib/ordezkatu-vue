@@ -14,6 +14,10 @@ class ZerrendaType extends AbstractType
         $builder
             ->add('name', null, [
                 'label' => 'Izena',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
             ])
         ;
     }

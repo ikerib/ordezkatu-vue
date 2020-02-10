@@ -119,6 +119,11 @@ class Job
      */
     private $titulazioa;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $eskatutakoTitulazioa;
+
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -354,6 +359,18 @@ class Job
     public function setIsUserEditable(bool $isUserEditable): self
     {
         $this->isUserEditable = $isUserEditable;
+
+        return $this;
+    }
+
+    public function getEskatutakoTitulazioa(): ?string
+    {
+        return $this->eskatutakoTitulazioa;
+    }
+
+    public function setEskatutakoTitulazioa(?string $eskatutakoTitulazioa): self
+    {
+        $this->eskatutakoTitulazioa = $eskatutakoTitulazioa;
 
         return $this;
     }

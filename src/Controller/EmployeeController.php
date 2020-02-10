@@ -77,6 +77,8 @@ class EmployeeController extends AbstractController
                     $ez->setZerrenda($zerrenda);
                     $ez->setEmployee($employee);
                     $ez->setPosition($position);
+                    $type = $this->em->getRepository( 'App:Type' )->find( 1 ); // ALTA TODO: kendu hardcoding
+                    $ez->setType( $type );
                     $employee->addEmployeeZerrenda($ez);
                     $this->em->persist($ez);
                     $this->em->persist($employee);

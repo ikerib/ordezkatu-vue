@@ -12,9 +12,16 @@ class ArrazoiaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, [
+                'label' => 'Arrazoia',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
             ->add('aldibaterako', null, [
-                'label' => 'Programa bat da'
+                'label' => 'Programa bat da',
+                'required' => false
             ])
         ;
     }

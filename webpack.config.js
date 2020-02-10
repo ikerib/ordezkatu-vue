@@ -15,6 +15,7 @@ Encore
     .addEntry('jsEmployee', './assets/js/employee.js')
     .addEntry('jsVueApp', './assets/js/vue/app.js')
     .addEntry('jsVueAppAddEmployee', './assets/js/vue/appAddEmployee.js')
+    .addEntry('jsDatepicker','./assets/js/datepicker.js')
     .addStyleEntry('cssGlobal', './assets/css/global.scss')
 
     .splitEntryChunks()
