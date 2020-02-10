@@ -77,7 +77,7 @@ class Job
     public function __construct()
     {
         $this->jobZerrendaEmployees = new ArrayCollection();
-
+        $this->setIsUserEditable( true );
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
     }
