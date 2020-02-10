@@ -57,7 +57,10 @@ class JobType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'label' => 'Lanpostua / Puesto de trabajo',
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
             ])
             ->add('startDate', DateTimeType::class, [
                 'label' => 'Hasiera / Comienzo',
@@ -66,17 +69,17 @@ class JobType extends AbstractType
                 'format' => 'dd-MM-yyyy',
                 'required' => true,
                 'attr' => [
-                    'class' => 'datepicker col-md-6',
-                    'html5' => false,
-                    'data-provide' => 'datetimepicker'
+                    'class' => 'datepicker col-md-2',
                 ]
             ])
             ->add('endDate', DateTimeType::class, [
                 'label' => 'Bukaera / Fin',
                 'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd-MM-yyyy',
                 'required' => true,
                 'attr' => [
-                    'class' => 'datepicker col-md-6'
+                    'class' => 'datepicker col-md-2'
                 ]
             ])
             ->add('description', CKEditorType::class, [
@@ -88,8 +91,13 @@ class JobType extends AbstractType
             ])
             ->add('created', DateTimeType::class, [
                 'widget' => 'single_text',
+                'html5' => false,
+                'format' => 'dd-MM-yyyy',
                 'label' => 'Eskaera data / Fecha de solicitud',
-                'disabled' => false
+                'disabled' => false,
+                'attr' => [
+                    'class' => 'datepicker col-md-2'
+                ]
             ])
             ->add('eginkizunak', CKEditorType::class, [
                 'label' => 'Eginkizunak / Tareas',

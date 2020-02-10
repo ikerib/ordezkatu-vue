@@ -29,17 +29,17 @@ class Job
     private $name;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $startDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $endDate;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -54,13 +54,13 @@ class Job
     private $bestebatzuk;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isUserEditable;
 
      /**
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $created;
 
@@ -77,6 +77,9 @@ class Job
     public function __construct()
     {
         $this->jobZerrendaEmployees = new ArrayCollection();
+
+        $this->startDate = new \DateTime();
+        $this->endDate = new \DateTime();
     }
 
     /**

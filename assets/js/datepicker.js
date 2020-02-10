@@ -7,9 +7,10 @@ $(document).ready(function () {
 
     $('.datepicker').datepicker({
         todayBtn: "linked",
+        format: "dd-mm-yyyy",
         language: "eu",
         autoclose: true,
-        todayHighlight: true
+        todayHighlight: true,
     })
 
 });
