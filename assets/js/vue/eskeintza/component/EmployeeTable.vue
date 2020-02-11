@@ -2,7 +2,7 @@
     <div>
         <template v-if="useFor=='selection'">
             <p>Hauek dira zerrendako hautagaiak</p>
-            <table class="table table-responsive">
+            <table class="table">
                 <thead>
                 <tr>
                     <th></th>
@@ -17,7 +17,12 @@
                 <tr v-for="e in employeesList" v-bind:value="e.id">
                     <td>
                         <label for="checkbox"></label>
-                        <input type="checkbox" id="checkbox" :value="selectEmployee" @input="changeEmployeeSelect(e.employee)">
+                        <input type="checkbox"
+                               id="checkbox"
+                               :value="e.employee.id"
+                               @input="changeEmployeeSelect(e.employee)"
+                               :checked="isChecked(e.employee)"
+                        >
                     </td>
                     <td>{{e.position}}</td>
                     <td>{{ e.employee.name}}</td>
@@ -31,7 +36,7 @@
         </template>
         <template v-else>
             <p>Hauek dira aukeratuak izan diren hautagaiak:</p>
-            <table class="table table-responsive">
+            <table class="table">
                 <thead>
                 <tr>
                     <th></th>
@@ -44,7 +49,7 @@
                 <tbody>
                 <tr v-for="e in employeesList" v-bind:value="e.id">
                     <td>
-                        <button class="btn btn-sm btn-danger" @input="removeFromSelectedEmployee(e)">
+                        <button class="btn btn-sm btn-danger" @click="removeFromSelectedEmployee(e)">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
@@ -90,12 +95,17 @@
             changeEmployeeSelect(e) {
                 console.log("changeEmployeeSelect");
                 console.log(e);
-                // this.$store.commit("UPDATE_SELECTED_EMPLOYEELIST", e);
                 this.$store.commit("SET_SELECTED_EMPLOYEELIST", e);
             },
             removeFromSelectedEmployee(e) {
                 console.log('removeFromSelectedEmployee');
                 console.log(e);
+                this.$store.commit("REMOVE_SELECTED_EMPLOYEELIST", e);
+            },
+            isChecked(e) {
+                console.log("isChecked");
+                console.log(this.$store.getters.IS_SELECTED(e));
+                return this.$store.getters.IS_SELECTED(e);
             }
         }
 

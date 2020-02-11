@@ -25,6 +25,15 @@ const mutations = {
             }).indexOf(payload.id);
             state.selectedEmployeeList.splice(removeIndex, 1);
         }
+    },
+    REMOVE_SELECTED_EMPLOYEELIST: (state, payload) => {
+        console.log("MUTATION REMOVE_SELECTED_EMPLOYEELIST");
+
+        const removeIndex = state.selectedEmployeeList.map(item => {
+            return item.id;
+        }).indexOf(payload.id);
+        state.selectedEmployeeList.splice(removeIndex, 1);
+
     }
 };
 
@@ -37,6 +46,9 @@ const getters = {
         console.log("GETTER SELECTEDEMPLOYEELIST");
         return state.selectedEmployeeList;
     },
+    IS_SELECTED: (state) => (payload) => {
+        return state.selectedEmployeeList.some(el => el.id === payload.id)
+    }
 };
 
 const actions = {

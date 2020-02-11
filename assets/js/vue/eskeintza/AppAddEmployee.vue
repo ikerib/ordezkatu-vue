@@ -52,9 +52,8 @@
                 job: null,
                 types: [],
                 selectedTypeId: "-1",
+                selectedZerrendaId: "-1",
                 selectEmployee: null,
-                selectedZerrendaId: "-1",
-                selectedZerrendaId: "-1",
                 employeeList: [],
                 zerrendak: [],
                 employees: []
@@ -73,7 +72,6 @@
         },
         computed: {
           employeesList() {
-
               return this.employees
           }
         },
@@ -82,15 +80,6 @@
                 console.log("Change type cmb:" + e.target.value);
             },
             changeZerrendaId: function (e) {
-                // console.log("Change Zerrenda cmb:" + e.target.value);
-                // const url = Routing.generate("get_employeezerrenda", { "zerrendaid": e.target.value });
-                // console.log(url);
-                // axios.get(url).then(response => {
-                //     console.log("Response");
-                //     console.log(response);
-                //     console.log(response.data);
-                //     this.employees = (response.data)
-                // });
                 console.log('changeZerrendaId');
                 this.$store.dispatch("GET_EMPLOYEELIST", e.target.value);
             },
