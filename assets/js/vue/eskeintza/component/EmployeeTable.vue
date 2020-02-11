@@ -40,6 +40,7 @@
                 <thead>
                 <tr>
                     <th></th>
+                    <th>Pos</th>
                     <th>Izena</th>
                     <th>Abizenak</th>
                     <th>Telf</th>
@@ -47,12 +48,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="e in employeesList" v-bind:value="e.id">
+                <tr v-for="(e, index) in employeesList" v-bind:value="e.id">
                     <td>
                         <button class="btn btn-sm btn-danger" @click="removeFromSelectedEmployee(e)">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
+                    <td>{{ index + 1 }}</td>
                     <td>{{ e.name}}</td>
                     <td>{{ e.abizena1 }}&nbsp;{{ e.abizena2 }}</td>
                     <td>{{ e.telefono }}</td>
