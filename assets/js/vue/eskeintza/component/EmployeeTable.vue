@@ -36,7 +36,7 @@
         </template>
         <template v-else>
             <p>Hauek dira aukeratuak izan diren hautagaiak:</p>
-            <table class="table">
+            <table class="table selectedEmployeesTable">
                 <thead>
                 <tr>
                     <th></th>
@@ -113,3 +113,9 @@
 
     };
 </script>
+
+<style scoped>
+    .selectedEmployeesTable {
+        background-color: gainsboro !important;
+    }
+</style>
