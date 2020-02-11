@@ -29,6 +29,7 @@
         "vich/uploader-bundle": "^1.12"
     },
     "require-dev": {
+        "deployer/deployer": "^6.7",
         "symfony/maker-bundle": "^1.14"
     },
     "config": {
