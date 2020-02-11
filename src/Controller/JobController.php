@@ -74,10 +74,12 @@ class JobController extends AbstractController
     {
         $types = $typeRepository->findAll();
         $zerrendak = $zerrendaRepository->findAll();
+        $jobDetails = $job->getJobDetails();
         return $this->render( 'job/addEmployee.html.twig', [
             'job' => $serializer->serialize( $job, 'json', [ 'groups' => 'main' ] ),
             'types' => $serializer->serialize( $types, 'json', [ 'groups' => 'main' ] ),
             'zerrendak' => $serializer->serialize( $zerrendak, 'json', [ 'groups' => 'main' ] ),
+            'jobDetails' => $serializer->serialize( $jobDetails, 'json', [ 'groups' => 'main' ] ),
         ] );
     }
 

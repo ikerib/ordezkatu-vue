@@ -26,6 +26,14 @@ const mutations = {
             state.selectedEmployeeList.splice(removeIndex, 1);
         }
     },
+    SET_INITIAL_SELECTED_EMPLOYEELIST: (state, payload) => {
+        console.log("MUTATION SET_INITIAL_SELECTED_EMPLOYEELIST");
+        payload.forEach(function (data, index) {
+            console.log(index);
+            console.log(data);
+            state.selectedEmployeeList.push(data.employee);
+        });
+    },
     REMOVE_SELECTED_EMPLOYEELIST: (state, payload) => {
         console.log("MUTATION REMOVE_SELECTED_EMPLOYEELIST");
 
@@ -81,6 +89,11 @@ const actions = {
     UPDATE_SELECTED_EMPLOYEELIST: (context, payload) => {
         console.log("UPDATE_SELECTED_EMPLOYEELIST");
         context.commit("SET_SELECTED_EMPLOYEELIST", payload)
+    },
+    INITIAL_SELECTED_EMPLOYEE: (context, payload) => {
+        console.log("INITIAL_SELECTED_EMPLOYEE");
+        console.log(payload);
+        context.commit("SET_INITIAL_SELECTED_EMPLOYEELIST", payload)
     }
 };
 

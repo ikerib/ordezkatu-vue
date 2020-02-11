@@ -37,6 +37,13 @@
                 <td>
                     <ul class="list-inline">
                         {% if is_granted('ROLE_ADMIN') %}
+                            {% if job.jobDetails |length > 0 %}
+                                <li class="list-inline-item">
+                                    <a href="{{ path('job_add_employee', { 'id': job.id}) }}">
+                                        <i class="fas fa-list-ol"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
                             {% if job.isUserEditable == false %}
                                 <li class="list-inline-item">
                                     <a href="{{ path('job_show', {'id': job.id}) }}">

@@ -52,6 +52,7 @@
         data() {
             return {
                 job: null,
+                jobDetails: [],
                 types: [],
                 selectedTypeId: "-1",
                 selectedZerrendaId: "-1",
@@ -65,12 +66,18 @@
             let el = document.querySelector("div[data-job]");
             this.job = JSON.parse(el.dataset.job);
 
+            el = document.querySelector("div[data-jobDetails]");
+            console.log(el);
+            this.jobDetails = JSON.parse(el.dataset.jobdetails);
+            console.log(this.jobDetails);
+
             el = document.querySelector("div[data-types]");
             this.types = JSON.parse(el.dataset.types);
 
             el = document.querySelector("div[data-zerrendak]");
             this.zerrendak = JSON.parse(el.dataset.zerrendak);
 
+            this.$store.dispatch("INITIAL_SELECTED_EMPLOYEE", this.jobDetails);
         },
         computed: {
           employeesList() {

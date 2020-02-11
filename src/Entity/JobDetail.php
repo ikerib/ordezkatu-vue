@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobDetailRepository")
@@ -14,6 +15,7 @@ class JobDetail
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"main"})
      */
     private $id;
 
@@ -35,11 +37,13 @@ class JobDetail
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="jobDetails")
+     * @Groups({"main"})
      */
     private $job;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="jobDetails")
+     * @Groups({"main"})
      */
     private $employee;
 
