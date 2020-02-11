@@ -33,14 +33,14 @@
     import store from '../store/store'
     export default {
         name: "CallTable",
-        props: ['rowData','zerrendaid', 'employeeid'],
+        props: ['rowData','jobid', 'employeeid'],
            methods: {
             callRemove: function (id, index) {
                 if ( confirm("Seguru dei hau ezabatu nahi duzula?")) {
 
                     const payload = {
                         callid: id,
-                        zerrendaid: this.zerrendaid
+                        jobid: this.jobid
                     };
 
                     this.$store.dispatch('REMOVE_CALL', payload)

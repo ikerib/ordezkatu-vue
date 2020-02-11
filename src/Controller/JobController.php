@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\JobType;
 use App\Form\JobZerrendaType;
 use App\Repository\EmployeeZerrendaRepository;
+use App\Repository\ErantzunaRepository;
 use App\Repository\JobRepository;
 use App\Repository\TypeRepository;
 use App\Repository\ZerrendaRepository;
@@ -122,6 +123,7 @@ class JobController extends AbstractController
      * @param Job                        $job
      *
      * @param TypeRepository             $typeRepository
+     * @param ErantzunaRepository        $erantzunaRepository
      * @param EmployeeZerrendaRepository $employeeZerrendaRepository
      * @param SerializerInterface        $serializer
      *
@@ -129,18 +131,17 @@ class JobController extends AbstractController
      */
     public function show(Job $job,
                          TypeRepository $typeRepository,
+                         ErantzunaRepository $erantzunaRepository,
                          EmployeeZerrendaRepository $employeeZerrendaRepository,
                          SerializerInterface $serializer): Response
 
     {
-        $types = $typeRepository->findAll();
+        $types = $erantzunaRepository->findAll();
 
 
         return $this->render('job/show.html.twig', [
             'job'       => $serializer->serialize($job, 'json',  ['groups' => 'main']),
-            'zerrenda'  => $serializer->serialize($job, 'json',  ['groups' => 'main']),
             'types'     => $serializer->serialize($types, 'json',  ['groups' => 'main']),
-
         ]);
     }
 

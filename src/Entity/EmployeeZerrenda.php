@@ -63,17 +63,6 @@ class EmployeeZerrenda
      */
     private $type;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employeezerrenda")
-     * @Groups({"main", "details"})
-     */
-    private $calls;
-
-    public function __construct()
-    {
-        $this->calls = new ArrayCollection();
-    }
-
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -127,37 +116,6 @@ class EmployeeZerrenda
     public function setType(?Type $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Call[]
-     */
-    public function getCalls(): Collection
-    {
-        return $this->calls;
-    }
-
-    public function addCall(Calls $call): self
-    {
-        if (!$this->calls->contains($call)) {
-            $this->calls[] = $call;
-            $call->setEmployeezerrenda($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCall(Calls $call): self
-    {
-        if ($this->calls->contains($call)) {
-            $this->calls->removeElement($call);
-            // set the owning side to null (unless already changed)
-            if ($call->getEmployeezerrenda() === $this) {
-                $call->setEmployeezerrenda(null);
-            }
-        }
 
         return $this;
     }

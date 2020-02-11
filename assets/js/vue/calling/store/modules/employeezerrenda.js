@@ -54,9 +54,9 @@ const getters = {
 
 const actions = {
     GET_EMPLOYEELIST: async ( context, payload ) => {
-        const urlZerrendaEmployee = Routing.generate("get_employeezerrenda", { "zerrendaid": payload });
+        const urlZerrendaEmployee = Routing.generate("get_job", { "id": payload });
         let { data } = await axios.get(urlZerrendaEmployee);
-        context.commit("SET_EMPLOYEELIST", data);
+        context.commit("SET_EMPLOYEELIST", data.jobDetails);
     },
     REMOVE_CALL: async ( context, payload ) => {
         console.log("REMOVINGGGG");
@@ -64,7 +64,7 @@ const actions = {
         const urlCallDelete = '/api/calls/' + payload.callid;
         axios.delete(urlCallDelete)
              .then(resp => {
-                 context.dispatch("GET_EMPLOYEELIST", payload.zerrendaid);
+                 context.dispatch("GET_EMPLOYEELIST", payload.jobid);
              })
              .catch(error => {
                  console.log(error);
@@ -79,7 +79,7 @@ const actions = {
                  console.log("ADD_CALL response");
                  console.log(response);
                  context.commit("SET_LAST_ID", response.data.id);
-                 context.dispatch("GET_EMPLOYEELIST", payload.zerrendaid)
+                 context.dispatch("GET_EMPLOYEELIST", payload.jobid)
              })
              .catch(e => {
                  console.log("HORROR!!!");
@@ -96,7 +96,7 @@ const actions = {
             notes: payload.notes
         }).then( response => {
             console.log(response);
-            context.dispatch("GET_EMPLOYEELIST", payload.zerrendaid)
+            context.dispatch("GET_EMPLOYEELIST", payload.jobid)
         }).catch( e => {
             console.log(e);
         })

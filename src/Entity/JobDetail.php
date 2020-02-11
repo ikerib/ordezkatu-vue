@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -15,7 +17,7 @@ class JobDetail
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $id;
 
@@ -37,7 +39,6 @@ class JobDetail
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="jobDetails")
-     * @Groups({"main"})
      */
     private $job;
 
@@ -46,6 +47,17 @@ class JobDetail
      * @Groups({"main"})
      */
     private $employee;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="jobdetail")
+     * @Groups({"main", "details"})
+     */
+    private $calls;
+
+    public function __construct()
+    {
+        $this->calls = new ArrayCollection();
+    }
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -101,6 +113,37 @@ class JobDetail
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Calls[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
+
+    public function addCall(Calls $call): self
+    {
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setJobdetail($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCall(Calls $call): self
+    {
+        if ($this->calls->contains($call)) {
+            $this->calls->removeElement($call);
+            // set the owning side to null (unless already changed)
+            if ($call->getJobdetail() === $this) {
+                $call->setJobdetail(null);
+            }
+        }
 
         return $this;
     }

@@ -43,17 +43,6 @@ class Calls
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\EmployeeZerrenda", inversedBy="calls")
-     */
-    private $employeezerrenda;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="calls")
-     * @Groups({"main"})
-     */
-    private $result;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Employee", inversedBy="calls")
      * @Groups({"main"})
      */
@@ -64,6 +53,16 @@ class Calls
      * @Groups({"main"})
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Erantzuna", inversedBy="calls")
+     */
+    private $erantzuna;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\JobDetail", inversedBy="calls")
+     */
+    private $jobdetail;
 
     public function __construct()
     {
@@ -102,18 +101,6 @@ class Calls
     public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
-
-        return $this;
-    }
-
-    public function getEmployeezerrenda(): ?EmployeeZerrenda
-    {
-        return $this->employeezerrenda;
-    }
-
-    public function setEmployeezerrenda(?EmployeeZerrenda $employeezerrenda): self
-    {
-        $this->employeezerrenda = $employeezerrenda;
 
         return $this;
     }
@@ -162,6 +149,30 @@ class Calls
     public function setEmployees(?self $employees): self
     {
         $this->employees = $employees;
+
+        return $this;
+    }
+
+    public function getErantzuna(): ?Erantzuna
+    {
+        return $this->erantzuna;
+    }
+
+    public function setErantzuna(?Erantzuna $erantzuna): self
+    {
+        $this->erantzuna = $erantzuna;
+
+        return $this;
+    }
+
+    public function getJobdetail(): ?JobDetail
+    {
+        return $this->jobdetail;
+    }
+
+    public function setJobdetail(?JobDetail $jobdetail): self
+    {
+        $this->jobdetail = $jobdetail;
 
         return $this;
     }

@@ -32,6 +32,23 @@ class ApiJobController extends AbstractFOSRestController
     }
 
     /**
+     * @Rest\Get("/job/{id}", name="get_job", options={ "expose": true})
+     *
+     * @param Job $job
+     *
+     * @return View|Response
+     */
+    public function getJob(Job $job)
+    {
+        $ctx = new Context();
+        $ctx->addGroup('main');
+
+        $view = $this->view( $job, Response::HTTP_OK )->setContext( $ctx );
+
+        return $this->handleView( $view );
+    }
+
+    /**
      * @Rest\Post("/job/{id}/employees", name="post_job_employee", options={ "expose":true })
      * @Rest\RequestParam(name="employees", description="array of employees", nullable=false)
      * @param ParamFetcher $paramFetcher

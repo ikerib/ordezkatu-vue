@@ -18,43 +18,49 @@ class Job
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"main"})
+     * @Groups({"main", "details"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"main", "details"})
      */
     private $startDate;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Groups({"main", "details"})
      */
     private $endDate;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"main", "details"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"main", "details"})
      */
     private $eginkizunak;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"main", "details"})
      */
     private $bestebatzuk;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"main", "details"})
      */
     private $isUserEditable;
 
@@ -130,6 +136,7 @@ class Job
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\JobDetail", mappedBy="job")
+     * @Groups({"main"})
      */
     private $jobDetails;
 

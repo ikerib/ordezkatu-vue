@@ -3,6 +3,7 @@ menu.municipio.list: Municipios
 menu.type.list: 'Tipos de estado'
 menu.customer: Candidato
 sidebar.customer: Candidatos
+sidebar.erantzuna: 'Respuestas'
 sidebar.zerrendak: Listas
 sidebar.lanpostuak: Ofertas
 sidebar.eskaerak: Peticiones

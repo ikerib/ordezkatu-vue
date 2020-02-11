@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-1">&nbsp;</div>
                             <div class="col-md-8">
-                                <CallTable :rowData="el.calls" :zerrendaid="zerrendaid" :employeeid="el.employee.id"></CallTable>
+                                <CallTable :rowData="el.calls" :jobid="jobid" :employeeid="el.employee.id"></CallTable>
                             </div>
                         </div>
 
@@ -115,7 +115,7 @@
             CallTable,
             StackModal
         },
-        props: ['zerrendaid'],
+        props: ['jobid'],
         data() {
             return {
                 modalClass: "",
@@ -169,10 +169,12 @@
 
                 this.emp = el;
                 const payload = {
-                    zerrendaid: this.zerrendaid,
+                    jobid: this.jobid,
+                    jobdetailid: el.id,
                     employeeid: el.employee.id
                 };
-
+                console.log("bagoaz!!");
+                console.log(payload);
                 this.$store.dispatch('ADD_CALL', payload)
 
             },
