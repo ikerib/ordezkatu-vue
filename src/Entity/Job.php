@@ -80,6 +80,7 @@ class Job
         $this->setIsUserEditable( true );
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
+        $this->jobDetails = new ArrayCollection();
     }
 
     /**
@@ -126,6 +127,11 @@ class Job
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $eskatutakoTitulazioa;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\JobDetail", mappedBy="job")
+     */
+    private $jobDetails;
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -374,6 +380,37 @@ class Job
     public function setEskatutakoTitulazioa(?string $eskatutakoTitulazioa): self
     {
         $this->eskatutakoTitulazioa = $eskatutakoTitulazioa;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|JobDetail[]
+     */
+    public function getJobDetails(): Collection
+    {
+        return $this->jobDetails;
+    }
+
+    public function addJobDetail(JobDetail $jobDetail): self
+    {
+        if (!$this->jobDetails->contains($jobDetail)) {
+            $this->jobDetails[] = $jobDetail;
+            $jobDetail->setJob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobDetail(JobDetail $jobDetail): self
+    {
+        if ($this->jobDetails->contains($jobDetail)) {
+            $this->jobDetails->removeElement($jobDetail);
+            // set the owning side to null (unless already changed)
+            if ($jobDetail->getJob() === $this) {
+                $jobDetail->setJob(null);
+            }
+        }
 
         return $this;
     }

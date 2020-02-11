@@ -1,6 +1,8 @@
 <template>
     <div>
-        <p>Gehitu hautagaiak eskeintzarara:</p>
+        <h2>Gehitu hautagaiak eskeintzarara:</h2>
+        <hr>
+        <button class="btn btn-primary btn-lg" @click="saveAndContinue"><i class="far fa-save"></i>&nbsp;Gorde edta jarraitu</button>
         <hr>
         <div class="row">
             <div class="col-md-6">
@@ -96,6 +98,28 @@
             changeEmployeeSelect: function (e) {
                 console.log("Employee select");
                 console.log(e);
+            },
+            saveAndContinue: function () {
+                const selectedEmployees = this.$store.getters.SELECTEDEMPLOYEELIST;
+                if ( selectedEmployees.length > 0 ) {
+                    // const url = Routing.generate("post_job_employee", { "id": this.job.id });
+                    const url = "/api/job/2/employees?XDEBUG_SESSION_START=PHPSTORM";
+                    console.log(url);
+                    const payload = {
+                        employees: selectedEmployees
+                    }
+                    axios.post(url,payload)
+                         .then(response => {
+                            console.log("ADD_CALL response");
+                            console.log(response);
+                             const url = Routing.generate("job_index");
+                             window.location.href = url;
+                        })
+                         .catch(e => {
+                             console.log("HORROR!!!");
+
+                         });
+                }
             }
         }
     }

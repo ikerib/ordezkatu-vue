@@ -104,11 +104,17 @@ class Employee
      */
     private $calls;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\JobDetail", mappedBy="employee")
+     */
+    private $jobDetails;
+
     public function __construct()
     {
         $this->employeeZerrenda = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
         $this->calls = new ArrayCollection();
+        $this->jobDetails = new ArrayCollection();
     }
 
     public function __toString()
@@ -344,6 +350,37 @@ class Employee
             // set the owning side to null (unless already changed)
             if ($call->getEmployee() === $this) {
                 $call->setEmployee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|JobDetail[]
+     */
+    public function getJobDetails(): Collection
+    {
+        return $this->jobDetails;
+    }
+
+    public function addJobDetail(JobDetail $jobDetail): self
+    {
+        if (!$this->jobDetails->contains($jobDetail)) {
+            $this->jobDetails[] = $jobDetail;
+            $jobDetail->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobDetail(JobDetail $jobDetail): self
+    {
+        if ($this->jobDetails->contains($jobDetail)) {
+            $this->jobDetails->removeElement($jobDetail);
+            // set the owning side to null (unless already changed)
+            if ($jobDetail->getEmployee() === $this) {
+                $jobDetail->setEmployee(null);
             }
         }
 

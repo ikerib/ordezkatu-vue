@@ -25,7 +25,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class JobController extends AbstractController
 {
     /**
-     * @Route("/", name="job_index", methods={"GET"})
+     * @Route("/", name="job_index", methods={"GET"}, options={ "expose":true })
      * @param JobRepository $jobRepository
      *
      * @return Response
