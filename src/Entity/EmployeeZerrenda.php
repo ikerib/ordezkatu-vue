@@ -59,6 +59,7 @@ class EmployeeZerrenda
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="employeeZerrendas")
+     * @Groups({"main", "details"})
      */
     private $type;
 

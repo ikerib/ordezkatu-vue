@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label for="cmbZerrendak">Zerrendak</label>
                     <select :value="selectedZerrendaId" @input="changeZerrendaId" id="cmbZerrendak" class="custom-select">
-                        <option disabled value="-1">Aukeratu bat</option>
+                        <option value="-1">Aukeratu bat</option>
                         <option v-for="zerrenda in zerrendak" v-bind:value="zerrenda.id">{{zerrenda.name}}</option>
                     </select>
                 </div>
@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label for="cmbTypes">Egoera mota</label>
                     <select :value="selectedTypeId" @input="changeTypeId" id="cmbTypes" class="custom-select">
-                        <option disabled value="-1">Aukeratu bat</option>
+                        <option value="-1">Aukeratu bat</option>
                         <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
                     </select>
                 </div>
@@ -77,11 +77,21 @@
         },
         methods: {
             changeTypeId: function(e) {
-                console.log("Change type cmb:" + e.target.value);
+                this.selectedTypeId = e.target.value;
+                const payload = {
+                    typeid: this.selectedTypeId,
+                    zerrendaid: this.selectedZerrendaId
+                };
+                this.$store.dispatch("GET_EMPLOYEELIST", payload);
             },
             changeZerrendaId: function (e) {
+                this.selectedZerrendaId = e.target.value;
                 console.log('changeZerrendaId');
-                this.$store.dispatch("GET_EMPLOYEELIST", e.target.value);
+                const payload = {
+                    typeid: this.selectedTypeId,
+                    zerrendaid: this.selectedZerrendaId
+                };
+                this.$store.dispatch("GET_EMPLOYEELIST", payload);
             },
             changeEmployeeSelect: function (e) {
                 console.log("Employee select");

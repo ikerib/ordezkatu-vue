@@ -54,9 +54,29 @@ const getters = {
 const actions = {
     GET_EMPLOYEELIST: async ( context, payload ) => {
         console.log("ACTION GET_EMPLOYEELIST");
-        const urlZerrendaEmployee = Routing.generate("get_employeezerrenda", { "zerrendaid": payload });
+        const urlZerrendaEmployee = Routing.generate("get_employeezerrenda", { "zerrendaid": payload.zerrendaid });
         let { data } = await axios.get(urlZerrendaEmployee);
-        context.commit("SET_EMPLOYEELIST", data);
+        // filter by Type
+        console.log("FILTRO GABE");
+        console.log(data);
+        if ( payload.typeid !== "-1" ) {
+            const filtered = data.filter(function ( d ) {
+                console.log(d.type.id);
+                console.log(typeof (d.type.id));
+                console.log(payload.typeid);
+                console.log(typeof (payload.typeid));
+                return d.type.id.toString() === payload.typeid;
+                // console.log(d);
+                // return false
+            });
+            console.log("FILTRATUTA");
+            console.log(filtered);
+            context.commit("SET_EMPLOYEELIST", filtered);
+        } else {
+            context.commit("SET_EMPLOYEELIST", data);
+        }
+
+
     },
     UPDATE_SELECTED_EMPLOYEELIST: (context, payload) => {
         console.log("UPDATE_SELECTED_EMPLOYEELIST");
