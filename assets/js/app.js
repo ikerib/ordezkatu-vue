@@ -178,6 +178,13 @@ $(document).ready(function () {
             }
         })
     })
+
+    $("#erantzuna_color").on("change", function () {
+        console.log(this.value);
+        // remove all clases
+        $('#divAdibide').removeClass().addClass("card").addClass(this.value);
+
+    });
 });
 
 

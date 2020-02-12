@@ -1,10 +1,10 @@
 <template>
     <div>
         <div v-for="(el, index) in employeeList">
-            <div class="card border-light">
+            <div class="card" :class="borderStatus(el)">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-8 col-sm-8">
+                        <div class="col-md-7 col-sm-7">
                             <ul class="list-inline no-bottom-marging">
                                 <li class="list-inline-item">
                                     <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id"
@@ -22,8 +22,12 @@
                                 <li class="list-inline-item"><h5>{{el.employee.name}} {{el.employee.abizena1}} {{el.employee.abizena2}}</h5></li>
                             </ul>
                         </div>
-                        <div class="col-md-4 col-sm-4">
+                        <div class="col-md-5 col-sm-5">
                             <ul class="list-inline no-bottom-marging text-right ">
+<!--                                <li>KK {{el.lastErantzuna}}</li>-->
+                                <li v-if="el.lastErantzuna" class="list-inline-item">
+                                    Azken erantzuna: {{ el.lastErantzuna.name}}
+                                </li>
                                 <li class="list-inline-item">
                                     <button v-if="!isCalling[el.id]" @click="newCall(el)" class="btn btn-outline-secondary">
                                         <i class="fas fa-phone"> Dei berria</i>
@@ -74,6 +78,7 @@
                     </div>
                 </div>
             </div>
+            <div class="row">&nbsp;</div>
             <stack-modal :show="show"
                          title="Nola amaitu da deia?"
                          @close="doModalClose"
@@ -125,10 +130,8 @@
             };
         },
         mounted() {
-            console.log("ERANTZUNAK");
             let el = document.querySelector("div[data-erantzunak]");
             this.erantzunak = JSON.parse(el.dataset.erantzunak);
-            console.log(this.erantzunak);
         },
         computed: {
             employeeList() {
@@ -151,8 +154,19 @@
             notes() {
                 return this.$store.getters.NOTES;
             }
+
         },
         methods: {
+            borderStatus: function(jobDetail) {
+                if ( jobDetail.lastErantzuna ) {
+                    return jobDetail.lastErantzuna.color;
+                } else {
+                    return {
+                        'border-default': true
+                    }
+                }
+
+            },
             updateNotes: function(e) {
                 this.$store.commit("SET_NOTES", e.target.value);
             },
@@ -174,8 +188,6 @@
                     jobdetailid: el.id,
                     employeeid: el.employee.id
                 };
-                console.log("bagoaz!!");
-                console.log(payload);
                 this.$store.dispatch('ADD_CALL', payload)
 
             },
@@ -189,9 +201,6 @@
                 this.$store.dispatch("TOOTGLE_SHOW", payload);
             },
             doModalSave: function () {
-                console.log('doModalSave');
-                console.log(this.valueCallStatus);
-
                 if (( this.valueCallStatus ) && ( this.valueCallStatus !== "-1" )){
                     const payload = {
                         valueCallStatus: this.valueCallStatus,

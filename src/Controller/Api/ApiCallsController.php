@@ -147,6 +147,11 @@ class ApiCallsController extends AbstractFOSRestController
             $call->setNotes( $notes );
             $this->entityManager->persist($call);
 
+            // Save las answer to JobDetail entity
+            $jobD = $call->getJobdetail();
+            $jobD->setLastErantzuna( $erantzuna );
+            $this->entityManager->persist($jobD);
+
             $this->entityManager->flush();
             $ctx = new Context();
             $ctx->addGroup( 'main' );

@@ -22,6 +22,12 @@ class JobDetail
     private $id;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"main", "details"})
+     */
+    private $position;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="date", nullable=true)
      */
@@ -55,9 +61,10 @@ class JobDetail
     private $calls;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Erantzuna", inversedBy="jobDetails")
+     * @Groups({"main", "details"})
      */
-    private $position;
+    private $lastErantzuna;
 
     public function __construct()
     {
@@ -161,6 +168,18 @@ class JobDetail
     public function setPosition(?int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getLastErantzuna(): ?Erantzuna
+    {
+        return $this->lastErantzuna;
+    }
+
+    public function setLastErantzuna(?Erantzuna $lastErantzuna): self
+    {
+        $this->lastErantzuna = $lastErantzuna;
 
         return $this;
     }

@@ -17,19 +17,14 @@ const mutations = {
         state.lastId = payload;
     },
     SET_SHOW: (state, payload) => {
-        console.log('Mutation show');
-        console.log(payload);
         state.show = !state.show;
         state.valueCallStatus = payload.valueCallStatus;
-        console.log(state.valueCallStatus);
         state.notes = payload.notes;
     },
     SET_CALL_STATUS: (state, payload) => {
-        console.log("Mutation call status");
         state.valueCallStatus = payload;
     },
     SET_NOTES: (state, payload) => {
-        console.log("Mutation notes");
         state.notes = payload;
     }
 };
@@ -59,7 +54,6 @@ const actions = {
         context.commit("SET_EMPLOYEELIST", data.jobDetails);
     },
     REMOVE_CALL: async ( context, payload ) => {
-        console.log("REMOVINGGGG");
         // const urlCallDelete = Routing.generate("delete_calls", payload);
         const urlCallDelete = '/api/calls/' + payload.callid;
         axios.delete(urlCallDelete)
@@ -71,13 +65,9 @@ const actions = {
              })
     },
     ADD_CALL: async (context, payload) => {
-        console.log("ADD_CALL");
-        console.log(payload);
         const postCallUrl = "/api/calls?XDEBUG_SESSION_START=PHPSTORM";
         axios.post(postCallUrl, payload)
              .then(response => {
-                 console.log("ADD_CALL response");
-                 console.log(response);
                  context.commit("SET_LAST_ID", response.data.id);
                  context.dispatch("GET_EMPLOYEELIST", payload.jobid)
              })
@@ -87,36 +77,27 @@ const actions = {
              });
     },
     UPDATE_CALL: async (context, payload) => {
-        console.log("XIEEEEEEEEEEEErrrrrrrrrrrrr");
-        console.log(payload);
         // const putUrl = "/api/calls/" + payload.id + '?XDEBUG_SESSION_START=PHPSTORM';
         const putUrl = "/api/calls/" + payload.id ;
         axios.put(putUrl, {
             erantzunaid: payload.valueCallStatus,
             notes: payload.notes
         }).then( response => {
-            console.log("AFTER PUTTTTTTTT");
-            console.log(response);
             context.dispatch("GET_EMPLOYEELIST", payload.jobid)
         }).catch( e => {
             console.log(e);
         })
     },
     TOOTGLE_SHOW: (context, payload) => {
-        console.log('Action Toogle show');
-        console.log(payload);
         context.commit('SET_SHOW', payload)
     },
     UPDATE_LAST_ID : (context, payload) => {
-        console.log("Action UPDATE_LAST_ID:" + payload.id);
         context.commit('SET_LAST_ID', payload.id)
     },
     UPDATE_CALL_STATUS: (context, payload) => {
-        console.log("Action UPDATE_CALL_STATUS");
         context.commit('SET_CALL_STATUS', payload)
     },
     UPDATE_NOTES: (context, payload) => {
-        console.log("Action UPDATE_NOTES");
         context.commit('SET_NOTES', payload)
     }
 };

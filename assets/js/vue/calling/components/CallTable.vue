@@ -49,8 +49,6 @@
                 }
             },
             callEdit: function (call, index) {
-                console.log('callEdit: ' +  call.id);
-                console.log(call);
                 const payload = {
                     valueCallStatus: call.erantzuna ? call.erantzuna.id : null,
                     notes: call.notes

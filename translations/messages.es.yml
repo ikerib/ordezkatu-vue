@@ -3,7 +3,7 @@ menu.municipio.list: Municipios
 menu.type.list: 'Tipos de estado'
 menu.customer: Candidato
 sidebar.customer: Candidatos
-sidebar.erantzuna: 'Respuestas'
+sidebar.erantzuna: Respuestas
 sidebar.zerrendak: Listas
 sidebar.lanpostuak: Ofertas
 sidebar.eskaerak: Peticiones
@@ -67,3 +67,10 @@ sidebar.titulazioa: Titulaciones
 'Hizkuntzen zerrenda': 'Lista idiomas'
 'Titulazio berria': 'Nueva titulación'
 'Titulazioen zerrenda': 'Lista de titulaciones'
+sidebar.erantzunak: 'Respuestas'
+'Izendapen mota berria': 'Nuevo tipo de Petición'
+'Izendapen mota zerrenda': 'Listado tipos de petición'
+'Hizkuntz eskakizun berria': 'Nuevo requisito de idioma'
+'Hizkuntz eskakizun zerrenda': 'Listado requisitos de idioma'
+'Erantzun berria': 'Nueva respuesta'
+'Erantzunen zerrenda': 'Listado de respuestas'

@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li class="nav-item {% if app.request.get('_route') starts with "erantzuna_" %}sidebar-active {% endif %}">
-                    <a class="nav-link {% if app.request.get('_route') starts with "type_" %}active {% endif %} " href="{{ path('erantzuna_index')}}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "erantzuna_" %}active {% endif %} " href="{{ path('erantzuna_index')}}">
                         <span data-feather="file-text"></span>
                         {{ "sidebar.erantzunak" | trans }}
                     </a>

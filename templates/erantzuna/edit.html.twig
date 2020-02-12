@@ -17,6 +17,49 @@
         </div>
     </div>
 
-    {{ include('erantzuna/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('erantzuna/_form.html.twig', {'button_label': 'Gorde'}) }}
+
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8"><p>Adibidea: </p></div></div>
+        <div class="col-md-2"></div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div id="divAdibide" class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-8">
+                            <ul class="list-inline no-bottom-marging">
+                                <li class="list-inline-item">
+                                    <h5>Pos: <span class="badge badge-secondary"></span></h5>
+                                </li>
+                                <li class="list-inline-item">&nbsp;</li>
+                                <li class="list-inline-item">
+                                    <h5>Iker Ibarguren Berasaluze</h5>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <ul class="list-inline no-bottom-marging text-right ">
+                                <li class="list-inline-item">
+                                    <button class="btn btn-outline-secondary">
+                                        <i class="fas fa-phone"> </i>
+                                    </button> <!---->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="collapse1" class="collapse">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
 
 {% endblock %}
