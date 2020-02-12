@@ -28,12 +28,14 @@ class Calls
     /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"main"})
      */
     private $created;
 
     /**
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"main"})
      */
     private $updated;
 
@@ -56,6 +58,7 @@ class Calls
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Erantzuna", inversedBy="calls")
+     * @Groups({"main"})
      */
     private $erantzuna;
 

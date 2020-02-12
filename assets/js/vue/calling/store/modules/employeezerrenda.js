@@ -92,9 +92,10 @@ const actions = {
         // const putUrl = "/api/calls/" + payload.id + '?XDEBUG_SESSION_START=PHPSTORM';
         const putUrl = "/api/calls/" + payload.id ;
         axios.put(putUrl, {
-            typeid: payload.valueCallStatus,
+            erantzunaid: payload.valueCallStatus,
             notes: payload.notes
         }).then( response => {
+            console.log("AFTER PUTTTTTTTT");
             console.log(response);
             context.dispatch("GET_EMPLOYEELIST", payload.jobid)
         }).catch( e => {

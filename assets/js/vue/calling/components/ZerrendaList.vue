@@ -80,16 +80,15 @@
                          v-on:save="doModalSave"
                          :modal-class="{ ['modal-morder-0']: true }"
                          :saveButton="{ title: 'Gorde', visible: true, btnClass: {'btn btn-primary': true}}"
-                         :cancelButton="{ title: 'Ezeztatu', visible: true, btnClass: {'btn btn-outline-secondary': true}}"
+                         :cancelButton="{ title: 'Ezeztatu', visible: true, btnClass: {'btn btn-outline-secondary': true}}">
 
-            >
                 <h5 class="modal-title"><span v-if="emp.employee">{{ emp.employee.name }} {{ emp.employee.abizena1 }} {{ emp.employee.abizena2 }}</span></h5>
 
                 <div class="form-group">
                     <label for="cmdCallStatus"></label>
                     <select :value="valueCallStatus" @input="updateCallStatus" id="cmdCallStatus" class="custom-select">
                         <option disabled value="-1">Aukeratu bat</option>
-                        <option v-for="type in types" v-bind:value="type.id">{{type.name}}</option>
+                        <option v-for="erantzuna in erantzunak" v-bind:value="erantzuna.id">{{erantzuna.name}}</option>
                     </select>
                 </div>
                 <hr>
@@ -119,15 +118,17 @@
         data() {
             return {
                 modalClass: "",
-                types: [],
+                erantzunak: [],
                 emp: "",
                 rowData: [],
                 isCalling: []
             };
         },
         mounted() {
-            let el = document.querySelector("div[data-types]");
-            this.types = JSON.parse(el.dataset.types);
+            console.log("ERANTZUNAK");
+            let el = document.querySelector("div[data-erantzunak]");
+            this.erantzunak = JSON.parse(el.dataset.erantzunak);
+            console.log(this.erantzunak);
         },
         computed: {
             employeeList() {
@@ -181,6 +182,7 @@
             endCall: function ( el ) {
                 this.$set(this.isCalling, el.id, false);
                 const payload = {
+                    jobdetailid: el.id,
                     valueCallStatus: this.valueCallStatus ? this.valueCallStatus : null,
                     notes: this.notes ? this.notes : null
                 };
@@ -194,7 +196,8 @@
                     const payload = {
                         valueCallStatus: this.valueCallStatus,
                         notes: this.notes,
-                        zerrendaid: this.zerrendaid,
+                        jobid: this.jobid,
+                        jobdetailid: this.jobdetailid,
                         id: this.lastId
                     };
                     this.$store.dispatch("UPDATE_CALL", payload);

@@ -6,6 +6,7 @@ use App\Entity\Calls;
 use App\Repository\CallsRepository;
 use App\Repository\EmployeeRepository;
 use App\Repository\EmployeeZerrendaRepository;
+use App\Repository\ErantzunaRepository;
 use App\Repository\JobDetailRepository;
 use App\Repository\TypeRepository;
 use App\Repository\ZerrendaRepository;
@@ -115,37 +116,34 @@ class ApiCallsController extends AbstractFOSRestController
 
     /**
      * @Rest\Put("/calls/{id}", name="put_calls", options={ "expose":true })
-     * @Rest\RequestParam(name="employeezerrendaid", description="Id of the EmployeeZerrenda", nullable=false)
-     * @Rest\RequestParam(name="employeeid", description="Id of the Employee", nullable=false)
-     * @Rest\RequestParam(name="typeid", description="Id of the Type", nullable=false)
+     *
+     * @Rest\RequestParam(name="erantzunaid", description="Id of the Erantzuna", nullable=false)
      * @Rest\RequestParam(name="notes", description="Notes of the call", nullable=true)
-     * @param ParamFetcher    $paramFetcher
+     * @param ParamFetcher        $paramFetcher
      *
-     * @param TypeRepository  $typeRepository
+     * @param ErantzunaRepository $erantzunaRepository
+     * @param CallsRepository     $callsRepository
      *
-     * @param CallsRepository $callsRepository
-     *
-     * @param                 $id
+     * @param                     $id
      *
      * @return View
      */
     public function putCalls( ParamFetcher $paramFetcher,
-                              TypeRepository $typeRepository,
+                              ErantzunaRepository $erantzunaRepository,
                               CallsRepository $callsRepository,
                               $id
     ): View
     {
         $call = $callsRepository->find( $id );
 
-        $typeid = $paramFetcher->get( 'typeid' );
-        $type   = $typeRepository->find( $typeid );
+        $erantzunaid = $paramFetcher->get( 'erantzunaid' );
+        $erantzuna   = $erantzunaRepository->find( $erantzunaid );
 
         $notes =$paramFetcher->get( 'notes' );
 
-        if ( ( $call ) && ( $type ) ) {
+        if ( ( $call ) && ( $erantzuna ) ) {
 
-            $call->setResult( $type );
-            $call->getEmployeezerrenda()->setType( $type );
+            $call->setErantzuna( $erantzuna );
             $call->setNotes( $notes );
             $this->entityManager->persist($call);
 

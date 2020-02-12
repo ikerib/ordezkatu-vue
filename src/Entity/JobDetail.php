@@ -54,6 +54,11 @@ class JobDetail
      */
     private $calls;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         $this->calls = new ArrayCollection();
@@ -144,6 +149,18 @@ class JobDetail
                 $call->setJobdetail(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

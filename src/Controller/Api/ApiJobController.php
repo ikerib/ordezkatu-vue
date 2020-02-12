@@ -60,12 +60,15 @@ class ApiJobController extends AbstractFOSRestController
     public function postAddEmployeesToJob(ParamFetcher $paramFetcher, Job $job): View
     {
         $employees = $paramFetcher->get('employees');
+        $cont = 0;
         if ($employees) {
+            $cont++;
             foreach ($employees as $emp) {
                 /** @var Employee $employee */
                 $employee = $this->em->getRepository( 'App:Employee' )->find( $emp[ 'id' ] );
                 /** @var JobDetail $jobd */
                 $jobd = new JobDetail();
+                $jobd->setPosition( $cont );
                 $jobd->setJob( $job );
                 $jobd->setEmployee( $employee );
                 $this->em->persist($jobd);

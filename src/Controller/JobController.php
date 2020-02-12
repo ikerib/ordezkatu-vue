@@ -136,12 +136,12 @@ class JobController extends AbstractController
                          SerializerInterface $serializer): Response
 
     {
-        $types = $erantzunaRepository->findAll();
+        $erantzunak = $erantzunaRepository->findAll();
 
 
         return $this->render('job/show.html.twig', [
             'job'       => $serializer->serialize($job, 'json',  ['groups' => 'main']),
-            'types'     => $serializer->serialize($types, 'json',  ['groups' => 'main']),
+            'erantzunak'     => $serializer->serialize($erantzunak, 'json',  ['groups' => 'main']),
         ]);
     }
 

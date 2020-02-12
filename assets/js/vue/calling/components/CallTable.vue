@@ -1,4 +1,5 @@
 <template>
+
     <table class="table  table-striped table-sm">
         <thead>
         <tr>
@@ -15,7 +16,7 @@
             <td>{{r.id}}</td>
             <td>{{r.user.username}}</td>
             <td>{{r.created | formatDate}}</td>
-            <td><span v-if="r.result">{{r.result.name}}</span></td>
+            <td><span v-if="r.erantzuna">{{r.erantzuna.name}}</span></td>
             <td>{{r.notes}}</td>
             <th>
                 <ul class="list-inline">
@@ -51,7 +52,7 @@
                 console.log('callEdit: ' +  call.id);
                 console.log(call);
                 const payload = {
-                    valueCallStatus: call.result.id,
+                    valueCallStatus: call.erantzuna ? call.erantzuna.id : null,
                     notes: call.notes
                 };
                 this.$store.dispatch("TOOTGLE_SHOW", payload);
