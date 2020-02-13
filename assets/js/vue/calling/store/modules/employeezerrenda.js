@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const state = {
     employeeList: [],
@@ -81,6 +82,11 @@ const actions = {
              })
              .catch(error => {
                  console.log(error);
+                 Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Arazo bat egon da. Jarri harremanetan informatika sailarekin'
+                 })
              })
     },
     ADD_CALL: async (context, payload) => {
@@ -91,8 +97,12 @@ const actions = {
                  context.dispatch("GET_EMPLOYEELIST", payload.jobid)
              })
              .catch(e => {
-                 console.log("HORROR!!!");
-                 this.errors.push(e);
+                 Swal.fire({
+                     icon: "error",
+                     title: "Oops...",
+                     text: "Arazo bat egon da. Jarri harremanetan informatika sailarekin"
+                 });
+                 console.log(e)
              });
     },
     UPDATE_CALL: async (context, payload) => {
@@ -105,6 +115,11 @@ const actions = {
             context.dispatch("GET_EMPLOYEELIST", payload.jobid)
         }).catch( e => {
             console.log(e);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Arazo bat egon da. Jarri harremanetan informatika sailarekin'
+            })
         })
     },
     TOOTGLE_SHOW: (context, payload) => {

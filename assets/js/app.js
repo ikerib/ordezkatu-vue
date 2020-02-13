@@ -45,7 +45,7 @@ $(document).ready(function () {
     });
 
     const appLocale = $('#app_locale').val();
-    const datatablesLocaleURL = "/build/libs/datatables/locales/" + appLocale + ".json";
+    const datatablesLocaleURL = "/build/datatables/" + appLocale + ".json";
 
     $('.mydatatable').DataTable({
         language: {
