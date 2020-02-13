@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Navbar :jobName="jobName"></Navbar>
+        <Navbar :jobid="this.jobid" :jobName="jobName"></Navbar>
         <hr>
         <ZerrendaList :jobid="this.jobid"></ZerrendaList>
     </div>
@@ -26,7 +26,6 @@
         mounted() {
             let el = document.querySelector("div[data-job]");
             const job = JSON.parse(el.dataset.job);
-            console.log(job);
             this.jobid = job.id;
             this.jobName = job.name;
 

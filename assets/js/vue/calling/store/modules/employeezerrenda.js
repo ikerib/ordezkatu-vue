@@ -2,16 +2,29 @@ import axios from "axios";
 
 const state = {
     employeeList: [],
+    allEmployeeList: [],
     lastId: null,
     isCalling: false,
     show: false,
     valueCallStatus: null,
-    notes: null
+    notes: null,
+    filterCallStatus: null
 };
 
 const mutations = {
     SET_EMPLOYEELIST: ( state, payload ) => {
-        state.employeeList = payload;
+        if (( state.filterCallStatus === "-1" ) || (state.filterCallStatus === null) ){
+            state.employeeList = payload;
+            state.allEmployeeList = payload;
+        } else if (state.filterCallStatus === "0") {
+            state.employeeList = state.allEmployeeList.filter(item => {
+                return !item.lastErantzuna;
+            });
+        } else {
+            state.employeeList = state.allEmployeeList.filter(item => {
+                return item.lastErantzuna.id.toString() === state.filterCallStatus.toString();
+            });
+        }
     },
     SET_LAST_ID: (state, payload) => {
         state.lastId = payload;
@@ -26,6 +39,9 @@ const mutations = {
     },
     SET_NOTES: (state, payload) => {
         state.notes = payload;
+    },
+    SET_FILTER_CALL_STATUS: (state, payload) => {
+        state.filterCallStatus = payload;
     }
 };
 
@@ -44,6 +60,9 @@ const getters = {
     },
     NOTES: (state) => {
         return state.notes;
+    },
+    GET_FILER_CALL_STATUS: (state) => {
+        return state.filterCallStatus
     }
 };
 
