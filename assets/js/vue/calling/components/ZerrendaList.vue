@@ -4,7 +4,7 @@
             <div class="card" :class="borderStatus(el)">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-7 col-sm-7">
+                        <div class="col-md-5 col-sm-5">
                             <ul class="list-inline no-bottom-marging">
                                 <li class="list-inline-item">
                                     <button :id="'btnCollapse' + el.id" class="btn collapsed" type="button" data-toggle="collapse" v-bind:data-target="'#collapse' +el.id"
@@ -22,12 +22,11 @@
                                 <li class="list-inline-item"><h5>{{el.employee.name}} {{el.employee.abizena1}} {{el.employee.abizena2}}</h5></li>
                             </ul>
                         </div>
-                        <div class="col-md-5 col-sm-5">
+                        <div class="col-md-4 col-sm-3">
+                            <span v-if="el.lastErantzuna">Azken erantzuna: {{ el.lastErantzuna.name}}</span>
+                        </div>
+                        <div class="col-md-3 col-sm-3">
                             <ul class="list-inline no-bottom-marging text-right ">
-<!--                                <li>KK {{el.lastErantzuna}}</li>-->
-                                <li v-if="el.lastErantzuna" class="list-inline-item">
-                                    Azken erantzuna: {{ el.lastErantzuna.name}}
-                                </li>
                                 <li class="list-inline-item">
                                     <button v-if="!isCalling[el.id]" @click="newCall(el)" class="btn btn-outline-secondary">
                                         <i class="fas fa-phone"> Dei berria</i>
