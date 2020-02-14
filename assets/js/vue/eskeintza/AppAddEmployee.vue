@@ -2,7 +2,7 @@
     <div>
         <h2>Gehitu hautagaiak eskeintzarara:</h2>
         <hr>
-        <button class="btn btn-primary btn-lg" @click="saveAndContinue"><i class="far fa-save"></i>&nbsp;Gorde edta jarraitu</button>
+        <button class="btn btn-primary btn-lg" @click="saveAndContinue"><i class="far fa-save"></i>&nbsp;Gorde eta jarraitu</button>
         <hr>
         <div class="row">
             <div class="col-md-6">

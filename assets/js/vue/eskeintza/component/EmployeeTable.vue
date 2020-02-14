@@ -10,6 +10,7 @@
                     <th>Izena</th>
                     <th>Abizenak</th>
                     <th>Telf</th>
+                    <th>Egoera</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,10 +24,11 @@
                                :checked="isChecked(e.employee)"
                         >
                     </td>
-                    <td>[{{e.id}}]{{ e.position }}</td>
+                    <td>{{ e.position }}</td>
                     <td>{{ e.employee.name }}</td>
                     <td>{{ e.employee.abizena1 }}&nbsp;{{ e.employee.abizena2 }}</td>
                     <td>{{ e.employee.telefono }}</td>
+                    <td>{{e.type.name}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -50,7 +52,7 @@
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
-                    <td>[{{e.id}}]{{ e.employee.position }}</td>
+                    <td>{{ e.employee.position }}</td>
                     <td>{{ e.employee.name}}</td>
                     <td>{{ e.employee.abizena1 }}&nbsp;{{ e.employee.abizena2 }}</td>
                     <td>{{ e.employee.telefono }}</td>
