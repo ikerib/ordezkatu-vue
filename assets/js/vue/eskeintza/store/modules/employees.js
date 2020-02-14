@@ -36,8 +36,6 @@ const actions = {
         const arrSelected= data.jobDetails.map(item => {
             return item
         });
-        console.log("arr selected");
-        console.log(arrSelected);
         state.commit("MUTATION_SET_SELECTED_EMPLOYEES", arrSelected);
     },
     ACTION_REMOVE_EMPLOYEE_FROM_LIST: ( state, payload ) => {
@@ -60,18 +58,22 @@ const actions = {
 
 
     },
-    ADD_REMOVE_EMPLOYEE_TO_LIST: async (context,payload) => {
-        console.log("ADD_REMOVE_EMPLOYEE_TO_LIST");
+    ACTION_ADD_REMOVE_EMPLOYEE_TO_LIST: async (context,payload) => {
+        console.log("ACTION_ADD_REMOVE_EMPLOYEE_TO_LIST");
         console.log(payload);
 
         if (state.selectedEmployeeList.some(el => el.id === payload.id) === false) {
             // if ( state.selectedEmployeeList.includes(payload) === false ) {
             console.log('Ez dago zerrendan, gehitzen....');
             // POST
-            const urlParams = { "id": state.jobid, "employeeid": payload.employee.id, "": "?XDEBUG_SESSION_START=PHPSTORM" };
+            const urlParams = {
+                "id": state.jobid,
+                "": "?XDEBUG_SESSION_START=PHPSTORM"
+            };
             const postUrl = Routing.generate('post_job_add_employee', urlParams );
             console.log(postUrl);
             const sendData = {
+                "employeeid": payload.employee.id,
                 position: payload.position
             };
 
@@ -139,7 +141,7 @@ const getters = {
         return state.selectedEmployeeList;
     },
     GET_IS_SELECTED: (state) => (payload) => {
-        return state.selectedEmployeeList.some(el => el.id === payload.id)
+        return state.selectedEmployeeList.some(el => el.employee.id === payload.id)
     }
 };
 

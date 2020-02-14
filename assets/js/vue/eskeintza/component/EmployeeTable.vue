@@ -14,7 +14,7 @@
                 </thead>
                 <tbody>
                 <tr v-for="(e, index) in employeesList" v-bind:value="e.id">
-                    <td>
+                    <td  :data-jobdetailid="e.id">
                         <label for="checkbox"></label>
                         <input type="checkbox"
                                id="checkbox"
@@ -76,8 +76,6 @@
                 if (this.useFor === "selection" ) {
                     return this.$store.getters.GET_EMPLOYEELIST;
                 } else {
-                    console.log("computedddddddddddddddddddddddddddd");
-                    console.log(this.$store.getters.GET_SELECTEDEMPLOYEELIST);
                     return this.$store.getters.GET_SELECTEDEMPLOYEELIST;
                 }
             }
@@ -85,14 +83,12 @@
         methods: {
             changeEmployeeSelect(e, index) {
                 console.log("changeEmployeeSelect");
-                console.log(e);
-                // this.$store.commit("SET_SELECTED_EMPLOYEELIST", e);
 
                 const payload = {
                     employee: e,
                     position: index
                 };
-                this.$store.dispatch("ADD_REMOVE_EMPLOYEE_TO_LIST", payload);
+                this.$store.dispatch("ACTION_ADD_REMOVE_EMPLOYEE_TO_LIST", payload);
             },
             removeFromSelectedEmployee(e) {
                 console.log('removeFromSelectedEmployee');
@@ -100,8 +96,6 @@
                 this.$store.dispatch("ACTION_REMOVE_EMPLOYEE_FROM_LIST", e);
             },
             isChecked(e) {
-                console.log("isChecked");
-                console.log(this.$store.getters.GET_IS_SELECTED(e));
                 return this.$store.getters.GET_IS_SELECTED(e);
             }
         }

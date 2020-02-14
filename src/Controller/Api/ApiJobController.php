@@ -50,18 +50,19 @@ class ApiJobController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Post("/job/{id}/employee/{employeeid}", name="post_job_add_employee", options={ "expose":true })
+     * @Rest\Post("/job/{id}/employee", name="post_job_add_employee", options={ "expose":true })
+     * @Rest\RequestParam(name="employeeid", description="Id of the Employee", nullable=false)
      * @Rest\RequestParam(name="position", description="position on the list", nullable=false)
      * @param ParamFetcher $paramFetcher
      *
      * @param Job          $job
      *
-     * @param Employee     $employee
-     *
      * @return View
      */
-    public function postAddOneEmployeesToJob(ParamFetcher $paramFetcher, Job $job, Employee $employee): View
+    public function postAddOneEmployeesToJob(ParamFetcher $paramFetcher, Job $job): View
     {
+        $employeeid = $paramFetcher->get('employeeid');
+        $employee = $this->em->getRepository( 'App:Employee' )->find( $employeeid );
         $position = $paramFetcher->get('position');
 
         if ($employee) {
