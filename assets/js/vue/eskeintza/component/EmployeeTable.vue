@@ -19,11 +19,11 @@
                         <input type="checkbox"
                                id="checkbox"
                                :value="e.employee.id"
-                               @input="changeEmployeeSelect(e.employee, index)"
+                               @input="changeEmployeeSelect(e, index)"
                                :checked="isChecked(e.employee)"
                         >
                     </td>
-                    <td>{{ e.position }}</td>
+                    <td>[{{e.id}}]{{ e.position }}</td>
                     <td>{{ e.employee.name }}</td>
                     <td>{{ e.employee.abizena1 }}&nbsp;{{ e.employee.abizena2 }}</td>
                     <td>{{ e.employee.telefono }}</td>
@@ -50,7 +50,7 @@
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
-                    <td>{{ e.employee.position }}</td>
+                    <td>[{{e.id}}]{{ e.employee.position }}</td>
                     <td>{{ e.employee.name}}</td>
                     <td>{{ e.employee.abizena1 }}&nbsp;{{ e.employee.abizena2 }}</td>
                     <td>{{ e.employee.telefono }}</td>
@@ -72,8 +72,9 @@
         },
         computed: {
             employeesList() {
-                console.log("employeesList. userFor => " + this.useFor);
                 if (this.useFor === "selection" ) {
+                    console.log("NIRE DATUAK");
+                    console.log(this.$store.getters.GET_EMPLOYEELIST);
                     return this.$store.getters.GET_EMPLOYEELIST;
                 } else {
                     return this.$store.getters.GET_SELECTEDEMPLOYEELIST;
@@ -82,17 +83,14 @@
         },
         methods: {
             changeEmployeeSelect(e, index) {
-                console.log("changeEmployeeSelect");
-
                 const payload = {
-                    employee: e,
-                    position: index
+                    employee: e.employee,
+                    position: index,
+                    id: e.id
                 };
                 this.$store.dispatch("ACTION_ADD_REMOVE_EMPLOYEE_TO_LIST", payload);
             },
             removeFromSelectedEmployee(e) {
-                console.log('removeFromSelectedEmployee');
-                console.log(e);
                 this.$store.dispatch("ACTION_REMOVE_EMPLOYEE_FROM_LIST", e);
             },
             isChecked(e) {

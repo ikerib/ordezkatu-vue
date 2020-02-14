@@ -60,8 +60,8 @@ const actions = {
         }
     },
     ACTION_ADD_REMOVE_EMPLOYEE_TO_LIST: async (context,payload) => {
-        if (state.selectedEmployeeList.some(el => el.id === payload.id) === false) {
-            // console.log('Ez dago zerrendan, gehitzen....');
+        if (state.selectedEmployeeList.some(el => el.employee.id === payload.employee.id) === false) {
+            console.log('Ez dago zerrendan, gehitzen....');
             // POST
             const urlParams = {
                 "id": state.jobid,
@@ -73,28 +73,43 @@ const actions = {
                 position: payload.position
             };
 
-            axios.post(postUrl, sendData)
-                 .then(response => {
-                     state.selectedEmployeeList.push(payload);
-                 })
-                 .catch(e => {
-                     Swal.fire({
-                         icon: "error",
-                         title: "Oops...",
-                         text: "Arazo bat egon da. Jarri harremanetan informatika sailarekin"
-                     });
-                     console.log(e)
-                 });
+            try {
+                let res = await axios.post(postUrl, sendData);
+
+                if ( res.status === 201 ){
+                    context.dispatch('ACTION_GET_JOB', context.getters.GET_JOBID)
+                }
+            } catch ( e ) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Arazo bat egon da. Jarri harremanetan informatika sailarekin"
+                });
+                console.log(e)
+            }
 
         } else {
             console.log("Zerrendan dago, ezabatzen...");
-            console.log(payload);
 
+            // find jobdetail for selected employee
+            let jobdetailidToRemove = context.getters.GET_SELECTEDEMPLOYEELIST;
+            let miid = jobdetailidToRemove.filter( item => {
+                if (payload.employee.id === item.employee.id) {
+                    return item
+                }
+            });
+            // console.log(miid[0].id);
             // const removeURL = Routing.generate('delete_jobdetail', { 'id': payload.jobdetailid});
             // const removeIndex = state.selectedEmployeeList.map(item => {
             //     return item.id;
             // }).indexOf(payload.id);
             // state.selectedEmployeeList.splice(removeIndex, 1);
+            console.log("ACTION => ACTION");
+            const myData = {
+                id: miid[0].id
+            }
+             context.dispatch("ACTION_REMOVE_EMPLOYEE_FROM_LIST", myData);
+
         }
     },
     ACTION_GET_EMPLOYEELIST: async ( context, payload ) => {
@@ -129,6 +144,9 @@ const getters = {
         return state.jobid;
     },
     GET_EMPLOYEELIST: ( state ) => {
+        return state.availableEmployees;
+    },
+    GET_AVAILABLEEMPLOYEEELIST: ( state ) => {
         return state.availableEmployees;
     },
     GET_SELECTEDEMPLOYEELIST: ( state ) => {
