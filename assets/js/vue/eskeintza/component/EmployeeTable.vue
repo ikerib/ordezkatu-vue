@@ -5,7 +5,7 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th></th>
+                    <th><input type="checkbox" @click="doCheckAll"></th>
                     <th>Pos</th>
                     <th>Izena</th>
                     <th>Abizenak</th>
@@ -52,7 +52,13 @@
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
-                    <td>{{ e.employee.position }}</td>
+                    <td>
+                        <div class="col-xs-1">
+                            <label>
+                                <input type="number" class="myWidth" :value="e.position" @change="doChangePosition(e, $event.target.value)">
+                            </label>
+                        </div>
+                    </td>
                     <td>{{ e.employee.name}}</td>
                     <td>{{ e.employee.abizena1 }}&nbsp;{{ e.employee.abizena2 }}</td>
                     <td>{{ e.employee.telefono }}</td>
@@ -87,7 +93,7 @@
             changeEmployeeSelect(e, index) {
                 const payload = {
                     employee: e.employee,
-                    position: index,
+                    position: e.position?e.position:null,
                     id: e.id
                 };
                 this.$store.dispatch("ACTION_ADD_REMOVE_EMPLOYEE_TO_LIST", payload);
@@ -97,6 +103,17 @@
             },
             isChecked(e) {
                 return this.$store.getters.GET_IS_SELECTED(e);
+            },
+            doCheckAll() {
+                this.$store.dispatch("ACTION_DO_CHECK_ALL");
+            },
+            doChangePosition(e, position) {
+                const payload = {
+                    jobdetail: e,
+                    position: position
+
+                };
+                this.$store.dispatch("ACTION_DO_CHANGE_POSITION", payload);
             }
         }
     };
@@ -105,5 +122,8 @@
 <style scoped>
     .selectedEmployeesTable {
         background-color: gainsboro !important;
+    }
+    .myWidth {
+        width: 60px;
     }
 </style>

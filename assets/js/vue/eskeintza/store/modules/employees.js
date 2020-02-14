@@ -16,22 +16,46 @@ const mutations = {
     },
     MUTATION_SET_EMPLOYEELIST: ( state, payload ) => {
         state.availableEmployees = payload;
-    },
-    MUTATION_REMOVE_EMPLOYEE_FROM_LIST: (state, payload) => {
-        const removeIndex = state.selectedEmployeeList.map(item => {
-            return item.id;
-        }).indexOf(payload.id);
-        state.selectedEmployeeList.splice(removeIndex, 1);
     }
 };
 
 const actions = {
+    ACTION_DO_CHANGE_POSITION: async ( state, payload ) => {
+        try {
+            const putURL = Routing.generate("put_job_detail_set_position", { 'id': payload.jobdetail.id});
+            const myData = {
+                position: payload.position
+            };
+            let res = await axios.put(putURL, myData);
+            if ( res.status === 201 ) {
+                const jobid = state.getters.GET_JOBID;
+                state.dispatch('ACTION_GET_JOB', jobid)
+            }
+        } catch ( e ) {
+            await Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Arazo bat egon da. Jarri harremanetan informatika sailarekin"
+            });
+            console.log(e)
+        }
+    },
+    ACTION_DO_CHECK_ALL: ( state) => {
+        const available = state.getters.GET_AVAILABLEEMPLOYEEELIST;
+        available.forEach(item => {
+            state.dispatch('ACTION_ADD_REMOVE_EMPLOYEE_TO_LIST', item)
+        })
+    },
     ACTION_GET_JOB: async (state, jobid) => {
         const urlJobDetails = Routing.generate("get_job", { 'id': jobid});
         let { data } = await axios.get(urlJobDetails);
         state.job = data;
         const arrSelected= data.jobDetails.map(item => {
             return item
+        }).sort((a,b) => {
+            if ( a.position > b.position ) { return 1}
+            if ( a.position < b.position ) { return -1}
+            return 0;
         });
         state.commit("MUTATION_SET_SELECTED_EMPLOYEES", arrSelected);
     },
@@ -41,12 +65,12 @@ const actions = {
         try {
             let res = await axios.delete(removeURL);
             if ( res.status === 204 ) {
-                 Swal.fire({
+                 await Swal.fire({
                      position: "top-end",
                      icon: "success",
                      title: "Aldaketak ongi gorde dira",
                      showConfirmButton: false,
-                     timer: 1000
+                     timer: 300
                  });
                  state.dispatch('ACTION_GET_JOB', state.getters.GET_JOBID)
             }
@@ -68,7 +92,7 @@ const actions = {
             const postUrl = Routing.generate('post_job_add_employee', urlParams );
             const sendData = {
                 employeeid: payload.employee.id,
-                position: payload.position
+                position: payload.position ? payload.position : null
             };
 
             try {

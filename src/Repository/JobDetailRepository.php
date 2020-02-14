@@ -19,6 +19,16 @@ class JobDetailRepository extends ServiceEntityRepository
         parent::__construct($registry, JobDetail::class);
     }
 
+    public function updatePosition($jobid, $position) {
+        $q = $this->createQueryBuilder( 'j' )
+                  ->update()
+                  ->set( 'j.position', 'j.position - 1' )
+                  ->andWhere('j.job=:jobid')->setParameter('jobid', $jobid)
+                 ->andWhere('j.position > :pos')->setParameter('pos', $position)
+        ;
+        dump( $q->getQuery()->getSQL() );
+        $q->getQuery()->execute();
+    }
     // /**
     //  * @return JobDetail[] Returns an array of JobDetail objects
     //  */

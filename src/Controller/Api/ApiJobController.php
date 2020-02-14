@@ -8,6 +8,7 @@ use App\Entity\Employee;
 use App\Entity\Job;
 use App\Entity\JobDetail;
 use App\Entity\Zerrenda;
+use App\Repository\JobDetailRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -86,13 +87,19 @@ class ApiJobController extends AbstractFOSRestController
      * @Rest\Delete("/jobdetail/{id}/delete", name="delete_jobdetail", options={ "expose": true})
      *
      *
-     * @param JobDetail $jobDetail
+     * @param JobDetail           $jobDetail
+     *
+     * @param JobDetailRepository $jobDetailRepository
      *
      * @return View
      */
-    public function deleteZerrenda(JobDetail $jobDetail): View
+    public function deleteZerrenda(JobDetail $jobDetail, JobDetailRepository $jobDetailRepository): View
     {
+        $jobid = $jobDetail->getJob();
+        $position = $jobDetail->getPosition();
         $this->em->remove($jobDetail);
+
+        $jobDetailRepository->updatePosition( $jobid, $position );
         $this->em->flush();
 
         return View::create(null, Response::HTTP_NO_CONTENT);
