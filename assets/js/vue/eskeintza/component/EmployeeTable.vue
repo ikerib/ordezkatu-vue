@@ -10,27 +10,24 @@
                     <th>Izena</th>
                     <th>Abizenak</th>
                     <th>Telf</th>
-
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="e in employeesList" v-bind:value="e.id">
+                <tr v-for="(e, index) in employeesList" v-bind:value="e.id">
                     <td>
                         <label for="checkbox"></label>
                         <input type="checkbox"
                                id="checkbox"
                                :value="e.employee.id"
-                               @input="changeEmployeeSelect(e.employee)"
+                               @input="changeEmployeeSelect(e.employee, index)"
                                :checked="isChecked(e.employee)"
                         >
                     </td>
-                    <td>{{e.position}}</td>
-                    <td>{{ e.employee.name}}</td>
+                    <td>{{ e.position }}</td>
+                    <td>{{ e.employee.name }}</td>
                     <td>{{ e.employee.abizena1 }}&nbsp;{{ e.employee.abizena2 }}</td>
                     <td>{{ e.employee.telefono }}</td>
-
                 </tr>
-
                 </tbody>
             </table>
         </template>
@@ -44,7 +41,6 @@
                     <th>Izena</th>
                     <th>Abizenak</th>
                     <th>Telf</th>
-
                 </tr>
                 </thead>
                 <tbody>
@@ -54,22 +50,15 @@
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ e.name}}</td>
-                    <td>{{ e.abizena1 }}&nbsp;{{ e.abizena2 }}</td>
-                    <td>{{ e.telefono }}</td>
+                    <td>{{ e.employee.position }}</td>
+                    <td>{{ e.employee.name}}</td>
+                    <td>{{ e.employee.abizena1 }}&nbsp;{{ e.employee.abizena2 }}</td>
+                    <td>{{ e.employee.telefono }}</td>
                 </tr>
                 </tbody>
             </table>
-
-
         </template>
-
-
     </div>
-
-
-
 </template>
 
 <script>
@@ -85,32 +74,37 @@
             employeesList() {
                 console.log("employeesList. userFor => " + this.useFor);
                 if (this.useFor === "selection" ) {
-                    console.log("EMPLOYEELIST");
-                    return this.$store.getters.EMPLOYEELIST;
+                    return this.$store.getters.GET_EMPLOYEELIST;
                 } else {
-                    console.log("SELECTEDEMPLOYEELIST");
-                    return this.$store.getters.SELECTEDEMPLOYEELIST;
+                    console.log("computedddddddddddddddddddddddddddd");
+                    console.log(this.$store.getters.GET_SELECTEDEMPLOYEELIST);
+                    return this.$store.getters.GET_SELECTEDEMPLOYEELIST;
                 }
             }
         },
         methods: {
-            changeEmployeeSelect(e) {
+            changeEmployeeSelect(e, index) {
                 console.log("changeEmployeeSelect");
                 console.log(e);
-                this.$store.commit("SET_SELECTED_EMPLOYEELIST", e);
+                // this.$store.commit("SET_SELECTED_EMPLOYEELIST", e);
+
+                const payload = {
+                    employee: e,
+                    position: index
+                };
+                this.$store.dispatch("ADD_REMOVE_EMPLOYEE_TO_LIST", payload);
             },
             removeFromSelectedEmployee(e) {
                 console.log('removeFromSelectedEmployee');
                 console.log(e);
-                this.$store.commit("REMOVE_SELECTED_EMPLOYEELIST", e);
+                this.$store.dispatch("ACTION_REMOVE_EMPLOYEE_FROM_LIST", e);
             },
             isChecked(e) {
                 console.log("isChecked");
-                console.log(this.$store.getters.IS_SELECTED(e));
-                return this.$store.getters.IS_SELECTED(e);
+                console.log(this.$store.getters.GET_IS_SELECTED(e));
+                return this.$store.getters.GET_IS_SELECTED(e);
             }
         }
-
     };
 </script>
 

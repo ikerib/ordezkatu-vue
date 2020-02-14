@@ -144,18 +144,6 @@ class Calls
         return $this;
     }
 
-    public function getEmployees(): ?self
-    {
-        return $this->employees;
-    }
-
-    public function setEmployees(?self $employees): self
-    {
-        $this->employees = $employees;
-
-        return $this;
-    }
-
     public function getErantzuna(): ?Erantzuna
     {
         return $this->erantzuna;
@@ -176,6 +164,18 @@ class Calls
     public function setJobdetail(?JobDetail $jobdetail): self
     {
         $this->jobdetail = $jobdetail;
+
+        return $this;
+    }
+
+    public function getEmployees(): ?Employee
+    {
+        return $this->employees;
+    }
+
+    public function setEmployees(?Employee $employees): self
+    {
+        $this->employees = $employees;
 
         return $this;
     }

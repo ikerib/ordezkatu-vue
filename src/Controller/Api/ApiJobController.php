@@ -3,6 +3,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Calls;
 use App\Entity\Employee;
 use App\Entity\Job;
 use App\Entity\JobDetail;
@@ -46,6 +47,54 @@ class ApiJobController extends AbstractFOSRestController
         $view = $this->view( $job, Response::HTTP_OK )->setContext( $ctx );
 
         return $this->handleView( $view );
+    }
+
+    /**
+     * @Rest\Post("/job/{id}/employee/{employeeid}", name="post_job_add_employee", options={ "expose":true })
+     * @Rest\RequestParam(name="position", description="position on the list", nullable=false)
+     * @param ParamFetcher $paramFetcher
+     *
+     * @param Job          $job
+     *
+     * @param Employee     $employee
+     *
+     * @return View
+     */
+    public function postAddOneEmployeesToJob(ParamFetcher $paramFetcher, Job $job, Employee $employee): View
+    {
+        $position = $paramFetcher->get('position');
+
+        if ($employee) {
+            /** @var JobDetail $jobd */
+            $jobd = new JobDetail();
+            $jobd->setPosition( $position );
+            $jobd->setJob( $job );
+            $jobd->setEmployee( $employee );
+            $this->em->persist($jobd);
+
+            $this->em->flush();
+            $ctx = new Context();
+            $ctx->addGroup('main');
+            return View::create($job, Response::HTTP_CREATED)->setContext($ctx);
+        }
+
+        return View::create(['employees' => 'This cannot be null.'], Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * @Rest\Delete("/jobdetail/{id}/delete", name="delete_jobdetail", options={ "expose": true})
+     *
+     *
+     * @param JobDetail $jobDetail
+     *
+     * @return View
+     */
+    public function deleteZerrenda(JobDetail $jobDetail): View
+    {
+        $this->em->remove($jobDetail);
+        $this->em->flush();
+
+        return View::create(null, Response::HTTP_NO_CONTENT);
     }
 
     /**

@@ -67,9 +67,7 @@
             this.job = JSON.parse(el.dataset.job);
 
             el = document.querySelector("div[data-jobDetails]");
-            console.log(el);
             this.jobDetails = JSON.parse(el.dataset.jobdetails);
-            console.log(this.jobDetails);
 
             el = document.querySelector("div[data-types]");
             this.types = JSON.parse(el.dataset.types);
@@ -77,7 +75,9 @@
             el = document.querySelector("div[data-zerrendak]");
             this.zerrendak = JSON.parse(el.dataset.zerrendak);
 
-            this.$store.dispatch("INITIAL_SELECTED_EMPLOYEE", this.jobDetails);
+            this.$store.commit("MUTATION_SET_JOBID", this.job.id);
+            // this.$store.dispatch("INITIAL_SELECTED_EMPLOYEE", this.jobDetails);
+            this.$store.dispatch('ACTION_GET_JOB', this.job.id)
         },
         computed: {
           employeesList() {
@@ -91,7 +91,7 @@
                     typeid: this.selectedTypeId,
                     zerrendaid: this.selectedZerrendaId
                 };
-                this.$store.dispatch("GET_EMPLOYEELIST", payload);
+                this.$store.dispatch("ACTION_GET_EMPLOYEELIST", payload);
             },
             changeZerrendaId: function (e) {
                 this.selectedZerrendaId = e.target.value;
@@ -100,14 +100,14 @@
                     typeid: this.selectedTypeId,
                     zerrendaid: this.selectedZerrendaId
                 };
-                this.$store.dispatch("GET_EMPLOYEELIST", payload);
+                this.$store.dispatch("ACTION_GET_EMPLOYEELIST", payload);
             },
             changeEmployeeSelect: function (e) {
                 console.log("Employee select");
                 console.log(e);
             },
             saveAndContinue: function () {
-                const selectedEmployees = this.$store.getters.SELECTEDEMPLOYEELIST;
+                const selectedEmployees = this.$store.getters.GET_SELECTEDEMPLOYEELIST;
                 if ( selectedEmployees.length > 0 ) {
                     // const url = Routing.generate("post_job_employee", { "id": this.job.id });
                     const url = "/api/job/2/employees?XDEBUG_SESSION_START=PHPSTORM";

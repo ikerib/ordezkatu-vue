@@ -1,87 +1,118 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const state = {
     availableEmployees: [],
-    selectedEmployeeList: []
+    selectedEmployeeList: [],
+    job: null,
+    jobid: null
 };
 
 const mutations = {
-    SET_EMPLOYEELIST: ( state, payload ) => {
-        console.log("Mutation SET_EMPLOYEELIST");
+    MUTATION_SET_JOBID: (state, payload) => {
+        state.jobid = payload;
+    },
+    MUTATION_SET_SELECTED_EMPLOYEES: (state, payload) => {
+        console.log("MUTATION MUTATION_SET_SELECTED_EMPLOYEES");
+        state.selectedEmployeeList = payload;
+    },
+    MUTATION_SET_EMPLOYEELIST: ( state, payload ) => {
+        console.log("Mutation MUTATION_SET_EMPLOYEELIST");
         state.availableEmployees = payload;
     },
-    SET_SELECTED_EMPLOYEELIST: ( state, payload ) => {
-        console.log("MUTATION SET_SELECTED_EMPLOYEELIST");
+    MUTATION_REMOVE_EMPLOYEE_FROM_LIST: (state, payload) => {
+        const removeIndex = state.selectedEmployeeList.map(item => {
+            return item.id;
+        }).indexOf(payload.id);
+        state.selectedEmployeeList.splice(removeIndex, 1);
+    }
+};
+
+const actions = {
+    ACTION_GET_JOB: async (state, jobid) => {
+        const urlJobDetails = Routing.generate("get_job", { 'id': jobid});
+        let { data } = await axios.get(urlJobDetails);
+        state.job = data;
+        const arrSelected= data.jobDetails.map(item => {
+            return item
+        });
+        console.log("arr selected");
+        console.log(arrSelected);
+        state.commit("MUTATION_SET_SELECTED_EMPLOYEES", arrSelected);
+    },
+    ACTION_REMOVE_EMPLOYEE_FROM_LIST: ( state, payload ) => {
+        console.log("actions REMOVE_EMPLOYEE_TO_LIST");
+        console.log(payload);
+        const removeURL = Routing.generate("delete_jobdetail", { "id": payload.id });
+        axios.delete(removeURL)
+             .then(resp => {
+                 state.commit('MUTATION_REMOVE_EMPLOYEE_FROM_LIST', payload)
+             })
+             .catch(error => {
+                 console.log(error);
+                 Swal.fire({
+                     icon: 'error',
+                     title: 'Oops...',
+                     text: 'Arazo bat egon da. Jarri harremanetan informatika sailarekin'
+                 })
+             })
+
+
+
+    },
+    ADD_REMOVE_EMPLOYEE_TO_LIST: async (context,payload) => {
+        console.log("ADD_REMOVE_EMPLOYEE_TO_LIST");
+        console.log(payload);
+
         if (state.selectedEmployeeList.some(el => el.id === payload.id) === false) {
-        // if ( state.selectedEmployeeList.includes(payload) === false ) {
+            // if ( state.selectedEmployeeList.includes(payload) === false ) {
             console.log('Ez dago zerrendan, gehitzen....');
-            state.selectedEmployeeList.push(payload);
+            // POST
+            const urlParams = { "id": state.jobid, "employeeid": payload.employee.id, "": "?XDEBUG_SESSION_START=PHPSTORM" };
+            const postUrl = Routing.generate('post_job_add_employee', urlParams );
+            console.log(postUrl);
+            const sendData = {
+                position: payload.position
+            };
+
+            axios.post(postUrl, sendData)
+                 .then(response => {
+                     console.log("postCallUrl success");
+                     console.log(response);
+                     state.selectedEmployeeList.push(payload);
+                 })
+                 .catch(e => {
+                     Swal.fire({
+                         icon: "error",
+                         title: "Oops...",
+                         text: "Arazo bat egon da. Jarri harremanetan informatika sailarekin"
+                     });
+                     console.log(e)
+                 });
+
         } else {
             console.log("Zerrendan dago, ezabatzen...");
             console.log(payload);
             // state.selectedEmployeeList.splice(state.selectedEmployeeList.indexOf(payload), 1)
+            const removeURL = Routing.generate('delete_jobdetail', { 'id': payload.jobdetailid});
             const removeIndex = state.selectedEmployeeList.map(item => {
                 return item.id;
             }).indexOf(payload.id);
             state.selectedEmployeeList.splice(removeIndex, 1);
         }
     },
-    SET_INITIAL_SELECTED_EMPLOYEELIST: (state, payload) => {
-        console.log("MUTATION SET_INITIAL_SELECTED_EMPLOYEELIST");
-        payload.forEach(function (data, index) {
-            console.log(index);
-            console.log(data);
-            state.selectedEmployeeList.push(data.employee);
-        });
-    },
-    REMOVE_SELECTED_EMPLOYEELIST: (state, payload) => {
-        console.log("MUTATION REMOVE_SELECTED_EMPLOYEELIST");
-
-        const removeIndex = state.selectedEmployeeList.map(item => {
-            return item.id;
-        }).indexOf(payload.id);
-        state.selectedEmployeeList.splice(removeIndex, 1);
-
-    }
-};
-
-const getters = {
-    EMPLOYEELIST: ( state ) => {
-        console.log("GETTER EMPLOYEELIST");
-        return state.availableEmployees;
-    },
-    SELECTEDEMPLOYEELIST: ( state ) => {
-        console.log("GETTER SELECTEDEMPLOYEELIST");
-        return state.selectedEmployeeList;
-    },
-    IS_SELECTED: (state) => (payload) => {
-        return state.selectedEmployeeList.some(el => el.id === payload.id)
-    }
-};
-
-const actions = {
-    GET_EMPLOYEELIST: async ( context, payload ) => {
-        console.log("ACTION GET_EMPLOYEELIST");
+    ACTION_GET_EMPLOYEELIST: async ( context, payload ) => {
+        console.log("ACTION ACTION_GET_EMPLOYEELIST");
         const urlZerrendaEmployee = Routing.generate("get_employeezerrenda", { "zerrendaid": payload.zerrendaid });
         let { data } = await axios.get(urlZerrendaEmployee);
         // filter by Type
-        console.log("FILTRO GABE");
-        console.log(data);
         if ( payload.typeid !== "-1" ) {
             const filtered = data.filter(function ( d ) {
-                console.log(d.type.id);
-                console.log(typeof (d.type.id));
-                console.log(payload.typeid);
-                console.log(typeof (payload.typeid));
                 return d.type.id.toString() === payload.typeid;
-                // console.log(d);
-                // return false
             });
-            console.log("FILTRATUTA");
-            console.log(filtered);
-            context.commit("SET_EMPLOYEELIST", filtered);
+            context.commit("MUTATION_SET_EMPLOYEELIST", filtered);
         } else {
-            context.commit("SET_EMPLOYEELIST", data);
+            context.commit("MUTATION_SET_EMPLOYEELIST", data);
         }
 
 
@@ -94,6 +125,21 @@ const actions = {
         console.log("INITIAL_SELECTED_EMPLOYEE");
         console.log(payload);
         context.commit("SET_INITIAL_SELECTED_EMPLOYEELIST", payload)
+    }
+};
+
+const getters = {
+    GET_JOBID: (state) => {
+        return state.jobid;
+    },
+    GET_EMPLOYEELIST: ( state ) => {
+        return state.availableEmployees;
+    },
+    GET_SELECTEDEMPLOYEELIST: ( state ) => {
+        return state.selectedEmployeeList;
+    },
+    GET_IS_SELECTED: (state) => (payload) => {
+        return state.selectedEmployeeList.some(el => el.id === payload.id)
     }
 };
 
