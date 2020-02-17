@@ -114,13 +114,13 @@
                     console.log(url);
                     const payload = {
                         employees: selectedEmployees
-                    }
+                    };
                     axios.post(url,payload)
                          .then(response => {
                             console.log("ADD_CALL response");
                             console.log(response);
-                             const url = Routing.generate("job_index");
-                             window.location.href = url;
+                             const myUrl = Routing.generate("job_index");
+                             window.location.href = myUrl;
                         })
                          .catch(e => {
                              console.log("HORROR!!!");
