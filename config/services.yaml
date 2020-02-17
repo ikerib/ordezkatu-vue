@@ -46,3 +46,20 @@ services:
         class: App\Service\PasaiaVichDirectoryNamer
         arguments: ['%kernel.root_dir%']
         public: true
+
+    Redis:
+        class: Redis
+        calls:
+            -   method: connect
+                arguments:
+                    - '%env(REDIS_HOST)%'
+                    - '%env(int:REDIS_PORT)%'
+            # If you need key prefix, uncomment line belows
+            # - method: setOption
+            #   arguments:
+            #       - !php/const Redis::OPT_PREFIX
+            #       - 'my_prefix'
+
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
