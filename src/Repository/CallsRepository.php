@@ -40,4 +40,13 @@ class CallsRepository extends ServiceEntityRepository
                     ->getResult()
             ;
     }
+
+    public function getCallsForEmployee ($id)
+    {
+        $q = $this->createQueryBuilder( 'c' )
+                  ->innerJoin( 'c.employees', 'e' )
+                  ->andWhere( 'e.id=:id' )->setParameter( 'id', $id );
+
+        return $q->getQuery()->getResult();
+    }
 }

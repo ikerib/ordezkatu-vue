@@ -26,9 +26,18 @@ class JobDetailRepository extends ServiceEntityRepository
                   ->andWhere('j.job=:jobid')->setParameter('jobid', $jobid)
                  ->andWhere('j.position > :pos')->setParameter('pos', $position)
         ;
-        dump( $q->getQuery()->getSQL() );
         $q->getQuery()->execute();
     }
+
+    public function getAllJobDetailsForEmployee($id)
+    {
+        $q = $this->createQueryBuilder( 'jd' )
+                  ->innerJoin( 'jd.employee', 'e' )
+                  ->andWhere( 'e.id=:id' )->setParameter( 'id', $id );
+
+        return $q->getQuery()->getResult();
+    }
+
     // /**
     //  * @return JobDetail[] Returns an array of JobDetail objects
     //  */
