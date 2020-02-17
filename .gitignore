@@ -17,3 +17,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 !/deploy.php
 deploy.php
+docker/data
