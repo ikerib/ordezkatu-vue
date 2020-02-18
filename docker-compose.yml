@@ -17,7 +17,8 @@ services:
             context: .
             dockerfile: docker/php/Dockerfile
             args:
-                TIMEZONE: ${DOCKER_TIMEZONE}
+                - TIMEZONE= ${DOCKER_TIMEZONE}
+                - WITH_XDEBUG=true
         restart: on-failure
         depends_on:
           - mysql
@@ -26,7 +27,8 @@ services:
             - APP_ENV=${APP_ENV}
             - APP_SECRET=${APP_SECRET}
             - DATABASE_URL=mysql://${DOCKER_MYSQL_USER}:${DOCKER_MYSQL_ROOT_PASSWORD}@mysql:3306/${DOCKER_MYSQL_DATABASE}?serverVersion=5.7
-            - XDEBUG_CONFIG=remote_host=host.docker.internal remote_port=9000 remote_enable=1
+            - PHP_IDE_CONFIG=serverName=ordezkatu.test
+            - XDEBUG_CONFIG=remote_host=172.28.64.102
         volumes:
 #            - ../src:/var/www
             - '.:/usr/src/app'

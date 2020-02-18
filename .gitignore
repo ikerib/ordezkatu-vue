@@ -21,3 +21,4 @@ docker/data
 /docker/data/
 /docker/data-redis/
 /docker/redis-data/
+.idea
