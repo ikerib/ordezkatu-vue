@@ -1,4 +1,4 @@
-version:  '3'
+version:  '3.7'
 services:
     mysql:
         image: mysql
@@ -15,32 +15,38 @@ services:
     php:
         build:
             context: .
-            dockerfile: ./docker/php/Dockerfile
-#            args:
-#                TIMEZONE: ${DOCKER_TIMEZONE}
-#        restart: on-failure
-#        depends_on:
-#          - mysql
-#          - redis
-#        environment:
-#            - APP_ENV=${APP_ENV}
-#            - APP_SECRET=${APP_SECRET}
-#            - DATABASE_URL=mysql://${DOCKER_MYSQL_USER}:${DOCKER_MYSQL_ROOT_PASSWORD}@mysql:3306/${DOCKER_MYSQL_DATABASE}?serverVersion=5.7
-#        volumes:
+            dockerfile: docker/php/Dockerfile
+            args:
+                TIMEZONE: ${DOCKER_TIMEZONE}
+        restart: on-failure
+        depends_on:
+          - mysql
+          - redis
+        environment:
+            - APP_ENV=${APP_ENV}
+            - APP_SECRET=${APP_SECRET}
+            - DATABASE_URL=mysql://${DOCKER_MYSQL_USER}:${DOCKER_MYSQL_ROOT_PASSWORD}@mysql:3306/${DOCKER_MYSQL_DATABASE}?serverVersion=5.7
+            - XDEBUG_CONFIG=remote_host=host.docker.internal remote_port=9000 remote_enable=1
+        volumes:
 #            - ../src:/var/www
+            - '.:/usr/src/app'
+
 
     nginx:
         image: nginx:1.15.3-alpine
         restart: on-failure
-        depends_on:
-            - php
         volumes:
+            - './public/:/usr/src/app'
             - './docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
         ports:
             - "80:80"
             - "443:443"
+        depends_on:
+            - php
 
     redis:
         image: redis:alpine
         ports:
             - "6379:6379"
+        volumes:
+        - ./docker/data-redis:/data
