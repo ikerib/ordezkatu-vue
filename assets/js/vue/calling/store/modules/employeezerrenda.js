@@ -90,7 +90,8 @@ const actions = {
              })
     },
     ADD_CALL: async (context, payload) => {
-        const postCallUrl = "/api/calls?XDEBUG_SESSION_START=PHPSTORM";
+        // const postCallUrl = "/api/calls?XDEBUG_SESSION_START=PHPSTORM";
+        const postCallUrl = "/api/calls";
         axios.post(postCallUrl, payload)
              .then(response => {
                  context.commit("SET_LAST_ID", response.data.id);

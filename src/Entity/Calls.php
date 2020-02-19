@@ -67,6 +67,16 @@ class Calls
      */
     private $jobdetail;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $justifyNeed;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $justified;
+
     public function __construct()
     {
         $this->created = New \DateTime();
@@ -176,6 +186,30 @@ class Calls
     public function setEmployees(?Employee $employees): self
     {
         $this->employees = $employees;
+
+        return $this;
+    }
+
+    public function getJustifyNeed(): ?bool
+    {
+        return $this->justifyNeed;
+    }
+
+    public function setJustifyNeed(?bool $justifyNeed): self
+    {
+        $this->justifyNeed = $justifyNeed;
+
+        return $this;
+    }
+
+    public function getJustified(): ?bool
+    {
+        return $this->justified;
+    }
+
+    public function setJustified(?bool $justified): self
+    {
+        $this->justified = $justified;
 
         return $this;
     }

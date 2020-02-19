@@ -28,7 +28,7 @@ class ApiCallsController extends AbstractFOSRestController
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct( EntityManagerInterface $entityManager )
     {
@@ -96,6 +96,9 @@ class ApiCallsController extends AbstractFOSRestController
         $jobdetailid = $paramFetcher->get( 'jobdetailid' );
         $jobdetail = $this->entityManager->getRepository( 'App:JobDetail' )->find( $jobdetailid );
 
+        $employeeid = $paramFetcher->get( 'employeeid' );
+        $employee = $this->entityManager->getRepository( 'App:Employee' )->find( $employeeid );
+
         $user = $this->getUser();
 
         if ( ( $jobdetail ) && ( $user ) ) {
@@ -103,6 +106,7 @@ class ApiCallsController extends AbstractFOSRestController
             $call = new Calls();
             $call->setUser( $user );
             $call->setJobdetail( $jobdetail );
+            $call->setEmployees( $employee );
             $this->entityManager->persist( $call );
             $this->entityManager->flush();
             $ctx = new Context();
