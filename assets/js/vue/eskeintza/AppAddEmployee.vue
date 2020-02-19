@@ -107,26 +107,25 @@
                 console.log(e);
             },
             saveAndContinue: function () {
-                const selectedEmployees = this.$store.getters.GET_SELECTEDEMPLOYEELIST;
-                if ( selectedEmployees.length > 0 ) {
-                    // const url = Routing.generate("post_job_employee", { "id": this.job.id });
-                    const url = "/api/job/2/employees?XDEBUG_SESSION_START=PHPSTORM";
-                    console.log(url);
-                    const payload = {
-                        employees: selectedEmployees
-                    };
-                    axios.post(url,payload)
-                         .then(response => {
-                            console.log("ADD_CALL response");
-                            console.log(response);
-                             const myUrl = Routing.generate("job_index");
-                             window.location.href = myUrl;
-                        })
-                         .catch(e => {
-                             console.log("HORROR!!!");
-
-                         });
-                }
+                // const selectedEmployees = this.$store.getters.GET_SELECTEDEMPLOYEELIST;
+                // if ( selectedEmployees.length > 0 ) {
+                //     const url = Routing.generate("post_job_employee", { "id": this.job.id });
+                //
+                //     console.log(url);
+                //     const payload = {
+                //         employees: selectedEmployees
+                //     };
+                //     axios.post(url,payload)
+                //          .then(response => {
+                //             console.log("ADD_CALL response");
+                //             console.log(response);
+                             window.location.href = Routing.generate("job_index");
+                        // })
+                        //  .catch(e => {
+                        //      console.log("HORROR!!!");
+                        //
+                        //  });
+                // }
             }
         }
     }

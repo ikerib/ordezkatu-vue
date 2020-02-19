@@ -19,7 +19,11 @@
                                 </li>
                                 <li class="list-inline-item"><h5>Pos: <span class="badge badge-secondary">{{el.position}}</span></h5></li>
                                 <li class="list-inline-item">&nbsp;</li>
-                                <li class="list-inline-item"><h5>{{el.employee.name}} {{el.employee.abizena1}} {{el.employee.abizena2}}</h5></li>
+                                <li class="list-inline-item">
+                                    <a @click="show_user(el)" class="user_link">
+                                        {{el.employee.name}} {{el.employee.abizena1}} {{el.employee.abizena2}}
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-md-4 col-sm-3">
@@ -224,7 +228,12 @@
                     notes: null
                 };
                 this.$store.dispatch("TOOTGLE_SHOW", payload);
+            },
+            show_user: function(el) {
+                const url = Routing.generate("employee_show", { "id": el.employee.id });
+                window.location.href = url;
             }
+
         }
 
     };
@@ -234,5 +243,15 @@
     .collapsed > .when-opened,
     :not(.collapsed) > .when-closed {
         display: none;
+    }
+    .user_link {
+        font-size: 1.123rem;
+        margin-bottom: 0.35rem;
+        font-family: Nunito,serif;
+        font-weight: 500;
+        line-height: 1.2;
+        margin-top: 0;
+        box-sizing: border-box;
+        cursor: pointer;
     }
 </style>
