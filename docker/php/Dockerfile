@@ -65,6 +65,17 @@ RUN pecl install xdebug \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 && composer --version
 
+# Add Yarn repository
+RUN apt-get update && apt-get install -y gnupg2
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+# Update
+RUN apt-get update -y
+
+# Install Yarn
+RUN apt-get install yarn -y
+
 WORKDIR /usr/src/app
 
 COPY . /usr/src/app
