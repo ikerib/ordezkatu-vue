@@ -76,6 +76,11 @@ RUN apt-get update -y
 # Install Yarn
 RUN apt-get install yarn -y
 
+# alias
+
+RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
+RUN echo 'alias cc="php bin/console cache:clear"' >> ~/.bashrc
+
 WORKDIR /usr/src/app
 
 COPY . /usr/src/app
