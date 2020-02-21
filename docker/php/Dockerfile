@@ -80,6 +80,8 @@ RUN apt-get install yarn -y
 
 RUN echo 'alias sf="php bin/console"' >> ~/.bashrc
 RUN echo 'alias cc="php bin/console cache:clear"' >> ~/.bashrc
+RUN echo 'alias f="ls -lah"' >> ~/.bashrc
+RUN chmod -R 777
 
 WORKDIR /usr/src/app
 
