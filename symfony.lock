@@ -2,6 +2,12 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "deployer/deployer": {
+        "version": "v6.8.0"
+    },
+    "deployer/phar-update": {
+        "version": "v2.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -25,6 +31,9 @@
     },
     "doctrine/dbal": {
         "version": "v2.10.1"
+    },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
     },
     "doctrine/doctrine-bundle": {
         "version": "2.0",
@@ -78,6 +87,9 @@
     "doctrine/reflection": {
         "version": "v1.1.0"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.1.1"
+    },
     "easycorp/easy-log-handler": {
         "version": "1.0",
         "recipe": {
@@ -89,6 +101,12 @@
         "files": [
             "config/packages/dev/easy_log_handler.yaml"
         ]
+    },
+    "ezyang/htmlpurifier": {
+        "version": "v4.13.0"
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
     },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
@@ -144,6 +162,9 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.1"
     },
+    "maennchen/zipstream-php": {
+        "version": "2.1.0"
+    },
     "markbaker/complex": {
         "version": "1.4.7"
     },
@@ -152,6 +173,9 @@
     },
     "monolog/monolog": {
         "version": "1.25.3"
+    },
+    "myclabs/php-enum": {
+        "version": "1.8.0"
     },
     "nikic/php-parser": {
         "version": "v4.3.0"
@@ -177,11 +201,23 @@
     "phpoffice/phpspreadsheet": {
         "version": "1.10.1"
     },
+    "pimple/pimple": {
+        "version": "v3.4.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
     },
     "psr/log": {
         "version": "1.1.2"
@@ -271,6 +307,9 @@
     "symfony/dependency-injection": {
         "version": "v4.4.2"
     },
+    "symfony/deprecation-contracts": {
+        "version": "v2.4.0"
+    },
     "symfony/doctrine-bridge": {
         "version": "v4.4.2"
     },
@@ -329,6 +368,9 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.4.0"
     },
     "symfony/http-foundation": {
         "version": "v4.4.2"
@@ -400,6 +442,12 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.13.1"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.22.1"
+    },
+    "symfony/process": {
+        "version": "v4.4.20"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
