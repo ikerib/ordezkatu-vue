@@ -23,7 +23,7 @@
         "@innologica/vue-stackable-modal": "^0.1.9",
         "@sweetalert2/theme-bootstrap-4": "^2.1.0",
         "animate.css": "^3.7.2",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "bloodhound-js": "^1.2.3",
         "bootstrap-colorpicker": "^3.1.2",
         "bootstrap-datepicker": "^1.9.0",
