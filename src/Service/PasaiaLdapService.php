@@ -142,7 +142,7 @@ class PasaiaLdapService
         }
         $user->setSailburuada($sailburuArr['sailburuada']);
         $ldapTaldeak = $this->getLdapUserMembershipGroupsRecursivelyByUsername($user->getUsername());
-        
+
         $user->setLdapTaldeak($ldapTaldeak);
 
         /**
