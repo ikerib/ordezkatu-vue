@@ -18,9 +18,5 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 !/deploy.php
 deploy.php
-docker/data
-/docker/data/
-/docker/data-redis/
-/docker/redis-data/
 .idea
 docker-compose.override.yml
