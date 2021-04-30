@@ -89,7 +89,7 @@ RUN apt-get install yarn -y
 RUN apt install -y zsh wget
 USER www-data
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
-COPY ./docker/php/conf/.zshrc /home/www-data/.zshrc
+
 
 WORKDIR /usr/src/app
 
