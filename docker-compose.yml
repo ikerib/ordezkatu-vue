@@ -50,6 +50,7 @@ services:
 
 volumes:
     ordezkatu_uploads:
+
 networks:
     default:
         ipam:
