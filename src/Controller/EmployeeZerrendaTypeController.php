@@ -117,7 +117,7 @@ class EmployeeZerrendaTypeController extends AbstractController
 
             return $this->redirectToRoute('employee_show', ['id' => $employeeZerrendaType->getEmployee()->getId()]);
         } else {
-            dump( $form->getErrors(true) );
+            $ERR=$form->getErrors();
         }
 
         return $this->render('employee_zerrenda_type/new.html.twig', [
