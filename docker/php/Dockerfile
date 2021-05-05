@@ -4,10 +4,10 @@ ARG USER_ID=${USER_ID}
 ARG GROUP_ID=${GROUP_ID}
 ARG DOCKER_TIMEZONE=${DOCKER_TIMEZONE}
 
-RUN echo "Timezone => " ${DOCKER_TIMEZONE}
-RUN echo "GROUP_ID => " ${GROUP_ID}
-RUN echo "USER_ID => " ${USER_ID}
-RUN echo " XDEBUG  => " ${WITH_XDEBUG}
+RUN echo "Timezone => ${DOCKER_TIMEZONE}"
+RUN echo "GROUP_ID =>  ${GROUP_ID}"
+RUN echo "USER_ID =>  ${USER_ID}"
+RUN echo " XDEBUG  => ${WITH_XDEBUG}"
 
 RUN userdel -f www-data &&\
     if getent group www-data ; then groupdel www-data; fi &&\

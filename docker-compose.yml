@@ -10,7 +10,7 @@ services:
             MYSQL_ROOT_PASSWORD: ${DOCKER_MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${DOCKER_MYSQL_DATABASE}
         volumes:
-        - ./docker/data:/var/lib/mysql
+        - ordezkatu_mysql:/var/lib/mysql
 
     app:
         build:
@@ -30,7 +30,10 @@ services:
             - './docker/php/conf/php.ini:/usr/local/etc/php/php.ini:ro'
 
     nginx:
-        image: nginx:1.15.3-alpine
+        name: ordezkatu_nginx
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
         restart: on-failure
         volumes:
         - ./public/:/usr/src/app
@@ -46,10 +49,12 @@ services:
         ports:
             - "6379:6379"
         volumes:
-        - ./docker/data-redis:/data
+        - ordezkatu_redis:/data
 
 volumes:
     ordezkatu_uploads:
+    ordezkatu_redis:
+    ordezkatu_mysql:
 
 networks:
     default:
