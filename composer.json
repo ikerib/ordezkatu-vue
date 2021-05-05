@@ -31,9 +31,9 @@
         "vich/uploader-bundle": "^1.12"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
         "deployer/deployer": "^6.8",
         "deployer/recipes": "^6.2",
+        "roave/security-advisories": "dev-latest",
         "symfony/maker-bundle": "^1.14"
     },
     "config": {
