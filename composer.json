@@ -1,4 +1,6 @@
 {
+    "name": "ikerib/ordezkatu",
+    "description": "Ordezkatu app",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -29,6 +31,7 @@
         "vich/uploader-bundle": "^1.12"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "deployer/deployer": "^6.8",
         "deployer/recipes": "^6.2",
         "symfony/maker-bundle": "^1.14"
