@@ -30,7 +30,6 @@ services:
             - './docker/php/conf/php.ini:/usr/local/etc/php/php.ini:ro'
 
     nginx:
-        name: ordezkatu_nginx
         build:
             context: .
             dockerfile: ./docker/nginx/Dockerfile
