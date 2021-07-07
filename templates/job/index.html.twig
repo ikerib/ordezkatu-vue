@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lanpostuak{% endblock %}
+{% block title %}Eskeintzak{% endblock %}
 
 {% block body %}
 
@@ -8,8 +8,7 @@
         <h1 class="h2">{{ "Lanpostuen zerrenda" | trans }}</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
-                <a class="btn btn-sm btn-outline-secondary" href="{{ path('job_new') }}">{{ "Lanpostu berria" | trans }}</a>
-
+                <a class="btn btn-sm btn-outline-primary" href="{{ path('job_new') }}">{{ "Eskeintza berria" | trans }}</a>
             </div>
         </div>
     </div>
@@ -18,8 +17,11 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Izaera</th>
                 <th>Saila</th>
+                <th>Arrazoia</th>
+                <th>Hasi</th>
+                <th>Amaitu</th>
                 <th></th>
             </tr>
         </thead>
@@ -29,15 +31,59 @@
                 <td>{{ job.id }}</td>
                 <td>{{ job.name }}</td>
                 <td>{{ job.saila }}</td>
+                <td>{% if job.arrazoia %}{{ job.arrazoia.name }}{% else %}-{% endif %}</td>
+                <td>{{ job.startDate | date('Y-m-d') }}</td>
+                <td>{{ job.endDate | date('Y-m-d') }}</td>
                 <td>
                     <ul class="list-inline">
-                        <li class="list-inline-item"><a href="{{ path('job_show', {'id': job.id}) }}"><i class="fas fa-eye"></i> </a>
-                        <li class="list-inline-item"><a href="{{ path('job_edit', {'id': job.id}) }}"><i class="fas fa-edit"></i></a></li>
-                        <li class="list-inline-item">
-                            {{ include('job/_delete_form.html.twig') }}
-                        </li>
-                    </ul>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {% if job.jobDetails |length > 0 %}
+                                <li class="list-inline-item">
+                                    <a href="{{ path('job_add_employee', { 'id': job.id}) }}">
+                                        <i class="fas fa-list-ol"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if job.isUserEditable == false %}
+                                <li class="list-inline-item">
+                                    <a href="{{ path('job_show', {'id': job.id}) }}">
+                                        <i class="fas fa-phone"></i>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="list-inline-item disabled">
+                                    <i class=" disabled fas fa-phone"></i>
+                                </li>
+                            {% endif %}
 
+                            <li class="list-inline-item">
+                                <a href="{{ path('job_edit', {'id': job.id}) }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                {{ include('job/_delete_form.html.twig') }}
+                            </li>
+                            {% if is_granted('ROLE_ADMIN') and job.isUserEditable%}
+                                <li class="list-inline-item">
+                                    <a href="{{ path('job_abiatu', { 'id': job.id}) }}">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            {% if job.isUserEditable %}
+                                <li class="list-inline-item">
+                                    <a href="{{ path('job_edit', {'id': job.id}) }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li><a href="#">&nbsp;</a></li>
+                            {% endif %}
+
+                        {% endif %}
+                    </ul>
                 </td>
             </tr>
         {% else %}

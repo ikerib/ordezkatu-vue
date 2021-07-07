@@ -64,6 +64,11 @@ class Employee
     private $helbidea;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $elkarkidetza;
+
+    /**
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -81,6 +86,7 @@ class Employee
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Municipio", inversedBy="employees")
+     * @Groups({"main"})
      */
     private $municipio;
     /**
@@ -89,30 +95,26 @@ class Employee
     private $employeeZerrenda;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="employee")
-     */
-    private $logs;
-
-//    /**
-//     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="employees")
-//     */
-//    private $type;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrendaType", mappedBy="employee")
      */
     private $employeeZerrendaTypes;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="employees")
      */
-    private $elkarkidetza;
+    private $calls;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\JobDetail", mappedBy="employee")
+     */
+    private $jobDetails;
 
     public function __construct()
     {
         $this->employeeZerrenda = new ArrayCollection();
-        $this->logs = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
+        $this->calls = new ArrayCollection();
+        $this->jobDetails = new ArrayCollection();
     }
 
     public function __toString()
@@ -281,49 +283,6 @@ class Employee
     }
 
     /**
-     * @return Collection|Log[]
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Log $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setEmployee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Log $log): self
-    {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
-            // set the owning side to null (unless already changed)
-            if ($log->getEmployee() === $this) {
-                $log->setEmployee(null);
-            }
-        }
-
-        return $this;
-    }
-
-//    public function getType(): ?Type
-//    {
-//        return $this->type;
-//    }
-//
-//    public function setType(?Type $type): self
-//    {
-//        $this->type = $type;
-//
-//        return $this;
-//    }
-
-    /**
      * @return Collection|EmployeeZerrendaType[]
      */
     public function getEmployeeZerrendaTypes(): Collection
@@ -366,6 +325,66 @@ class Employee
         return $this;
     }
 
+    /**
+     * @return Collection|Calls[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
 
+    public function addCall(Calls $call): self
+    {
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCall(Calls $call): self
+    {
+        if ($this->calls->contains($call)) {
+            $this->calls->removeElement($call);
+            // set the owning side to null (unless already changed)
+            if ($call->getEmployee() === $this) {
+                $call->setEmployee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|JobDetail[]
+     */
+    public function getJobDetails(): Collection
+    {
+        return $this->jobDetails;
+    }
+
+    public function addJobDetail(JobDetail $jobDetail): self
+    {
+        if (!$this->jobDetails->contains($jobDetail)) {
+            $this->jobDetails[] = $jobDetail;
+            $jobDetail->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobDetail(JobDetail $jobDetail): self
+    {
+        if ($this->jobDetails->contains($jobDetail)) {
+            $this->jobDetails->removeElement($jobDetail);
+            // set the owning side to null (unless already changed)
+            if ($jobDetail->getEmployee() === $this) {
+                $jobDetail->setEmployee(null);
+            }
+        }
+
+        return $this;
+    }
 
 }

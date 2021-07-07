@@ -13,8 +13,6 @@ class TypeType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('created')
-            ->add('updated')
             ->add('orden')
         ;
     }

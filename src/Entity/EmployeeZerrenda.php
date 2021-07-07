@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeeZerrendaRepository")
@@ -26,6 +27,17 @@ class EmployeeZerrenda
      */
     private $position;
 
+    /**
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created;
+
+    /**
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated;
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -41,23 +53,15 @@ class EmployeeZerrenda
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Zerrenda", inversedBy="employeeZerrenda")
      * @ORM\JoinColumn(name="zerrenda_id", referencedColumnName="id")
+     * @Groups({"main", "details"})
      */
     private $zerrenda;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="employeezerrenda")
-     */
-    private $logs;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="employeeZerrendas")
+     * @Groups({"main", "details"})
      */
     private $type;
-
-    public function __construct()
-    {
-        $this->logs = new ArrayCollection();
-    }
 
     /************************************************************************************************************************************************************************************/
     /************************************************************************************************************************************************************************************/
@@ -104,37 +108,6 @@ class EmployeeZerrenda
         return $this;
     }
 
-    /**
-     * @return Collection|Log[]
-     */
-    public function getLogs(): Collection
-    {
-        return $this->logs;
-    }
-
-    public function addLog(Log $log): self
-    {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setEmployeezerrenda($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLog(Log $log): self
-    {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
-            // set the owning side to null (unless already changed)
-            if ($log->getEmployeezerrenda() === $this) {
-                $log->setEmployeezerrenda(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getType(): ?Type
     {
         return $this->type;
@@ -146,4 +119,29 @@ class EmployeeZerrenda
 
         return $this;
     }
+
+    public function getCreated(): ?\DateTimeInterface
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    public function getUpdated(): ?\DateTimeInterface
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
 }

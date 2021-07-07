@@ -45,7 +45,7 @@ $(document).ready(function () {
     });
 
     const appLocale = $('#app_locale').val();
-    const datatablesLocaleURL = "/build/libs/datatables/locales/" + appLocale + ".json";
+    const datatablesLocaleURL = "/build/datatables/" + appLocale + ".json";
 
     $('.mydatatable').DataTable({
         language: {
@@ -94,6 +94,48 @@ $(document).ready(function () {
         $(this).next('.form-control-file').addClass("selected").html(fileName);
     });
 
+    // Employee
+    $(".btnZerrendaType").on("click", function () {
+        const employeeid = $(this).data("employeeid");
+        const zerrendaid = $(this).data("zerrendaid");
+        const typeid = $(this).data("typeid");
+
+        $("#employee_zerrenda_type_zerrenda").val(zerrendaid).trigger('change');
+        $("#employee_zerrenda_type_type").val(typeid).trigger('change');
+
+        $("#modalChangeType").modal('show');
+    });
+
+    $("#employee_zerrenda_type_zerrenda").on("select2:select", function (e) {
+
+        const employeeid = $("#employee_zerrenda_type_employee").val();
+
+        console.log("employeeid: " + employeeid + " zerrendaid: " + e.params.data.id);
+
+        const url = Routing.generate("get_employeezerrenda_position_employee", {
+            employeeid: employeeid,
+            zerrendaid: e.params.data.id
+        });
+        $.ajax({
+            url: url,
+            success: function ( response ) {
+                $("#employee_zerrenda_type_lastPosition").val(response.position);
+
+            }
+        });
+
+        const url2 = Routing.generate('get_employeezerrendatype', {'employeeid': employeeid, 'zerrendaid': e.params.data.id})
+        $.ajax({
+            url: url2,
+            success: function ( response ) {
+                console.log("SUCCESS 2")
+                console.log(response);
+
+            }
+        });
+
+    });
+
     // Employee select
     $('.mySelect').on('change', function () {
         const miid = $(this).val();
@@ -112,6 +154,36 @@ $(document).ready(function () {
 
     $('.btnFormAddEmployeeSelectFormSubmit').on('click', function () {
         $('#formAddEmployeeSelectForm').submit();
+    });
+
+
+    // JOB NEW
+    // $('#job_arrazoia').on('change', function () {
+     $('#job_arrazoia').on('select2:select', function (e) {
+         const data = e.params.data;
+         console.log('params');
+         console.log(e.params.data.id);
+        const url = Routing.generate("get_arrazoia", {'id': e.params.data.id});
+        console.log(url);
+        $.ajax({
+            url: url,
+            success: function (data) {
+                console.log('success');
+                console.log(data);
+                if ( data.aldibaterako ) {
+                    $('#divPrograma').show()
+                } else {
+                    $('#divPrograma').hide()
+                }
+            }
+        })
+    })
+
+    $("#erantzuna_color").on("change", function () {
+        console.log(this.value);
+        // remove all clases
+        $('#divAdibide').removeClass().addClass("card").addClass(this.value);
+
     });
 });
 

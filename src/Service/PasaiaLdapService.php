@@ -142,33 +142,18 @@ class PasaiaLdapService
         }
         $user->setSailburuada($sailburuArr['sailburuada']);
         $ldapTaldeak = $this->getLdapUserMembershipGroupsRecursivelyByUsername($user->getUsername());
+
         $user->setLdapTaldeak($ldapTaldeak);
 
         /**
          * TODO: Rolak zehaztu
          */
-        if ($this->in_array_r('App-Web_Egutegia-Arduraduna', $ldapTaldeak,false)) {
-            $rol[] = 'ROLE_ALKATEA';
-        }
-        if ($this->in_array_r('App-Web_Egutegia-Arduraduna', $ldapTaldeak,false)) {
-            $rol[] = 'ROLE_ALKATEA';
-        }
-        if ($this->in_array_r('APP-Web_Egutegia', $ldapTaldeak,false)) {
+        if ($this->in_array_r('APP-Web_Ordezkatu-Admin', $ldapTaldeak,false)) {
             $rol[] = 'ROLE_ADMIN';
-        }
-        if ($this->in_array_r('APP-Web_Egutegia-Bideratzaile', $ldapTaldeak,false)) {
-            $rol[] = 'ROLE_BIDERATZAILE';
         }
         if ($this->in_array_r('ROL-Antolakuntza_Informatika', $ldapTaldeak,false)) {
             $rol[] = 'ROLE_SUPER_ADMIN';
         }
-        if ($this->in_array_r('App-Web_Egutegia-Sinatzailea', $ldapTaldeak,false)) {
-            $rol[] = 'ROLE_SINATZAILEA';
-        }
-        if ($this->in_array_r('daltzaing', $ldapTaldeak,false)) {
-            $rol[] = 'ROLE_UDALTZAINA';
-        }
-
 
         $user->setRoles($rol);
         $this->em->persist($user);
@@ -177,7 +162,7 @@ class PasaiaLdapService
         return $user;
     }
 
-    function in_array_r($needle, $haystack, $strict = false): bool
+    public function in_array_r($needle, $haystack, $strict = false): bool
     {
         foreach ($haystack as $item) {
 
@@ -253,7 +238,7 @@ class PasaiaLdapService
             if ($key !== 'count') {
                 $taldea = $group['samaccountname'][0];
                 switch ($taldea) {
-                    case strpos($taldea,'APP-')===0:
+                    case stripos($taldea, 'APP-') ===0:
                         $ldapApp[] = $taldea;
                         break;
                     case strpos($taldea,'ROL-'):

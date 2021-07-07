@@ -1,10 +1,11 @@
 menu.taula.laguntzaileak: 'Taula laguntzaileak'
 menu.municipio.list: Herriak
 menu.type.list: 'Egoera motak'
-menu.customer: Langileak
-sidebar.customer: Langileak
+menu.customer: Hautagaiak
+sidebar.customer: Hautagaiak
+sidebar.erantzuna: Erantzunak
 sidebar.zerrendak: Zerrendak
-sidebar.lanpostuak: Lanpostuak
+sidebar.lanpostuak: Eskeintzak
 sidebar.eskaerak: Eskaerak
 sidebar.egoera_motak: 'Egoera motak'
 sidebar.herriak: Herriak
@@ -41,3 +42,35 @@ Helbidea: Helbidea
 'Zerrenda berria': 'Zerrenda berria'
 'Zerrenda aldatu': 'Zerrenda aldatu'
 sidebar.saila: Sailak
+sidebar.arrazoia: Arrazoiak
+'Eskeintza berria': 'Eskeintza berria'
+'Sailen zerrenda': 'Sailen zerrenda'
+'Sail berria': 'Sail berria'
+'Arrazoien zerrenda': 'Arrazoien zerrenda'
+'Arrazoi berria': 'Arrazoi berria'
+Ezarri: Ezarri
+Fitxategia: Fitxategia
+Egoera: Egoera
+'Hurrekera zerrendan': 'Hurrekera zerrendan'
+sidebar.jobtype: 'Izendapen mota'
+sidebar.sailkapentalea: 'Sailkapen taldeak'
+sidebar.hizkuntza: 'Hizkuntz eskakizunak'
+sidebar.titulazioa: Titulazioak
+'Eskaintza berria': 'Eskaintza berria'
+'Mota berria': 'Mota berria'
+'Moten zerrenda': 'Moten zerrenda'
+'Eskaintza mota berria': 'Eskaintza mota berria'
+'Eskaintza mota zerrenda': 'Eskaintza mota zerrenda'
+'Sailkapen talde berria': 'Sailkapen talde berria'
+'Sailkapen talde zerrenda': 'Sailkapen talde zerrenda'
+'Hizkuntza berria': 'Hizkuntza berria'
+'Hizkuntzen zerrenda': 'Hizkuntzen zerrenda'
+'Titulazio berria': 'Titulazio berria'
+'Titulazioen zerrenda': 'Titulazioen zerrenda'
+sidebar.erantzunak: Erantzunak
+'Izendapen mota berria': 'Izendapen mota berria'
+'Izendapen mota zerrenda': 'Izendapen mota zerrenda'
+'Hizkuntz eskakizun berria': 'Hizkuntz eskakizun berria'
+'Hizkuntz eskakizun zerrenda': 'Hizkuntz eskakizun zerrenda'
+'Erantzun berria': 'Erantzun berria'
+'Erantzunen zerrenda': 'Erantzunen zerrenda'

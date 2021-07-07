@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeRepository")
@@ -16,11 +17,13 @@ class Type
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"main"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"main"})
      */
     private $name;
 
@@ -39,6 +42,7 @@ class Type
     /**
      * @Gedmo\SortablePosition
      * @ORM\Column(name="orden", type="integer", nullable=true)
+     * @Groups({"main"})
      */
     private $orden;
 
@@ -53,15 +57,27 @@ class Type
     private $employeeZerrendaTypes;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrendaType", mappedBy="last")
+     */
+    private $lastemployeeZerrendaTypes;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmployeeZerrenda", mappedBy="type")
      */
     private $employeeZerrendas;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="result")
+     */
+    private $calls;
 
     public function __construct()
     {
 //        $this->employees = new ArrayCollection();
         $this->employeeZerrendaTypes = new ArrayCollection();
         $this->employeeZerrendas = new ArrayCollection();
+        $this->calls = new ArrayCollection();
+        $this->lastemployeeZerrendaTypes = new ArrayCollection();
     }
 
     public function __toString()
@@ -209,6 +225,68 @@ class Type
             // set the owning side to null (unless already changed)
             if ($employeeZerrenda->getType() === $this) {
                 $employeeZerrenda->setType(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Calls[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
+
+    public function addCall(Calls $call): self
+    {
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setResult($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCall(Calls $call): self
+    {
+        if ($this->calls->contains($call)) {
+            $this->calls->removeElement($call);
+            // set the owning side to null (unless already changed)
+            if ($call->getResult() === $this) {
+                $call->setResult(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|EmployeeZerrendaType[]
+     */
+    public function getLastemployeeZerrendaTypes(): Collection
+    {
+        return $this->lastemployeeZerrendaTypes;
+    }
+
+    public function addLastemployeeZerrendaType(EmployeeZerrendaType $lastemployeeZerrendaType): self
+    {
+        if (!$this->lastemployeeZerrendaTypes->contains($lastemployeeZerrendaType)) {
+            $this->lastemployeeZerrendaTypes[] = $lastemployeeZerrendaType;
+            $lastemployeeZerrendaType->setLast($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLastemployeeZerrendaType(EmployeeZerrendaType $lastemployeeZerrendaType): self
+    {
+        if ($this->lastemployeeZerrendaTypes->contains($lastemployeeZerrendaType)) {
+            $this->lastemployeeZerrendaTypes->removeElement($lastemployeeZerrendaType);
+            // set the owning side to null (unless already changed)
+            if ($lastemployeeZerrendaType->getLast() === $this) {
+                $lastemployeeZerrendaType->setLast(null);
             }
         }
 

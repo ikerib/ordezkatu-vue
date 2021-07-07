@@ -1,8 +1,14 @@
 <?php
 
+
 namespace App\Controller\Api;
 
+use App\Entity\Calls;
+use App\Entity\Employee;
 use App\Entity\Job;
+use App\Entity\JobDetail;
+use App\Entity\Zerrenda;
+use App\Repository\JobDetailRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
@@ -18,102 +24,119 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiJobController extends AbstractFOSRestController
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var EntityManagerInterface
      */
-    private $entityManager;
+    private $em;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->entityManager = $entityManager;
-    }
-
-    /**
-     * @Rest\Get("/jobs", name="get_jobs", options={ "expose": true})
-     */
-    public function getJobs(): View
-    {
-        $jobs = $this->entityManager->getRepository(Job::class)->findAll();
-        $ctx = new Context();
-        $ctx->addGroup('main');
-
-        return View::create($jobs, Response::HTTP_OK)->setContext($ctx);
+        $this->em = $em;
     }
 
     /**
      * @Rest\Get("/job/{id}", name="get_job", options={ "expose": true})
-     * @param \App\Entity\Job $job
      *
-     * @return \FOS\RestBundle\View\View
+     * @param Job $job
+     *
+     * @return View|Response
      */
-    public function getJob(Job $job): View
+    public function getJob(Job $job)
     {
         $ctx = new Context();
         $ctx->addGroup('main');
 
-        return View::create($job, Response::HTTP_OK)->setContext($ctx);
+        $view = $this->view( $job, Response::HTTP_OK )->setContext( $ctx );
+
+        return $this->handleView( $view );
     }
 
     /**
-     * @Rest\Post("/job", name="post_job", options={ "expose":true })
-     * @Rest\RequestParam(name="name", description="The name of the job", nullable=false)
-     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
+     * @Rest\Post("/job/{id}/employee", name="post_job_add_employee", options={ "expose":true })
+     * @Rest\RequestParam(name="employeeid", description="Id of the Employee", nullable=false)
+     * @Rest\RequestParam(name="position", description="position on the list", nullable=false)
+     * @param ParamFetcher $paramFetcher
      *
-     * @return \FOS\RestBundle\View\View
+     * @param Job          $job
+     *
+     * @return View
      */
-    public function postJob(ParamFetcher $paramFetcher): View
+    public function postAddOneEmployeesToJob(ParamFetcher $paramFetcher, Job $job): View
     {
-        $name = $paramFetcher->get('name');
-        $saila = $paramFetcher->get('saila');
-        if ($name) {
-            $job = new Job();
-            $job->setName($name);
-            if ($saila) {
-                $job->setSaila($saila);
-            }
-            $this->entityManager->persist($job);
-            $this->entityManager->flush();
+        $employeeid = $paramFetcher->get('employeeid');
+        $employee = $this->em->getRepository( 'App:Employee' )->find( $employeeid );
+        $position = $paramFetcher->get('position');
+
+        if ($employee) {
+            /** @var JobDetail $jobd */
+            $jobd = new JobDetail();
+            $jobd->setPosition( $position );
+            $jobd->setJob( $job );
+            $jobd->setEmployee( $employee );
+            $this->em->persist($jobd);
+
+            $this->em->flush();
             $ctx = new Context();
             $ctx->addGroup('main');
-
             return View::create($job, Response::HTTP_CREATED)->setContext($ctx);
         }
 
-        return View::create(['name' => 'This cannot be null.'], Response::HTTP_BAD_REQUEST);
+        return View::create(['employees' => 'This cannot be null.'], Response::HTTP_BAD_REQUEST);
     }
 
     /**
-     * @Rest\Put("/job/{id}", name="put_job", options={ "expose": true })
-     * @Rest\RequestParam(name="name", description="Jobren izena", nullable=false)
-     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
-     * @param \App\Entity\Job                 $job
+     * @Rest\Delete("/jobdetail/{id}/delete", name="delete_jobdetail", options={ "expose": true})
      *
-     * @return \FOS\RestBundle\View\View
-     */
-    public function putJob(ParamFetcher $paramFetcher, Job $job): View
-    {
-        $name = $paramFetcher->get('name');
-        if ('' !== trim($name)) {
-            $job->setName($name);
-            $this->entityManager->persist($job);
-            $this->entityManager->flush();
-
-            return View::create(null, Response::HTTP_NO_CONTENT);
-        }
-
-        return View::create(['name' => 'Ezin du hutsik egon'], Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @Rest\Delete("/job/{id}", name="delete_job", options={ "expose": true})
-     * @param \App\Entity\Job $job
      *
-     * @return \FOS\RestBundle\View\View
+     * @param JobDetail           $jobDetail
+     *
+     * @param JobDetailRepository $jobDetailRepository
+     *
+     * @return View
      */
-    public function deleteJob(Job $job): View
+    public function deleteZerrenda(JobDetail $jobDetail, JobDetailRepository $jobDetailRepository): View
     {
-        $this->entityManager->remove($job);
-        $this->entityManager->flush();
+        $jobid = $jobDetail->getJob();
+        $position = $jobDetail->getPosition();
+        $this->em->remove($jobDetail);
+
+        $jobDetailRepository->updatePosition( $jobid, $position );
+        $this->em->flush();
 
         return View::create(null, Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * @Rest\Post("/job/{id}/employees", name="post_job_employee", options={ "expose":true })
+     * @Rest\RequestParam(name="employees", description="array of employees", nullable=false)
+     * @param ParamFetcher $paramFetcher
+     *
+     * @param Job          $job
+     *
+     * @return View
+     */
+    public function postAddEmployeesToJob(ParamFetcher $paramFetcher, Job $job): View
+    {
+        $employees = $paramFetcher->get('employees');
+        $cont = 0;
+        if ($employees) {
+            $cont++;
+            foreach ($employees as $emp) {
+                /** @var Employee $employee */
+                $employee = $this->em->getRepository( 'App:Employee' )->find( $emp[ 'id' ] );
+                /** @var JobDetail $jobd */
+                $jobd = new JobDetail();
+                $jobd->setPosition( $cont );
+                $jobd->setJob( $job );
+                $jobd->setEmployee( $employee );
+                $this->em->persist($jobd);
+            }
+            $this->em->flush();
+            $ctx = new Context();
+            $ctx->addGroup('main');
+            return View::create($job, Response::HTTP_CREATED)->setContext($ctx);
+        }
+
+        return View::create(['employees' => 'This cannot be null.'], Response::HTTP_BAD_REQUEST);
+    }
+
 }

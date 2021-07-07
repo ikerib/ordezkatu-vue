@@ -1,46 +1,88 @@
 <nav class="col-md-2 d-none d-md-block bg-light sidebar">
     <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-            <li class="nav-item {% if app.request.get('_route') starts with "employee_" %}sidebar-active {% endif %}">
-                <a class="nav-link {% if app.request.get('_route') starts with "employee_" %}active {% endif %} " href="{{ path('employee_index') }}">
-                    <i class="fas fa-users"></i>
-                    {{ "sidebar.customer" | trans }} <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            <li class="nav-item {% if app.request.get('_route') starts with "job_" %}sidebar-active {% endif %}">
-                <a class="nav-link {% if app.request.get('_route') starts with "job_" %}active {% endif %} " href="{{ path('job_index') }}">
-                    <i class="fas fa-city"></i>
-                    {{ "sidebar.lanpostuak" | trans }}
-                </a>
-            </li>
-            <li class="nav-item {% if app.request.get('_route') starts with "zerrenda_" %}sidebar-active {% endif %}">
-                <a class="nav-link {% if app.request.get('_route') starts with "zerrenda_" %}active {% endif %} " href="{{ path('zerrenda_index') }}">
-                    <i class="fas fa-list"></i>
-                    {{ "sidebar.zerrendak" | trans }}
-                </a>
-            </li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <ul class="nav flex-column">
+                <li class="nav-item {% if app.request.get('_route') == "job_index"
+                                       or app.request.get('_route') == "job_new"
+                                       or app.request.get('_route') == "job_add_employee"
+                                       or app.request.get('_route') == "job_edit"
+                                       or app.request.get('_route') == "job_show"%}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "job_" %}active {% endif %} " href="{{ path('job_index') }}">
+                        <i class="fas fa-city"></i>
+                        {{ "sidebar.lanpostuak" | trans }}
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "employee_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "employee_" %}active {% endif %} " href="{{ path('employee_index') }}">
+                        <i class="fas fa-users"></i>
+                        {{ "sidebar.customer" | trans }} <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "zerrenda_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "zerrenda_" %}active {% endif %} " href="{{ path('zerrenda_index') }}">
+                        <i class="fas fa-list"></i>
+                        {{ "sidebar.zerrendak" | trans }}
+                    </a>
+                </li>
 
-        </ul>
+            </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>{{ "Taula Laguntzaileak" | trans }}</span>
-            <a class="d-flex align-items-center text-muted" href="#">
-                <span data-feather="plus-circle"></span>
-            </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-            <li class="nav-item {% if app.request.get('_route') starts with "type_" %}sidebar-active {% endif %}">
-                <a class="nav-link {% if app.request.get('_route') starts with "type_" %}active {% endif %} " href="{{ path('type_index')}}">
-                    <span data-feather="file-text"></span>
-                    {{ "sidebar.egoera_motak" | trans }}
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                <span>{{ "Taula Laguntzaileak" | trans }}</span>
+                <a class="d-flex align-items-center text-muted" href="#">
+                    <span data-feather="plus-circle"></span>
                 </a>
-            </li>
-            <li class="nav-item {% if app.request.get('_route') starts with "saila_" %}sidebar-active {% endif %}">
-            <a class="nav-link {% if app.request.get('_route') starts with "saila_" %}active {% endif %} " href="{{ path('saila_index') }}">
-                    <span data-feather="file-text"></span>
-                    {{ "sidebar.saila" | trans }}
-                </a>
-            </li>
-        </ul>
+            </h6>
+            <ul class="nav flex-column mb-2">
+                <li class="nav-item {% if app.request.get('_route') starts with "type_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "type_" %}active {% endif %} " href="{{ path('type_index')}}">
+                        <span data-feather="file-text"></span>
+                        {{ "sidebar.egoera_motak" | trans }}
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "erantzuna_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "erantzuna_" %}active {% endif %} " href="{{ path('erantzuna_index')}}">
+                        <span data-feather="file-text"></span>
+                        {{ "sidebar.erantzunak" | trans }}
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "saila_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "saila_" %}active {% endif %} " href="{{ path('saila_index') }}">
+                        <span data-feather="file-text"></span>
+                        {{ "sidebar.saila" | trans }}
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "arrazoia_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "arrazoia_" %}active {% endif %} " href="{{ path('arrazoia_index') }}">
+                        <span data-feather="file-text"></span>
+                        {{ "sidebar.arrazoia" | trans }}
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "job_type_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "job_type_" %}active {% endif %} " href="{{ path('job_type_index') }}">
+                        <span data-feather="file-text"></span>
+                        {{ "sidebar.jobtype" | trans }}
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "sailkapen_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "sailkapen_" %}active {% endif %} " href="{{ path('sailkapen_taldea_index') }}">
+                        <span data-feather="file-text"></span>
+                        {{ "sidebar.sailkapentalea" | trans }}
+                    </a>
+                </li>
+                <li class="nav-item {% if app.request.get('_route') starts with "hizkuntza_" %}sidebar-active {% endif %}">
+                    <a class="nav-link {% if app.request.get('_route') starts with "hizkuntza_" %}active {% endif %} " href="{{ path('hizkuntza_index') }}">
+                        <span data-feather="file-text"></span>
+                        {{ "sidebar.hizkuntza" | trans }}
+                    </a>
+                </li>
+{#                <li class="nav-item {% if app.request.get('_route') starts with "titulazioa_" %}sidebar-active {% endif %}">#}
+{#                    <a class="nav-link {% if app.request.get('_route') starts with "titulazioa_" %}active {% endif %} " href="{{ path('titulazioa_index') }}">#}
+{#                        <span data-feather="file-text"></span>#}
+{#                        {{ "sidebar.titulazioa" | trans }}#}
+{#                    </a>#}
+{#                </li>#}
+            </ul>
+        {% endif %}
     </div>
 </nav>

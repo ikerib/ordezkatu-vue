@@ -98,6 +98,7 @@ body {
     position: -webkit-sticky;
     position: sticky;
     background-color: #1a3e46;
+    background-image: linear-gradient(180deg, rgba(26,62,70,1) 50%, rgba(95,116,53,1) 98%);
   }
 }
 
@@ -208,9 +209,9 @@ body {
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   background-color: #1a3e46;
-  color: #ececec !important;
+  color: #ffffff !important;
   font-weight: 500 !important;
-  padding: 6px 0;
+  padding: 6px 0 0 16px;
 }
 
   /** Twitter Typeahead **/

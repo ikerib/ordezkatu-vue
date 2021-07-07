@@ -12,14 +12,58 @@ class EmployeeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('abizena1')
-            ->add('abizena2')
-            ->add('nan')
-            ->add('email')
-            ->add('telefono')
-            ->add('helbidea')
+            ->add('name', null, [
+                'label' => 'Izena',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
+            ->add('abizena1', null, [
+                'label' => '1º Abizena',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
+            ->add('abizena2', null, [
+                'label' => '2º Abizena',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
+            ->add('nan', null, [
+                'label' => 'N.A.N',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
+            ->add('email', null, [
+                'label' => 'Email',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
+            ->add('telefono', null, [
+                'label' => 'Telefonoa',
+                'required' => true,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
+            ->add('helbidea', null, [
+                'label' => 'Helbidea',
+                'required' => false,
+                'attr' => [
+                    'autocomplete' => 'off'
+                ]
+            ])
             ->add('municipio', null, [
+                'label' => 'Herria',
+                'required' => false,
                 'attr' => [
                     'class' => 'myselect2',
                 ],

@@ -1,10 +1,11 @@
 menu.taula.laguntzaileak: 'Tablas auxiliares'
 menu.municipio.list: Municipios
 menu.type.list: 'Tipos de estado'
-menu.customer: Trabajador
-sidebar.customer: Trabajadores
+menu.customer: Candidato
+sidebar.customer: Candidatos
+sidebar.erantzuna: Respuestas
 sidebar.zerrendak: Listas
-sidebar.lanpostuak: 'Puestos de empleo'
+sidebar.lanpostuak: Ofertas
 sidebar.eskaerak: Peticiones
 sidebar.egoera_motak: 'Tipos de estado'
 sidebar.herriak: Municipios
@@ -41,3 +42,35 @@ Helbidea: Dirección
 'Zerrenda berria': 'Nueva lista'
 'Zerrenda aldatu': 'Editar lista'
 sidebar.saila: Departamentos
+sidebar.arrazoia: Razones
+'Eskeintza berria': 'Nueva oferta'
+'Sailen zerrenda': 'Listado de listado'
+'Sail berria': 'Nueva departamento'
+'Arrazoien zerrenda': 'Listado de Razones'
+'Arrazoi berria': 'Nueva razón'
+Ezarri: Ezarri
+Fitxategia: Fichero
+Egoera: Estado
+'Hurrekera zerrendan': Posición
+sidebar.jobtype: 'Tipos de nombramiento'
+sidebar.sailkapentalea: 'Grupo de Clasificación'
+sidebar.hizkuntza: 'Requisito idiomas'
+sidebar.titulazioa: Titulaciones
+'Eskaintza berria': 'Nueva petición'
+'Mota berria': 'Nuevo tipo'
+'Moten zerrenda': 'Nueva lista'
+'Eskaintza mota berria': 'Nuevo tipo de nombramiento'
+'Eskaintza mota zerrenda': 'Lista tipos de nombramiento'
+'Sailkapen talde berria': 'Nuevo grupo'
+'Sailkapen talde zerrenda': 'Lista grupos de clasificación'
+'Hizkuntza berria': 'Nuevo idioma'
+'Hizkuntzen zerrenda': 'Lista idiomas'
+'Titulazio berria': 'Nueva titulación'
+'Titulazioen zerrenda': 'Lista de titulaciones'
+sidebar.erantzunak: 'Respuestas'
+'Izendapen mota berria': 'Nuevo tipo de Petición'
+'Izendapen mota zerrenda': 'Listado tipos de petición'
+'Hizkuntz eskakizun berria': 'Nuevo requisito de idioma'
+'Hizkuntz eskakizun zerrenda': 'Listado requisitos de idioma'
+'Erantzun berria': 'Nueva respuesta'
+'Erantzunen zerrenda': 'Listado de respuestas'

@@ -1,0 +1,28 @@
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Deiak</h4>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>Noiz</th>
+                <th>Nork</th>
+                <th>Eskeintza</th>
+                <th>Erantzuna</th>
+                <th>Oharrak</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for call in calls %}
+                <tr>
+                    <td>{{ call.created | date('Y-m-d h:m:s') }}</td>
+                    <td>{{ call.user }}</td>
+                    <td>{{ call.jobdetail.job.name }}</td>
+                    <td>{{ call.erantzuna }}</td>
+                    <td>{{ call.notes }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

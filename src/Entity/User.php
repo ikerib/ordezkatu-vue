@@ -129,9 +129,19 @@ class User implements UserInterface
     private $updated;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Log", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Calls", mappedBy="user")
      */
-    private $logs;
+    private $calls;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Job", mappedBy="user")
+     */
+    private $jobs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Notifycation", mappedBy="user")
+     */
+    private $notifycations;
 
     /*****************************************************************************************************************/
     /*** ERLAZIOAK ***************************************************************************************************/
@@ -142,7 +152,9 @@ class User implements UserInterface
         if (empty($this->roles)) {
             $this->roles[] = 'ROLE_USER';
         }
-        $this->logs = new ArrayCollection();
+        $this->calls = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
+        $this->notifycations = new ArrayCollection();
     }
 
     public function __toString()
@@ -425,33 +437,96 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Log[]
+     * @return Collection|Calls[]
      */
-    public function getLogs(): Collection
+    public function getCalls(): Collection
     {
-        return $this->logs;
+        return $this->calls;
     }
 
-    public function addLog(Log $log): self
+    public function addCall(Calls $call): self
     {
-        if (!$this->logs->contains($log)) {
-            $this->logs[] = $log;
-            $log->setUser($this);
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeLog(Log $log): self
+    public function removeCall(Calls $call): self
     {
-        if ($this->logs->contains($log)) {
-            $this->logs->removeElement($log);
+        if ($this->calls->contains($call)) {
+            $this->calls->removeElement($call);
             // set the owning side to null (unless already changed)
-            if ($log->getUser() === $this) {
-                $log->setUser(null);
+            if ($call->getUser() === $this) {
+                $call->setUser(null);
             }
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection|Job[]
+     */
+    public function getJobs(): Collection
+    {
+        return $this->jobs;
+    }
+
+    public function addJob(Job $job): self
+    {
+        if (!$this->jobs->contains($job)) {
+            $this->jobs[] = $job;
+            $job->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJob(Job $job): self
+    {
+        if ($this->jobs->contains($job)) {
+            $this->jobs->removeElement($job);
+            // set the owning side to null (unless already changed)
+            if ($job->getUser() === $this) {
+                $job->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notifycation[]
+     */
+    public function getNotifycations(): Collection
+    {
+        return $this->notifycations;
+    }
+
+    public function addNotifycation(Notifycation $notifycation): self
+    {
+        if (!$this->notifycations->contains($notifycation)) {
+            $this->notifycations[] = $notifycation;
+            $notifycation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotifycation(Notifycation $notifycation): self
+    {
+        if ($this->notifycations->contains($notifycation)) {
+            $this->notifycations->removeElement($notifycation);
+            // set the owning side to null (unless already changed)
+            if ($notifycation->getUser() === $this) {
+                $notifycation->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

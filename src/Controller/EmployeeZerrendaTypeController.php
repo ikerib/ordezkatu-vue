@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Employee;
 use App\Entity\EmployeeZerrenda;
 use App\Entity\EmployeeZerrendaType;
-use App\Entity\Log;
 use App\Entity\User;
 use App\Entity\Zerrenda;
 use App\Form\EmployeeZerrendaTypeType;
@@ -76,7 +75,10 @@ class EmployeeZerrendaTypeController extends AbstractController
             $employeeZerrendaType->setZerrenda($zerrenda);
         }
 
-        $form = $this->createForm(EmployeeZerrendaTypeType::class, $employeeZerrendaType);
+        $form = $this->createForm(EmployeeZerrendaTypeType::class, $employeeZerrendaType, [
+            'employeeid' => $employee->getId(),
+            'method' => 'POST'
+        ]);
         $form->handleRequest($request);
 
 
@@ -84,21 +86,18 @@ class EmployeeZerrendaTypeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            /** @var Log $log */
-            $log = new Log();
-            /** @var User $user */
-            $user = $this->getUser();
-            $log->setUser($user);
-            $log->setEmployee($employeeZerrendaType->getEmployee());
-            $log->setZerrenda($employeeZerrendaType->getZerrenda());
-            $log->setName('Egoera aldatu');
+
             if ($employeeZerrendaType->getZerrenda()) {
                 /** @var EmployeeZerrenda $employeeZerrenda */
                 $employeeZerrenda = $this->em->getRepository(EmployeeZerrenda::class)->findOneByEmployeeZerrenda($employeeZerrendaType->getEmployee(), $employeeZerrendaType->getZerrenda());
                 $employeeZerrenda->setType($employeeZerrendaType->getType());
-                $entityManager->persist($employeeZerrenda);
 
-                $log->setDescription($employeeZerrendaType->getEmployee() . ' hautagaiaren egoera aldatua da' . $employeeZerrendaType->getZerrenda() . '-rako. Egoera berria: ' . $employeeZerrendaType->getType());
+                //            TODO: currentPosition bidaltzen bada employeeZerrenda entitatea eguneratu.
+                if (( $employeeZerrendaType->getLastPosition() !== $employeeZerrendaType->getCurrentPosition()) && ($employeeZerrendaType->getCurrentPosition()) ){
+                    $employeeZerrenda->setPosition( $employeeZerrendaType->getCurrentPosition() );
+                }
+
+                $entityManager->persist($employeeZerrenda);
             } else {
                 $zerrendak = $this->em->getRepository(EmployeeZerrenda::class)->findAllZerrendasForEmployee($employeeid);
                 /** @var EmployeeZerrenda $z */
@@ -106,14 +105,20 @@ class EmployeeZerrendaTypeController extends AbstractController
                 {
                     $z->setType($employeeZerrendaType->getType());
                     $this->em->persist($z);
-                    $log->setDescription($employeeZerrendaType->getEmployee() . ' hautagaiaren egoera aldatua da' . $z->getZerrenda() . '-rako. Egoera berria: ' . $employeeZerrendaType->getType());
                 }
             }
+
+            if ( $employeeZerrendaType->getLast() !== $employeeZerrendaType->getType()) {
+                $employeeZerrendaType->setLast( $employeeZerrendaType->getType() );
+            }
+
             $entityManager->persist($employeeZerrendaType);
-            $entityManager->persist($log);
             $entityManager->flush();
 
             return $this->redirectToRoute('employee_show', ['id' => $employeeZerrendaType->getEmployee()->getId()]);
+
+        } else {
+            $ERR=$form->getErrors();
         }
 
         return $this->render('employee_zerrenda_type/new.html.twig', [

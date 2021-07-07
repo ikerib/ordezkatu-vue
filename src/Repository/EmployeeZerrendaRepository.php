@@ -24,6 +24,10 @@ class EmployeeZerrendaRepository extends SortableRepository
         parent::__construct($em, $em->getClassMetadata(EmployeeZerrenda::class));
     }
 
+    public function findJobEmployeeZerrenda ($jobid) {
+
+    }
+
     public function findOneByEmployeeZerrenda($employeeid, $zerrendaid)
     {
         $qb = $this->createQueryBuilder('ez')
@@ -57,6 +61,21 @@ class EmployeeZerrendaRepository extends SortableRepository
                     ->orderBy('ez.position')
         ;
         return $qb->getQuery()->getResult();
+    }
+
+    public function findPosition($employeeid, $zerrendaid) {
+        $qb = $this->createQueryBuilder( 'ez' )
+                   ->innerJoin( 'ez.employee', 'e' )
+                   ->innerJoin( 'ez.zerrenda', 'z' )
+                   ->andWhere( 'e.id=:employeeid' )->setParameter( 'employeeid', $employeeid )
+                   ->andWhere('z.id=:zerrendaid')->setParameter('zerrendaid', $zerrendaid)
+        ;
+
+        try {
+            return $qb->getQuery()->getOneOrNullResult();
+        } catch ( NonUniqueResultException $e ) {
+            return null;
+        }
     }
 
     public function getMaxPositionZerrenda($zerrendaid) {

@@ -4,13 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Employee;
 use App\Entity\EmployeeZerrenda;
-use App\Entity\Log;
 use App\Entity\Municipio;
 use App\Entity\User;
 use App\Entity\Zerrenda;
 use App\Form\ZerrendaInportType;
 use App\Form\ZerrendaTemplateType;
 use App\Form\ZerrendaType;
+use App\Repository\TypeRepository;
 use App\Repository\ZerrendaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -68,16 +68,7 @@ class ZerrendaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            /** @var Log $log */
-            $log = new Log();
-            /** @var User $user */
-            $user = $this->getUser();
-            $log->setUser($user);
-            $log->setZerrenda($zerrenda);
-            $log->setName('Zerrenda berria sortua da');
-            $log->setDescription("$zerrenda zerrenda sortua izan da.");
             $entityManager->persist($zerrenda);
-            $entityManager->persist($log);
             $entityManager->flush();
 
             return $this->redirectToRoute('zerrenda_edit', ['id' => $zerrenda->getId()]);
@@ -93,17 +84,24 @@ class ZerrendaController extends AbstractController
      * @Route("/{id}", name="zerrenda_show", methods={"GET"})
      *
      * @param                     $id
+     * @param TypeRepository      $typeRepository
      * @param ZerrendaRepository  $zerrendaRepository
      *
      * @param SerializerInterface $serializer
      *
      * @return Response
      */
-    public function show($id, ZerrendaRepository $zerrendaRepository, SerializerInterface $serializer): Response
+    public function show($id,
+                         TypeRepository $typeRepository,
+                         ZerrendaRepository $zerrendaRepository,
+                         SerializerInterface $serializer): Response
     {
         $zerrenda   = $zerrendaRepository->findZerrendaBat( $id );
+        $types = $typeRepository->findAll();
+
         return $this->render('zerrenda/show.html.twig', [
-            'zerrenda' =>$serializer->serialize($zerrenda, 'json',  ['groups' => 'main']),
+            'zerrenda'  =>$serializer->serialize($zerrenda, 'json',  ['groups' => 'main']),
+            'types'     =>$serializer->serialize($types, 'json',  ['groups' => 'main'])
         ]);
     }
 
@@ -121,15 +119,6 @@ class ZerrendaController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Log $log */
-            $log = new Log();
-            /** @var User $user */
-            $user = $this->getUser();
-            $log->setUser($user);
-            $log->setZerrenda($zerrenda);
-            $log->setName('Zerrenda editatu');
-            $log->setDescription("$zerrenda zerrenda editatua izan da");
-            $this->em->persist($log);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('zerrenda_edit', [ 'id' => $zerrenda->getId()]);
         }
@@ -194,12 +183,6 @@ class ZerrendaController extends AbstractController
 
                 $position++;
 
-                /** @var Log $log */
-                $log = new Log();
-                /** @var User $user */
-                $user = $this->getUser();
-                $log->setUser($user);
-
                 // Check if employee exists in DB
                 /** @var Employee $emp */
                 $emp = $this->em->getRepository(Employee::class)->finyOneByNan($data[3]);
@@ -210,6 +193,8 @@ class ZerrendaController extends AbstractController
                     $ez->setEmployee($emp);
                     $ez->setZerrenda($zerrenda);
                     $ez->setPosition($position);
+                    $type = $this->em->getRepository( 'App:Type' )->find( 1 ); // TODO: kendu hardcoding
+                    $ez->setType( $type );
                     $this->em->persist($ez);
                     $emp->addEmployeeZerrenda($ez);
                     $emp->setName($data[0]);
@@ -224,12 +209,6 @@ class ZerrendaController extends AbstractController
                     if ($municipio) {
                         $emp->setMunicipio($municipio);
                     }
-                    $log->setEmployee($emp);
-                    $log->setZerrenda($zerrenda);
-                    $log->setEmployeezerrenda($ez);
-                    $log->setName('Hautagai berria inportatu da');
-                    $log->setDescription("$emp hautagaia $zerrenda zerrendara inportatu da fitxategitik");
-
                 } else {
                     // Check if Employee is in the list already
                     $dago = $this->em->getRepository(EmployeeZerrenda::class)->findOneByEmployeeZerrenda($emp->getId(), $zerrenda->getId());
@@ -239,18 +218,11 @@ class ZerrendaController extends AbstractController
                         $ez->setZerrenda($zerrenda);
                         $emp->addEmployeeZerrenda($ez);
                         $ez->setPosition($position);
-
-                        $log->setZerrenda($zerrenda);
-                        $log->setEmployeezerrenda($ez);
-                        $log->setName('Existitzen zen hautagaia zerrendara inportatu da');
-                        $log->setDescription("$emp hautagaia $zerrenda zerrendara inportatu da " . $myFile['fitxategiaFile'] . ' fitxategitik');
-
                     } else {
                         $this->addFlash('warning',$emp->getName().' '.$emp->getAbizena1().' '.$emp->getAbizena2(). ' iadanik zerrendan dago.');
                     }
                 }
                 $this->em->persist($emp);
-                $this->em->persist($log);
             }
             $this->em->flush();
 
@@ -300,17 +272,12 @@ class ZerrendaController extends AbstractController
                             $newEz->setEmployee($ez->getEmployee());
                             $newEz->setZerrenda($oriZerrenda);
                             $newEz->setPosition((int)$position);
-                            /** @var Log $log */
-                            $log = new Log();
+
+                            $type = $this->em->getRepository( 'App:Type' )->find( 1 ); // TODO: Kendu Hardcoding
+                            $newEz->setType( $type );
+
                             /** @var User $user */
                             $user = $this->getUser();
-                            $log->setUser($user);
-                            $log->setEmployeezerrenda($newEz);
-                            $log->setEmployee($ez->getEmployee());
-                            $log->setZerrenda($ez->getZerrenda());
-                            $log->setName('Zerrenda inportatu');
-                            $log->setDescription($ez->getEmployee() . ' ' . $oriZerrenda . '-tik inportatua izan da');
-                            $this->em->persist($log);
                             $this->em->persist($newEz);
                         } else {
                             $this->addFlash('warning',$destEmployee->getName().' '.$destEmployee->getAbizena1().' '.$destEmployee->getAbizena2(). ' iadanik zerrendan dago.');
@@ -337,15 +304,8 @@ class ZerrendaController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$zerrenda->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($zerrenda);
-            /** @var Log $log */
-            $log = new Log();
             /** @var User $user */
             $user = $this->getUser();
-            $log->setUser($user);
-            $log->setZerrenda($zerrenda);
-            $log->setName('Zerrenda ezabatu');
-            $log->setDescription("$zerrenda zerrenda ezabatua izan da.");
-            $this->em->persist($log);
             $entityManager->flush();
         }
 
